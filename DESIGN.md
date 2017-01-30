@@ -117,52 +117,52 @@ Here were our pros and cons for each point of discussion:
 
 1. **The Actor model as compared to the State model.**
 
-	In the Actor model, Actors move across a grid of cells, whereas in the State model, the state of a cell is regularly set. We debated between these two approaches for quite a long time.
+In the Actor model, Actors move across a grid of cells, whereas in the State model, the state of a cell is regularly set. We debated between these two approaches for quite a long time.
 		
-	The Actor model is preferable for these reasons: 
+The Actor model is preferable for these reasons: 
 		
 - In many of these games, characters or actors are moving. Conceptually then, it might be reasonable to model these games as Actors moving over grids.
 - It seems normal to ask an Actor to move, to call a method on an actor rather to set it to a new location.
 		
-	The State model is preferable for these reasons:
+The State model is preferable for these reasons:
 		
 - In these games, there are often empty cells, cells that don't move. The Actor model does not take this type of cell into account, while the State model does.
 - The State abstraction is simpler, and allows us to do away with movement conceptually: we no longer need to worry about movement, and instead we just need to set the state of cells. 
 		
-	While both abstractions had their conceptual advantages, we eventually settled on the State model. We noticed that when we were discussing the matter, our language tended to favor the "set this cell to" construction. This in itself felt like a valid reason to choose the State model.
+While both abstractions had their conceptual advantages, we eventually settled on the State model. We noticed that when we were discussing the matter, our language tended to favor the "set this cell to" construction. This in itself felt like a valid reason to choose the State model.
 
 2. **The decision to create subclasses of State**.
 	
-	Originally, we determined that for each game, we should create subclasses of State and store them in a package related to the game. In a wildfire simulation, for instance, we would create a Fire subclass, an Empty subclass, and a Tree subclass. The alternative was to **not** manually create a number of subclasses, but instead create our States from a Game subclass (wildfire, in this situation).
+Originally, we determined that for each game, we should create subclasses of State and store them in a package related to the game. In a wildfire simulation, for instance, we would create a Fire subclass, an Empty subclass, and a Tree subclass. The alternative was to **not** manually create a number of subclasses, but instead create our States from a Game subclass (wildfire, in this situation).
 		
-	The manual subclass model is preferable for these reasons:
+The manual subclass model is preferable for these reasons:
 		
 - It is very clear what States belong to what Game. They are in the same package, as separate files.
 - The implementation, while perhaps not flexible, is the simplest and most intuitive.
 	
-	The alternative, to create our States from a Game subclass, is preferable for these reasons:
+The alternative, to create our States from a Game subclass, is preferable for these reasons:
 		
 - It is far more flexible. For each game, we need to create one subclass (a subclass of Game), instead of many subclasses of State.
 - Conceptually, our Game subclass controls and determines the behavior of the game – which is exactly what one would expect.
 	
-	In the end, we voted for flexibility and the principle of least astonishment, and chose to create our States from within a Game subclass instead of manually subclassing each State for each game.
+In the end, we voted for flexibility and the principle of least astonishment, and chose to create our States from within a Game subclass instead of manually subclassing each State for each game.
 
 3. **Our way of accessing the rules.**
 
-	From the start, we felt we should have a Rules class. We debated between two different implementations, however: having every rule, for every game, in a static Rules class; or subclassing the Rules class for each Game, and storing all of one game's rules in one subclass.
+From the start, we felt we should have a Rules class. We debated between two different implementations, however: having every rule, for every game, in a static Rules class; or subclassing the Rules class for each Game, and storing all of one game's rules in one subclass.
 		
-	Having every rule for every game in one Rules class is advantageous because:
+Having every rule for every game in one Rules class is advantageous because:
 		
 - Similar rules can be reused between games (no code duplication in that regard).
 - Each State can conveniently be initialized with an ArrayList of Rules (these rules could be called using either Reflection or Lambda Expressions).
 	
-	Subclassing the Rules class for each game is better because:
+Subclassing the Rules class for each game is better because:
 		
 - It prevents the creation of a massive, confusing Rules class.
 - It circumvents the need for mistake-prone tools like Java's Reflection.
 - It lets us clearly identify which rules belong to which game.
 	
-    In the end, this choice was easy: the latter option prevailed. Subclassing the Rules class feels more flexible and robust from a coding standpoint.
+In the end, this choice was easy: the latter option prevailed. Subclassing the Rules class feels more flexible and robust from a coding standpoint.
 	
 We designed our current plan under that assumption that, to create a new game, one needs to: create a subclass of Game, and create a subclass of Rules (beyond adding an XML file with game characteristics). At this point, we are aware that combining the Game and Rules class is possible (and would make for a simpler addition of games), but we feel that would reduce our program's flexibility. We'd rather preserve flexibility at this early stage in our project!
 
