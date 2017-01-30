@@ -3,15 +3,30 @@ Cell Society Design
 
 ## Introduction
 
-One of the problems that have been identified in the Cell Society project is how to organize a program that will be flexible enough to support many different Cell Automata. We want to be able to add a new type of simulation in the future and have to change as little of our existing code as possible. Thus, as the factors that determine the behavior of a simulations are the rules by which it lives. Thus, our team decided to encapsulate all of the rules per game, so that the program is extensible. Each cell will have a state, which will update on the coming of the next time tick. The cells are generic and and contain a state. This state will have different information, depending on which simulation is being run. This state object will have rules that are pertinent to it. The UI will consist of a screen in which the user sees the current state of the grid. This will change on each time tick. The user will be able to adjust key values for different simulations. The user will also be able to pause and unpause the simulation, and pick a new simulation. We look to have an organized design that facilitates easy testing, debugging and refactoring. 
+The main difficulty that we have identified in the Cell Society project is designing a program that will be flexible enough to support many different Cell Automata.
+
+We want to be able to add new types of simulations in the future, while having to change as little of our existing code as possible. We came to the conclusion that a game is primarily defined by its rules; as a consequence, we chose to encapsulate a game's rules in one coherent structure. 
+
+Each generic cell will have a specific state, which will update on each time tick. The cell's state will have different information, depending on which simulation is being run: different colors and different rules, for instance.
+
+The User Interface will consist of a screen on which the user sees the current state of a grid. This grid will change on each time tick. 
+
+Through the interface, the user will be able to adjust important values for different simulations. The user will also be able to pause and play the simulation, or pick a new simulation. 
+
+In planning CellSociety, we sought to design an organized project that promotes pain-free testing, debugging and refactoring. 
 
 ## Overview
 
-PICTURE
+We chose to divide our program into three layers of abstraction:
 
-We chose to divide our program into three portions:
+![](overview.jpg)
 
 1. **The UI.**
+
+	The User Interface will have an *IO* class that handles the user's input. This class will communicate the modification of important simulation parameters by the user to the *Simulation* layer of abstraction. 
+	
+	The *Grid* class, described in the next section, will also play a part in the UI. It will let the user visualize the current state of the simulation.
+
 2. **The Simulation.** 
 
 	We will have a *Simulation* class that will serve as a clock to our program. On each time step, the class will tell the *Grid* class to update its cells according to the rules assigned to their current states. Naturally, this class will have a *step()* method. Ideally, we'd like to keep this method minimal: we want to dissociate the actual game from our project's simulation capability. 
@@ -31,7 +46,7 @@ We felt that these three distinct layers of abstraction gave us the best chance 
 
 ## User Interface
 
-PICTURE
+![](ui.jpg)
 
 Our project's UI will use a menu similar to the one provided in the simulation attached to the Schelling’s Model of Segregation project. The user would be able to modify the grid dimensions and the delay (how quickly the simulation runs) before the game is actually launched.
 
@@ -48,18 +63,51 @@ Pressing the “Start" button will begin the simulation. The simulation will con
 
 
 ### Details
-The Game class will handle reading in of the xml file with the initial configurations and parameter values. These will be different for each game, so we will make an inheritance hierarchy and subclass for each new type of simulation that we are required to implement. The Game subclasses will also dictate which type of state gets which rules. This is important as an extensibility feature so that we have to change existing code as little as possible. The simulation class will be holding the game loop. This is what will have the time ticks of the simulation. The Grid class will have a grid object that contains a cells in a structure. The grid class will be part of UI as well. Since each cell has a state instance variable, this also tells the UI what color to display the cell in. Thus, Grid is a bridge between the backend and the frontend. The cell class will handle the operations of the game related to its neighboring cells. The cell will have a set of rules. There will be a method to get the adjacent cells of the cell. The cell will also have a update() method, which will be invoked on each time tick. This method will take in the adjacent cells' states and the use the cell's own state and act on this information according to the cell's rules. The rules class will have subclasses for each of the games we need to implement as well. Since a cell's state can defines rules within a game, we don't need to subclass for all the possible states. Instead, we subclass for the separate simulations and the state will determine the rules that are applied to that cell on that time tick. The cell will have an instance of a rules object and will use that in its update method. This setup is again done for extensibility purposes. The rules are determined by each type of simulation. These are if (condition) then (outcome) statements that operate on states of adjacent cells. On the UI side, the grid will handle the status of the grid and updating the colors as the simulation runs. We will also have a class to handle the inputs and outputs to the UI. These include the sliders, the menus and updating the indicators based on what simulation is running. It is important to separate UI from backend. This is done to make code more readable, organized, and easier to debug and test. There will be a Main class in the root of the project which will just be responsible for loading up the window and launching the program from the beginning. 
+- The *Game* superclass will handle the reading in of the XML file with the initial configurations and parameter values. These will be different for each game, so we will make an inheritance hierarchy and subclass for each new type of simulation that we are required to implement. The *Game* subclasses will also dictate which type of *State* gets which rules. This is important because it ensures that our code is flexible and requires small amounts of modifications when being extended.
+
+- The *Simulation* class will own the game loop. The class will set the simulation's clock and time step mechanism.
+
+- The *Grid* class will have a grid object that contains a Collection of *Cells*. The *Grid* class will be part of the User Interface as well. Since each *Cell* has a *State* instance variable, it also tells the UI what color to display the *Cell* in. Thus, *Grid* is a bridge between the backend and the frontend. 
+
+- The *Cell* class will represent one graphical unit and will  own a *State* object. The *adjacentCells()* method will return the cells adjacent to the current Cell. The Cell will also have an *update()* method, which will be invoked on each time tick. This method will take in the adjacent cells' states and the use the cell's own state and act on this information according to the cell's state's rules. 
+
+- The *Rules* superclass will have subclasses for each of the games we need to implement as well. In order to avoid subclassing each game's numerous *States*, we subclass *Rules* and assign an instance of these *Rules* to a *State*. This is done, once again, for extensibility purposes. The rules are determined by each type of *Game*, and consist in statements that conditionally operate on the *State* of adjacent cells.
+
+- On the UI side, the *Grid* will handle the updating of the simulation's colors as the simulation runs. We will also have a class to handle the inputs to the User Interface and update the interface's indicators based on the state of the simulation. Input is collected through the menus and fields. We consider it important to separate the User Interface from the backend. This is done to make code more readable, organized, and easier to debug and test. 
+- There will be a *Main* class in the root of the project. It will be responsible for launching the program.
+
 ### Use Cases
 #### Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors)
-Similarly, the cell will retrieve a list of its neighbors through its getNeighbors() method. This method uses simple math and accesses the grid to get the cells adjacent to the cell in question. Then, taking into account its state and the states of all of its neighbors, the cell will change (or not) according to the rule that it is acting by. If the cell changes state, this will be reflected in the visualization. If not, then the cell will remain the same as it was on the previous time tick. On a change of the state, the rules of the cell also changes.
+1. The cell will retrieve a list of its neighbors through its *getAdjacentCells()* method. This method uses simple math to access the *Grid* and get the cells adjacent to the cell in question. 
+2. Then, taking into account the *States* of its neighbors, the *Cell* will change (or not) according to the rules defined in its *State* instance variable. In this case, the *Rules* class will have a method that counts the Ccell's number of neighbors.
+3. If the *Cell* changes *State*, this will be reflected in the visualization. If not, then the *Cell* will remain the same as it was on the previous time tick.
+
 #### Apply the rules to an edge cell: set the next state of a cell to live by counting its number of neighbors using the Game of Life rules for a cell on the edge (i.e., with some of its neighbors missing)
-Similarly, the cell will retrieve a list of its neighbors through its getNeighbors() method. This method uses simple math and accesses the grid to get the cells adjacent to the cell in question. Next, using its state and the state of all of its neighbors, the cell will act according to the rules that has been assigned to it. If the state of the cell changes, the rules assigned to it will change accordingly. 
+1. The cell will retrieve a list of its neighbors through its *getAdjacentCells()* method. This method uses simple math to access the *Grid* and get the cells adjacent to the cell in question. 
+2. Then, taking into account the *States* of its neighbors, the *Cell* will change (or not) according to the rules defined in its *State* instance variable. In this case, the *Rules* class will have a method that counts the Ccell's number of neighbors.
+3. If the *Cell* changes *State*, this will be reflected in the visualization. If not, then the *Cell* will remain the same as it was on the previous time tick.
+
 #### Move to the next generation: update all cells in a simulation from their current state to their next state and display the result graphically
-The Simulation class will maintain the game loop. On each time tick of the simulation, all cells in the grid will be told to update. This means to analyze the states of all the surrounding cells and chose to take an action (different actions depending on which simulation is being run). Once every cell has chosen which action to take, the program will run through and resolve all conflicts (eg two fish try to move to the same cell). The states will be updated and as a result the visualization will be updated as well.
-#### Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in an XML fire
-The Game class will be responsible to read in initial parameters and configurations of the grid, if given. This will happen each time the simulation is spawned, or each time a new simulation is chosen. Next, this parameter will be applied to the corresponding rule in the rules class as part of the initialization, and the simulation will begin when the user presses the start button.
+
+1. The *Simulation* class will maintain the game loop. On each time tick of the simulation, all Cells in the grid will be told to update. 
+2. Each *Cell* will analyze the states of its surrounding cells and chose to take an action (different actions depending on which simulation is being run). 
+3. Once every cell has chosen which action to take, the program will iterate through the planned changes and resolve all conflicts (e.g. two fish trying to move to the same *Cell*).
+4. The states will be updated and as a result the visualization will be updated as well.
+
+#### Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in an XML file
+1. The *Game* class will be responsible for reading in initial parameters and configurations of the *Grid*. This will happen each time the simulation is spawned, or each time a new simulation is chosen. 
+2. Next, a *Rules* subclass will be created with this parameter during the initialization, and the appropriate *State* objects will be assigned this *Rules* subclass.
+3. The simulation will begin when the user presses the start button.
+
 #### Switch simulations: use the GUI to change the current simulation from Game of Life to Wator
-The user can pause the simulation (or not pause). The Simulation class will pause the simulation when (if) the UI io class tells it to. Then the user must click on the drop down menu on the side of what simulation to run and click on Wator. The io class will tell the game class which new game to load up. The Game class will load the new game and initialize simulation from the xml file over again with Wator. The Simulation class will start the simulation as soon as the user clicks start on the UI. The UI io class will tell the Simulation class to begin.
+
+1. The user can pause or play the simulation.
+2. The *Simulation* class will pause the simulation if and when the *IO* class tells it to. 
+3. Then, the user must click on the drop-down menu on the side of the current simulation to select Wator.
+4. The *IO* class will tell the *Game* class which new game to launch.
+5. The *Game* class will load the new game and initialize the simulation from Wator's XML file. 
+6. The *Simulation* class will start the simulation as soon as the user clicks start on the UI. 
+7. The *IO* class will tell the *Simulation* class to begin.
 
 ## Design Considerations 
 
