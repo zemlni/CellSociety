@@ -22,22 +22,17 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-/**
- * A basic example JavaFX program for the first lab.
- * 
- * It is cool.
- * 
- * @author Robert C. Duvall
- */
-// Test.
 public class Scrolling extends Application {
 	public static final String TITLE = "Scrolling";
 
-	public static final String textName = "text_file"; 
+	public static final String textName = "DESIGN.md"; 
 	private Rectangle bar;
 	private Rectangle grabber;
 	private Rectangle tableSpace = new Rectangle(10, 10, 300, 300); //use this to set space for table
-
+	
+	
+	
+	
 	public static final int SIZE = 400;
 	public static final Paint BACKGROUND = Color.WHITE;
 	public static final int FRAMES_PER_SECOND = 60;
@@ -53,9 +48,11 @@ public class Scrolling extends Application {
 	private ArrayList<Text> textList = new ArrayList<Text>();
 	private int topTextIndex = 0;
 	private int textSpacing = 12;
+	
 	private Text selectedGame;
 
 	Group gameList = new Group();
+
 
 
 
@@ -96,13 +93,13 @@ public class Scrolling extends Application {
 		grabber.setArcWidth(grabber.getWidth());
 
 
-
 		gameList.getChildren().add(bar);
 		gameList.getChildren().add(grabber);
 
+		
 		myScene.setOnMouseDragged(e -> handleMouseInput(e.getX(), e.getY()));
 		myScene.setOnScroll(e -> scroll(e, e.getX(), e.getY()));
-		myScene.setOnMouseClicked(e -> clickGame(e.getX(), e.getY()));
+		myScene.setOnMouseClicked(e -> clickGameSelection(e.getX(), e.getY()));
 		addText();
 		return myScene;
 	}
@@ -162,6 +159,7 @@ public class Scrolling extends Application {
 		handleTextFiles();
 		for (int i = 0; i < textList.size(); i++){
 			Text text = textList.get(i);
+			
 			//adjusts the size of text so it fits in the window provided
 			while (text.getBoundsInLocal().getWidth() > tableSpace.getWidth()){
 				text.setFont(new Font(text.getFont().getSize() - 1));
@@ -221,7 +219,8 @@ public class Scrolling extends Application {
 		}
 	}
 	
-	private void clickGame(double x, double y){
+	//allows you to select which game you want to simulate
+	private void clickGameSelection(double x, double y){
 		for (Text game : textList){
 			if (game.contains(x,y)){
 				//setting others to normal
@@ -233,6 +232,8 @@ public class Scrolling extends Application {
 			}
 		}
 	}
+	
+	
 	
 
 	/**
