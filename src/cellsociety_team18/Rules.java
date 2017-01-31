@@ -8,13 +8,6 @@ package cellsociety_team18;
  *
  */
 public abstract class Rules {
-
-	/**
-	 * 
-	 */
-	public Rules() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public abstract void run();
 
