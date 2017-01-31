@@ -1,21 +1,22 @@
 /**
  * Nikita changeadsdfasdg	
  */asdgasdg
-adsfapackage asdgasdgcellsociety_team18;asdgasdg
+ 
+ 
+ 
+package cellsociety_team18;asdgasdg
+// Elliott's new change
 
 /**
  * @author elliott
  *
  */
 public abstract class Rules {
-
-	/**
-	 * 
-	 */
-	public Rules() {
-		// TODO Auto-generated constructor stub
-	}
 	
 	public abstract void run();
+	
+	public void heyNewTestMethod() {
+	    
+	}
 
 }
