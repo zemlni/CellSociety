@@ -22,14 +22,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-/**
- * A basic example JavaFX program for the first lab.
- * 
- * It is cool.
- * 
- * @author Robert C. Duvall
- */
-// Test.
 public class Scrolling extends Application {
 	public static final String TITLE = "Scrolling";
 
