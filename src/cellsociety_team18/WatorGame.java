@@ -36,8 +36,5 @@ public class WatorGame extends Game{
 		}
 		
 	}
-	public static void main(String[] args) {
-		WatorGame game = new WatorGame();
-		game.setup();
-	}
+
 }

@@ -32,5 +32,10 @@ public class Point {
 	public void setY(int y) {
 		this.y = y;
 	}
+	@Override
+	public boolean equals(Object other){
+		
+		return (other instanceof Point && ((Point)other).getX() == x && ((Point)other).getY() == y);
+	}
 	
 }
