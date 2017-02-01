@@ -1,6 +1,3 @@
-/**
- * 
- */
 package cellsociety_team18;
 
 /**
@@ -9,6 +6,6 @@ package cellsociety_team18;
  */
 public abstract class Rules {
 	
-	public abstract void run();
+	public abstract void apply(Cell cell);
 
 }
