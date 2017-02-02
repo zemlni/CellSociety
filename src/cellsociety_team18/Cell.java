@@ -58,6 +58,8 @@ public abstract class Cell {
 		state.applyRules();
 	}
 	
-	public abstract ArrayList<Cell> getNeighbors();
+	public ArrayList<Cell> getNeighbors() {
+		return getGrid().getNeighbors(getX(), getY());
+	}
 
 }
