@@ -33,8 +33,8 @@ public abstract class State {
 	}
 	
 	/**
-	 * Obey the rules corresponding to this State.
+	 * Pick a state according to the rules for the current state.
 	 */
-	public abstract void applyRules();
-
+	public abstract void chooseState();
+	
 }

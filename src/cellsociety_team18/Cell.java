@@ -1,30 +1,29 @@
 package cellsociety_team18;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javafx.scene.paint.Color;
 
 /**
  * @author elliott
  * This class represents one cell.
- * The cell has a State and a Color.
- *
+ * The cell has a state, a next state, and a Point coordinate object.
+ * The cell also has a reference to the grid that owns it.
  */
 public abstract class Cell {
 	
 	private Grid grid;
+	private Point point;
 	private State state;
-	
-	private int x;
-	private int y;
+	private State nextState;
 
 	/**
 	 * @param grid The grid that owns the cell.
+	 * @param point The (X, Y) coordinates of the cell.
 	 */
-	public Cell(Grid grid, int x, int y) {
+	public Cell(Grid grid, Point point) {
 		this.grid = grid;
-		this.x = x;
-		this.y = y;
+		this.point = point;
 	}
 	
 	public Color getColor() {
@@ -35,31 +34,44 @@ public abstract class Cell {
 		return grid;
 	}
 	
+	public Point getPoint() {
+		return point;
+	}
+	
+	/**
+	 * @return A List of the cell's NSEW neighbors.
+	 */
+	public List<Cell> getNeighbors() {
+		return getGrid().getNeighbors(point);
+	}
+	
+	/**
+	 * @return A List of the cell's NSEW and diagonal neighbors.
+	 */
+	public List<Cell> getNeighborsDiagonal() {
+		return getGrid().getNeighborsDiagonal(point);
+	}
+	
 	public State getState() {
 		return state;
 	}
 	
-	public void setState(State state) {
-		this.state = state;
+	public void setNextState(State nextState) {
+		this.nextState = nextState;
 	}
 	
-	public int getX() {
-		return x;
-	}
-	
-	public int getY() {
-		return y;
-	}
-		
 	/**
-	 * Update the Cell's State.
+	 * Choose the Cell's next state.
+	 */
+	public void chooseState() {
+		state.chooseState();
+	}
+	
+	/**
+	 * Set the Cell's state to its next State.
 	 */
 	public void updateState() {
-		state.applyRules();
-	}
-	
-	public ArrayList<Cell> getNeighbors() {
-		return getGrid().getNeighbors(getX(), getY());
-	}
+		state = nextState;
+	}	
 
 }

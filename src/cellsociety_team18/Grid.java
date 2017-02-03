@@ -1,12 +1,17 @@
 package cellsociety_team18;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Grid {
 
 	public Grid() { }
 	
-	public ArrayList<Cell> getNeighbors(int x, int y) {
+	public List<Cell> getNeighbors(Point point) {
+		return new ArrayList<Cell>();
+	}
+	
+	public List<Cell> getNeighborsDiagonal(Point point) {
 		return new ArrayList<Cell>();
 	}
 

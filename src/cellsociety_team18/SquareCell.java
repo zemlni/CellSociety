@@ -7,10 +7,11 @@ package cellsociety_team18;
 public class SquareCell extends Cell {
 
 	/**
-	 * @param grid
+	 * @param grid The grid that owns the cell.
+	 * @param point The (X, Y) coordinates of the cell.
 	 */
-	public SquareCell(Grid grid, int x, int y) {
-		super(grid, x, y);
+	public SquareCell(Grid grid, Point point) {
+		super(grid, point);
 	}
 
 }
