@@ -1,4 +1,4 @@
-package GameOfLife;
+package game_of_life;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;

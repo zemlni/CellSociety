@@ -32,6 +32,10 @@ public abstract class State {
 		return cell;
 	}
 	
+	public void setCell(Cell cell) {
+		this.cell = cell;
+	}
+	
 	/**
 	 * Pick a state according to the rules for the current state.
 	 */

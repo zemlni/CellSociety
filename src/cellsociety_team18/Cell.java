@@ -20,10 +20,12 @@ public abstract class Cell {
 	/**
 	 * @param grid The grid that owns the cell.
 	 * @param point The (X, Y) coordinates of the cell.
+	 * @param state The cell's state.
 	 */
-	public Cell(Grid grid, Point point) {
+	public Cell(Grid grid, Point point, State state) {
 		this.grid = grid;
 		this.point = point;
+		this.state = this.nextState = state;
 	}
 	
 	public Color getColor() {
@@ -56,7 +58,12 @@ public abstract class Cell {
 		return state;
 	}
 	
+	public State getNextState() {
+		return nextState;
+	}
+	
 	public void setNextState(State nextState) {
+		nextState.setCell(this);
 		this.nextState = nextState;
 	}
 	

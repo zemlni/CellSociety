@@ -1,4 +1,4 @@
-package Wildfire;
+package wildfire;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
