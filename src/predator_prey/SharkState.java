@@ -6,13 +6,13 @@ import java.util.List;
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
-import segregation.Empty;
+import segregation.EmptyState;
 
 /**
  * @author elliott
  * This class represents a Shark in Predator/Prey.
  */
-public class Shark extends Agent {
+public class SharkState extends AgentState {
 	
 	private int energy;
 	private int energyEarned;
@@ -22,7 +22,7 @@ public class Shark extends Agent {
 	 * @param energy The shark's original energy.
 	 * Shark states are black.
 	 */
-	public Shark(Cell cell, int originalEnergy, int energyEarned, int reproductionTime) {
+	public SharkState(Cell cell, int originalEnergy, int energyEarned, int reproductionTime) {
 		super(cell, reproductionTime);
 		setColor(Color.BLACK);
 		energy = originalEnergy;
@@ -38,11 +38,11 @@ public class Shark extends Agent {
 	public void chooseState() {
 		energy--;
 		if (energy == 0) {
-			getCell().setNextState(new Empty(getCell()));
+			getCell().setNextState(new EmptyState(getCell()));
 		}
 		List<Cell> options = getOptions();
 		State replacedState = move(options);
-		if (replacedState instanceof Fish) {
+		if (replacedState instanceof FishState) {
 			energy += energyEarned;
 		}
 	}

@@ -12,6 +12,11 @@ public abstract class State {
 	
 	private Cell cell;
 	private Color color;
+	
+	/**
+	 * A constructor that takes no arguments.
+	 */
+	public State() {}
 
 	/**
 	 * @param cell The cell that owns the State object.

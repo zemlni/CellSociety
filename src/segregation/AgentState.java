@@ -11,7 +11,7 @@ import cellsociety_team18.State;
  * This abstract class represents an Agent in Segregation.
  * It calculates the percentage of similar neighbors and determines the movement of agents.
  */
-public abstract class Agent extends State {
+public abstract class AgentState extends State {
 	
 	private double satisfactionThreshold;
 
@@ -19,7 +19,7 @@ public abstract class Agent extends State {
 	 * @param cell The cell that owns the state.
 	 * @param satisfactionThreshold The percentage of neighbors that must be the same as the Agent in question.
 	 */
-	public Agent(Cell cell, double satisfactionThreshold) {
+	public AgentState(Cell cell, double satisfactionThreshold) {
 		super(cell);
 		this.satisfactionThreshold = satisfactionThreshold;
 	}
@@ -31,7 +31,7 @@ public abstract class Agent extends State {
 		int neighbors = 0;
 		int similar = 0;
 		for (Cell cell: getCell().getNeighborsDiagonal()) {
-			if (!(cell.getState() instanceof Empty)) {
+			if (!(cell.getState() instanceof EmptyState)) {
 				neighbors++;
 				if (cell.getState().getClass().equals(this.getClass())) {
 					similar++;
@@ -60,9 +60,9 @@ public abstract class Agent extends State {
 			List<Cell> cells = getCell().getGrid();
 			Collections.shuffle(cells);
 			for (Cell cell: cells) {
-				if (cell.getNextState() instanceof Empty) {
+				if (cell.getNextState() instanceof EmptyState) {
 					cell.setNextState(this);
-					getCell().setNextState(new Empty(getCell()));
+					getCell().setNextState(new EmptyState(getCell()));
 					return;
 				}
 			}

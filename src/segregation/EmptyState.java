@@ -8,13 +8,13 @@ import javafx.scene.paint.Color;
  * @author elliott
  * This class represents an Empty state in Segregation.
  */
-public class Empty extends State {
+public class EmptyState extends State {
 
 	/**
 	 * @param cell The owner of the State.
 	 * Empty state is white.
 	 */
-	public Empty(Cell cell) {
+	public EmptyState(Cell cell) {
 		super(cell);
 		setColor(Color.WHITE);
 	}

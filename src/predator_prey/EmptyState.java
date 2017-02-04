@@ -11,13 +11,13 @@ import javafx.scene.paint.Color;
  * @author elliott
  * This class represents an empty state in Predator/Prey.
  */
-public class Empty extends State {
+public class EmptyState extends State {
 
 	/**
 	 * @param cell The cell that owns the state.
 	 * An Empty state is blue in this game.
 	 */
-	public Empty(Cell cell) {
+	public EmptyState(Cell cell) {
 		super(cell);
 		setColor(Color.DEEPSKYBLUE);
 	}

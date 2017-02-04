@@ -7,13 +7,13 @@ import java.util.Random;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
-import segregation.Empty;
+import segregation.EmptyState;
 
 /**
  * @author elliott
  * This class represents an Agent in the Predator/Prey game.
  */
-public abstract class Agent extends State {
+public abstract class AgentState extends State {
 	
 	private int reproductionTime;
 	private int survivalTime = 0;
@@ -22,7 +22,7 @@ public abstract class Agent extends State {
 	 * @param cell The cell that owns this state.
 	 * @param reproductionTime The time elapsed before reproduction takes place.
 	 */
-	public Agent(Cell cell, int reproductionTime) {
+	public AgentState(Cell cell, int reproductionTime) {
 		super(cell);
 		this.reproductionTime = reproductionTime;
 	}
@@ -35,8 +35,8 @@ public abstract class Agent extends State {
 		Iterator<Cell> i = options.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-		   if (this instanceof Fish && !(cell.getState() instanceof Empty)
-				   || this instanceof Shark && cell.getState() instanceof Shark) {
+		   if (this instanceof FishState && !(cell.getState() instanceof EmptyState)
+				   || this instanceof SharkState && cell.getState() instanceof SharkState) {
 			   i.remove();
 		   }
 		}
@@ -58,7 +58,7 @@ public abstract class Agent extends State {
 				return cell.getState();
 			}
 			cell.setNextState(this);
-			getCell().setNextState(new Empty(getCell()));
+			getCell().setNextState(new EmptyState(getCell()));
 			return cell.getState();
 		}
 		return null;
