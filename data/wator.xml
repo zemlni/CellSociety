@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<info>
+		<name>wator</name>
+		<title>Wator Predator-Prey Simulation</title>
+		<author>Niktia Zemlevskiy</author>
+		<size>4</size>
+	</info>
+	<locations>
+		<shark>0, 0</shark>
+		<shark>3, 3</shark>
+		<fish>0, 1</fish>
+		<fish>0, 2</fish>
+		<fish>0, 3</fish>
+		<fish>1, 2</fish>
+		<fish>2, 0</fish>
+		<fish>2, 2</fish>
+		<fish>2, 3</fish>
+		<fish>3, 0</fish>
+		<water>1, 0</water>
+		<water>1, 1</water>
+		<water>1, 3</water>
+		<water>2, 1</water>
+		<water>3, 1</water>
+		<water>3, 2</water>
+	</locations>
+</data>
