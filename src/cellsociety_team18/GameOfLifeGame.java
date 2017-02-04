@@ -1,13 +1,11 @@
 package cellsociety_team18;
 
-import java.io.File;
+import game_of_life.*;
 
-public class LifeGame extends Game {
+public class GameOfLifeGame extends Game {
 
 	@Override
 	public void setup() {
-		State[] states = { new LiveState(), new DeadState() };
-		setStates(states);
 		setName("life");
 	}
 

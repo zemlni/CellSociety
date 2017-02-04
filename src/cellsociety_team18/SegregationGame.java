@@ -5,16 +5,13 @@ import java.io.File;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import segregation.*;
 
 public class SegregationGame extends Game {
 	private double percentSegregation;
 
 	@Override
 	public void setup() {
-		State[] states = {
-				new BluePopulation(),
-				new EmptyPopulation
-		};
 		setName("segregation");
 		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
 		setupBasicInfo(xmlFile);
@@ -27,14 +24,15 @@ public class SegregationGame extends Game {
 		}
 
 	}
+
 	@Override
-	public State getRandomState(Cell cell){
-		int rand = (int)Math.random()*3;
+	public State getRandomState(Cell cell) {
+		int rand = (int) Math.random() * 3;
 		if (rand == 0)
-			return new BluePopulation(cell);
+			return new BlueState(cell, percentSegregation);
 		if (rand == 1)
-			return new RedPopulation(cell);
-		return new EmptyPopulation(cell);
+			return new RedState(cell, percentSegregation);
+		return new EmptyState(cell);
 	}
 
 }

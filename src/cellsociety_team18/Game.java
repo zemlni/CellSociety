@@ -18,14 +18,14 @@ import java.util.Map;
 public abstract class Game {
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private Map<String, String> basicInfo;
-	private Map<String, List<Point>> locations;
+	private Map<State, List<Point>> locations;
 	private State[] states;
 	private String name;
 
 	/*
 	 * TODO: fix duplicated code in here and in subclass
 	 */
-	public Map<String, List<Point>> getLocations() {
+	public Map<State, List<Point>> getLocations() {
 		return locations;
 	}
 
@@ -39,15 +39,16 @@ public abstract class Game {
 			if (temp.getNodeType() == Node.ELEMENT_NODE)
 				basicInfo.put(temp.getNodeName(), ((Element) temp).getTextContent());
 		}
-		locations = new HashMap<String, List<Point>>();
+		locations = new HashMap<State, List<Point>>();
 
 		nList = navigateTo(root, "locations");
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node temp = nList.item(i);
 			if (temp.getNodeType() == Node.ELEMENT_NODE) {
-				if (locations.get(temp.getNodeName()) == null)
-					locations.put(temp.getNodeName(), new ArrayList<Point>());
+				if (locations.get(temp.getNodeName()) == null) {
 
+					locations.put(temp.getNodeName(), new ArrayList<Point>());
+				}
 				String[] text = ((Element) temp).getTextContent().split(",");
 
 				Point p = new Point(Integer.parseInt(text[0].trim()), Integer.parseInt(text[1].trim()));
@@ -60,24 +61,25 @@ public abstract class Game {
 		NodeList nList = root.getElementsByTagName("info");
 		Node info = nList.item(0);
 		nList = info.getChildNodes();
-		return nList; 
+		return nList;
 	}
 
 	public int getSize() {
 		return Integer.parseInt(basicInfo.get("size"));
 	}
-	
-	public void setName(String name){
+
+	public void setName(String name) {
 		this.name = name;
 	}
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
-	
+
 	public void setStates(State[] states) {
 		this.states = states;
 	}
-	
+
 	public abstract State getRandomState(Cell cell);
 
 	private static DocumentBuilder getDocumentBuilder() {

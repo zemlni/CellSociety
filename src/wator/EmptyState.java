@@ -1,7 +1,7 @@
 /**
  * 
  */
-package predator_prey;
+package wator;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
@@ -9,7 +9,7 @@ import javafx.scene.paint.Color;
 
 /**
  * @author elliott
- * This class represents an empty state in Predator/Prey.
+ * This class represents an empty state in Wator.
  */
 public class EmptyState extends State {
 

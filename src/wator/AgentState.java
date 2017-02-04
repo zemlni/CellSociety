@@ -1,4 +1,4 @@
-package predator_prey;
+package wator;
 
 import java.util.Collections;
 import java.util.Iterator;
@@ -11,7 +11,7 @@ import segregation.EmptyState;
 
 /**
  * @author elliott
- * This class represents an Agent in the Predator/Prey game.
+ * This class represents an Agent in the Wator game.
  */
 public abstract class AgentState extends State {
 	

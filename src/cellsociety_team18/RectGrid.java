@@ -4,41 +4,45 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-
-
+import java.util.Map;
 
 public class RectGrid extends Grid {
-	private int size;
-	@Override
-	public void setup(int n, Map<String, List<Point>> locations) {
-		size = n;
 
-		for (String state: locations.keySet()){
-			ArrayList<Point> points = locations.get(state);
-			for (Point p : points){
-				cells.put(p, new RectCell(this, p, state));
+	private int size;
+
+	@Override
+	public void setup(int size, Map<State, List<Point>> locations) {
+		this.size = size;
+
+		for (State state : locations.keySet()) {
+			List<Point> points = locations.get(state);
+			for (Point p : points) {
+				cells.put(p, new SquareCell(this, p, state));
 			}
 		}
 	}
-	
-	/* Contains diagonal neighbors
-	 * */
+
+	/*
+	 * Contains diagonal neighbors
+	 */
 	public List<Cell> getNeighborsDiagonal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = center.getX();
 		int y = center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= j + 1; j++) {
-				neighbors.append(getCell(new Point(i, j)));
+				neighbors.add(getCell(new Point(i, j)));
 			}
 		}
 		neighbors.removeAll(Collections.singleton(null));
 		return neighbors;
 	}
-	/* Does not contain diagonal neighbors
-	 * */
+
+	/*
+	 * Does not contain diagonal neighbors
+	 */
 	@Override
-	public List<Cell> getNeighbors(Point center){
+	public List<Cell> getNeighbors(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = center.getX();
 		int y = center.getY();
@@ -49,4 +53,5 @@ public class RectGrid extends Grid {
 		neighbors.removeAll(Collections.singleton(null));
 		return neighbors;
 	}
+
 }

@@ -1,4 +1,4 @@
-package predator_prey;
+package wator;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 
 /**
  * @author elliott
- * This class represents a Fish in Predator/Prey.
+ * This class represents a Fish in Wator.
  */
 public class FishState extends AgentState {
 	

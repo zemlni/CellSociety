@@ -57,7 +57,7 @@ public abstract class AgentState extends State {
 	@Override
 	public void chooseState() {
 		if (!isSatisfied()) {
-			List<Cell> cells = getCell().getGrid();
+			List<Cell> cells = getCell().getGrid().getCellsAsList();
 			Collections.shuffle(cells);
 			for (Cell cell: cells) {
 				if (cell.getNextState() instanceof EmptyState) {

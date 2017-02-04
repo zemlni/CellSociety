@@ -4,18 +4,13 @@ import java.io.File;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import wildfire.*;
 
 public class FireGame extends Game {
 	private double fireChance;
 
 	@Override
 	public void setup() {
-		State [] states = {
-				new BurningState(),
-				new TreeState(),
-				new EmptyState()
-		};
-		setStates(states);
 		setName("fire");
 		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
 		setupBasicInfo(xmlFile);
@@ -35,9 +30,8 @@ public class FireGame extends Game {
 		if (rand == 0)
 			return new BurningState(cell);
 		if (rand == 1)
-			return new TreeState(cell);
+			return new TreeState(cell, fireChance);
 		return new EmptyState(cell);
-	}
 	}
 
 }

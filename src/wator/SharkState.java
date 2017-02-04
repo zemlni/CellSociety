@@ -1,6 +1,5 @@
-package predator_prey;
+package wator;
 
-import java.util.Iterator;
 import java.util.List;
 
 import cellsociety_team18.Cell;
@@ -10,7 +9,7 @@ import segregation.EmptyState;
 
 /**
  * @author elliott
- * This class represents a Shark in Predator/Prey.
+ * This class represents a Shark in Wator.
  */
 public class SharkState extends AgentState {
 	
