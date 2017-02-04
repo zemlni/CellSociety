@@ -23,4 +23,7 @@ public class Simulation {
 	public void shuffle() {
 		grid.shuffle(game);
 	}
+	public Grid getGrid(){
+		return grid;
+	}
 }
