@@ -2,26 +2,29 @@ package cellsociety_team18;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
-import javafx.scene.control.Cell;
+
 
 public class RectGrid extends Grid {
 	private int size;
-
-	public void setupGrid(int n) {
+	@Override
+	public void setup(int n, Map<String, List<Point>> locations) {
 		size = n;
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				Point p = new Point(i, j);
-				this.cells.put(p, new RectCell());
+
+		for (String state: locations.keySet()){
+			ArrayList<Point> points = locations.get(state);
+			for (Point p : points){
+				cells.put(p, new RectCell(this, p, state));
 			}
 		}
 	}
-
+	
 	/* Contains diagonal neighbors
 	 * */
-	public ArrayList<Cell> getNeighborsDiagonal(Point center) {
-		ArrayList<Cell> neighbors = new ArrayList<Cell>();
+	public List<Cell> getNeighborsDiagonal(Point center) {
+		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = center.getX();
 		int y = center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
@@ -32,9 +35,11 @@ public class RectGrid extends Grid {
 		neighbors.removeAll(Collections.singleton(null));
 		return neighbors;
 	}
+	/* Does not contain diagonal neighbors
+	 * */
 	@Override
-	public ArrayList<Cell> getNeighbors(Point center){
-		ArrayList<Cell<T>> neighbors = new ArrayList<Cell>();
+	public List<Cell> getNeighbors(Point center){
+		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = center.getX();
 		int y = center.getY();
 		neighbors.add(getCell(new Point(x - 1, y)));
@@ -42,5 +47,6 @@ public class RectGrid extends Grid {
 		neighbors.add(getCell(new Point(x, y - 1)));
 		neighbors.add(getCell(new Point(x, y + 1)));
 		neighbors.removeAll(Collections.singleton(null));
+		return neighbors;
 	}
 }

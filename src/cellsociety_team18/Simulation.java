@@ -1,8 +1,5 @@
 package cellsociety_team18;
 
-import java.util.ArrayList;
-
-import javafx.scene.control.Cell;
 
 public class Simulation {
 	private Game[] games = {
@@ -11,26 +8,25 @@ public class Simulation {
 			new FireGame(),
 			new LifeGame()
 	};
-	private String[] names = {
-			"wator",
-			"segregation",
-			"fire",
-			"life"
-	};
 	private Grid[] grids = {
 			new RectGrid()
 	};
 	private Grid grid;
 	private Game game;
-	public Simulation(int gameType, int gridSize, int gridType){
+	
+	public Simulation(int gameType, int gridType){
 		
 		game = games[gameType];
-		grid.setup();
+		game.setup();
 		grid = grids[gridType];
+		grid.setup(game.getSize(), game.getLocations());
 		
 	}
 	public void step(){
-		for (Object cell: grid.getCells())
-			((Cell) cell).update();
+		for (Cell cell: grid.getCellsAsList())
+			cell.update();
+	}
+	public void shuffle(){
+		grid.shuffle(game);
 	}
 }
