@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<info>
+		<name>life</name>
+		<title>Game of Life Simulation</title>
+		<author>Niktia Zemlevskiy</author>
+		<size>4</size>
+	</info>
+	<special>
+		<percentLiving>40</percentLiving>
+	</special>
+</data>

@@ -11,7 +11,7 @@ public class Simulation {
 		game = games[gameType];
 		game.setup();
 		grid = grids[gridType];
-		grid.setup(game.getSize(), game.getLocations());
+		grid.setup(game.getSize(), game.getLocations(), game);
 
 	}
 

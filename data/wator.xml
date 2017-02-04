@@ -6,22 +6,13 @@
 		<author>Niktia Zemlevskiy</author>
 		<size>4</size>
 	</info>
-	<locations>
-		<shark>0, 0</shark>
-		<shark>3, 3</shark>
-		<fish>0, 1</fish>
-		<fish>0, 2</fish>
-		<fish>0, 3</fish>
-		<fish>1, 2</fish>
-		<fish>2, 0</fish>
-		<fish>2, 2</fish>
-		<fish>2, 3</fish>
-		<fish>3, 0</fish>
-		<water>1, 0</water>
-		<water>1, 1</water>
-		<water>1, 3</water>
-		<water>2, 1</water>
-		<water>3, 1</water>
-		<water>3, 2</water>
-	</locations>
+	<special>
+		<percentFish>50</percentFish>
+		<fishReprodTime>3</fishReprodTime>
+		<percentSharks>20</percentSharks>
+		<sharkStartEnergy>7</sharkStartEnergy>
+		<sharkEnergyPerFish>1</sharkEnergyPerFish>
+		<sharkReprodTime>10</sharkReprodTime>
+		
+	</special>
 </data>

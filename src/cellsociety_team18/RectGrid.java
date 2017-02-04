@@ -6,18 +6,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class RectGrid extends Grid {
 
 	private int size;
 
 	@Override
-	public void setup(int size, Map<State, List<Point>> locations) {
+	public void setup(int size, Map<State, List<Point>> locations, Game game) {
 		this.size = size;
+		this.game = game;
 
-		for (State state : locations.keySet()) {
-			List<Point> points = locations.get(state);
-			for (Point p : points) {
-				cells.put(p, new SquareCell(this, p, state));
+		int sqrt = (int)Math.sqrt(size);
+		for (int i = 0; i < sqrt; i++){
+			for (int j = 0; j < sqrt; j++){
+				Point p = new Point(i, j);
+				Cell cell = new SquareCell(this, p, null);
+				cell.setNextState(game.getRandomState(cell));
+				cell.updateState();
+				cells.put(p, cell);
 			}
 		}
 	}
