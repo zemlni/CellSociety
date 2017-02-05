@@ -10,9 +10,7 @@ public class Simulation {
 		game = games[gameType];
 		game.setup();
 		grid = grids[gridType];
-
 		grid.setup(game.getSize(), game.getLocations(), game);
-
 	}
 
 	public Grid step() {
@@ -27,7 +25,7 @@ public class Simulation {
 		grid.shuffle(game);
 	}
 
-	public Grid getGrid(){
+	public Grid getGrid() {
 		return grid;
 	}
 }

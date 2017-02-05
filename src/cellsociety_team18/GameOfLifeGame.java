@@ -28,7 +28,6 @@ public class GameOfLifeGame extends Game {
 	@Override
 	public State getRandomState(Cell cell) {
 		double rand = Math.random();
-		// System.out.println(rand + " " + percentLiving);
 		return rand < percentLiving ? new LiveState(cell) : new DeadState(cell);
 	}
 

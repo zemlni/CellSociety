@@ -1,5 +1,6 @@
 package cellsociety_team18;
 
+import java.util.Objects;
 
 public class Point {
 	private int x;
@@ -40,7 +41,7 @@ public class Point {
 	
 	@Override
 	public int hashCode(){
-		return 17*x + 10000 * y;
+		return Objects.hash(x, y);
 	}
 	
 }
