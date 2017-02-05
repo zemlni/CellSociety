@@ -13,25 +13,14 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-class GraphicCell extends Rectangle {
-	public static final int gridSize = 40;
-	public static final int actualGridSize = 600;
-
-	public GraphicCell(Color color) {
-		setHeight(actualGridSize / gridSize);
-		setWidth(actualGridSize / gridSize);
-		setFill(color);
-	}
-}
-
 public class ViewController {
 	
 	public static final int FRAMES_PER_SECOND = 4;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-	public static final int gridSize = 40;
-	public static final int actualGridSize = 600;
+	public static final int gridSizeCells = 40;
+	public static final int gridSizePixels = 600;
 
 	private Simulation simulation = new Simulation(1, 0);
 	private Group myDisplayGrid;
@@ -40,7 +29,7 @@ public class ViewController {
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
 		myDisplayGrid = createDisplay();
-		Scene scene = new Scene(myDisplayGrid, actualGridSize, actualGridSize, Color.BLACK);
+		Scene scene = new Scene(myDisplayGrid, gridSizePixels, gridSizePixels, Color.BLACK);
 		stage.setScene(scene);
 		stage.show();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -61,12 +50,12 @@ public class ViewController {
 	private Group createDisplay() {
 		Grid grid = simulation.step();
 		Group group = new Group();
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
+		for (int i = 0; i < gridSizeCells; i++) {
+			for (int j = 0; j < gridSizeCells; j++) {
 				Cell data = grid.getCell(new Point(i, j));
-				GraphicCell cell = new GraphicCell(data.getColor());
-				cell.setX(j * actualGridSize / gridSize);
-				cell.setY(i * actualGridSize / gridSize);
+				GraphicCell cell = new GraphicCell(data.getColor(), gridSizePixels, gridSizeCells);
+				cell.setX(j * gridSizePixels / gridSizeCells);
+				cell.setY(i * gridSizePixels / gridSizeCells);
 				group.getChildren().add(cell);
 			}
 		}
@@ -75,12 +64,12 @@ public class ViewController {
 
 	private void updateDisplay(Grid grid) {
 		myDisplayGrid.getChildren().removeAll(myDisplayGrid.getChildren());
-		for (int i = 0; i < gridSize; i++) {
-			for (int j = 0; j < gridSize; j++) {
+		for (int i = 0; i < gridSizeCells; i++) {
+			for (int j = 0; j < gridSizeCells; j++) {
 				Cell data = grid.getCell(new Point(i, j));
-				GraphicCell cell = new GraphicCell(data.getColor());
-				cell.setX(j * actualGridSize / gridSize);
-				cell.setY(i * actualGridSize / gridSize);
+				GraphicCell cell = new GraphicCell(data.getColor(), gridSizePixels, gridSizeCells);
+				cell.setX(j * gridSizePixels / gridSizeCells);
+				cell.setY(i * gridSizePixels / gridSizeCells);
 				myDisplayGrid.getChildren().add(cell);
 			}
 		}
