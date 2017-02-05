@@ -4,13 +4,13 @@
 		<name>wator</name>
 		<title>Wator Predator-Prey Simulation</title>
 		<author>Niktia Zemlevskiy</author>
-		<size>4</size>
+		<size>400</size>
 	</info>
 	<special>
-		<percentFish>50</percentFish>
+		<percentFish>0.05</percentFish>
 		<fishReprodTime>3</fishReprodTime>
-		<percentSharks>20</percentSharks>
-		<sharkStartEnergy>7</sharkStartEnergy>
+		<percentSharks>0.05</percentSharks>
+		<sharkStartEnergy>3</sharkStartEnergy>
 		<sharkEnergyPerFish>1</sharkEnergyPerFish>
 		<sharkReprodTime>10</sharkReprodTime>
 		

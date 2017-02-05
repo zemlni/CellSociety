@@ -5,7 +5,7 @@ import java.util.List;
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
-import segregation.EmptyState;
+import wator.EmptyState;
 
 /**
  * @author elliott
@@ -36,7 +36,8 @@ public class SharkState extends AgentState {
 	@Override
 	public void chooseState() {
 		energy--;
-		if (energy == 0) {
+		System.out.println(energy);
+		if (energy <= 0) {
 			getCell().setNextState(new EmptyState(getCell()));
 		}
 		List<Cell> options = getOptions();

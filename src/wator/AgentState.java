@@ -3,11 +3,10 @@ package wator;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
-import segregation.EmptyState;
+import wator.EmptyState;
 
 /**
  * @author elliott

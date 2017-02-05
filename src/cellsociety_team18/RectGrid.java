@@ -6,11 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import game_of_life.DeadState;
-import game_of_life.LiveState;
-import javafx.scene.paint.Color;
-
-
 public class RectGrid extends Grid {
 
 	private int size;
@@ -20,7 +15,6 @@ public class RectGrid extends Grid {
 		this.cells = new HashMap<Point, Cell>();
 		this.size = size;
 		this.game = game;
-		/*
 		int sqrt = (int)Math.sqrt(size);
 		for (int i = 0; i < sqrt; i++){
 			for (int j = 0; j < sqrt; j++){
@@ -30,7 +24,7 @@ public class RectGrid extends Grid {
 				cell.updateState();
 				cells.put(p, cell);
 			}
-		}*/
+		}
 		/*int sqrt = (int)Math.sqrt(size);
 		for (int i = 0; i < sqrt; i++){
 			for (int j = 0; j < sqrt; j++){
@@ -52,7 +46,7 @@ public class RectGrid extends Grid {
 			System.out.println(cell.getColor());
 			System.out.println(cell.getPoint().getX() + " " + cell.getPoint().getY());
 		}*/
-		int sqrt = (int) Math.sqrt(size);
+		/*int sqrt = (int) Math.sqrt(size);
 		for (int i = 0; i < 2; i++){
 			for (int j = 0; j < sqrt; j++){
 				Point p = new Point(j, i);
@@ -90,6 +84,8 @@ public class RectGrid extends Grid {
 				cells.put(p, cell);
 			}
 		}
+		
+		System.out.println(cells.size());*/
 	}
 
 	/*
