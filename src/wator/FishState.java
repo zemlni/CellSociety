@@ -27,7 +27,7 @@ public class FishState extends AgentState {
 	@Override
 	public void chooseState() {
 		List<Cell> options = getOptions();
-		//move(options);
+		move(options);
 	}
 
 }

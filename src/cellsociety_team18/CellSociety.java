@@ -27,10 +27,10 @@ public class CellSociety extends Application {
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
-	public static final int gridSize = 20;
+	public static final int gridSize = 40;
 	public static final int actualGridSize = 600;
 
-	private Simulation simulation = new Simulation(1, 0);
+	private Simulation simulation = new Simulation(3, 0);
 	private Group myDisplayGrid;
 
 	/**

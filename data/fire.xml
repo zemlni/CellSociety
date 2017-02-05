@@ -4,11 +4,11 @@
 		<name>fire</name>
 		<title>Fire Spreading Simulation</title>
 		<author>Nikita Zemlevskiy</author>
-		<size>400</size>
+		<size>1600</size>
 	</info>
 	<special>
-		<percentTree>0.5</percentTree>
-		<percentBurning>0.1</percentBurning>
+		<percentTree>0.7</percentTree>
+		<percentBurning>0.15</percentBurning>
 		<fireChance>0.5</fireChance>
 	</special>
 </data>

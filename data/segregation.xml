@@ -4,11 +4,11 @@
 		<name>life</name>
 		<title>Game of Life Simulation</title>
 		<author>Nikita Zemlevskiy</author>
-		<size>400</size>
+		<size>1600</size>
 	</info>
 	<special>
 		<percentBlue>0.25</percentBlue>
 		<percentRed>0.25</percentRed>
-		<satisfaction>0.4</satisfaction>
+		<satisfaction>0.7</satisfaction>
 	</special>
 </data>
