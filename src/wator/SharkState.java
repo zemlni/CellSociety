@@ -36,15 +36,14 @@ public class SharkState extends AgentState {
 	@Override
 	public void chooseState() {
 		energy--;
-		System.out.println(energy);
 		if (energy <= 0) {
 			getCell().setNextState(new EmptyState(getCell()));
 		}
 		List<Cell> options = getOptions();
 		State replacedState = move(options);
-		if (replacedState instanceof FishState) {
+		/*if (replacedState instanceof FishState) {
 			energy += energyEarned;
-		}
+		}*/
 	}
 
 }

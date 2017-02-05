@@ -25,15 +25,16 @@ public class FireGame extends Game {
 			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentTree"))
 				percentTree = Double.parseDouble(((Element) temp).getTextContent());
 			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentBurning"))
-				percentTree = Double.parseDouble(((Element) temp).getTextContent());
+				percentBurning = Double.parseDouble(((Element) temp).getTextContent());
 		}
 	}
 
 	@Override
 	public State getRandomState(Cell cell) {
 		double rand = Math.random();
-		if (rand < percentBurning)
+		if (rand < percentBurning) {
 			return new BurningState(cell);
+		}
 		if (rand >= percentBurning && rand <(percentBurning + percentTree))
 			return new TreeState(cell, fireChance);
 		return new EmptyState(cell);

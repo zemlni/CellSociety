@@ -12,11 +12,11 @@ public class BurningState extends State {
 
 	/**
 	 * @param cell The cell that owns this state.
-	 * A Burning state is orange.
+	 * A Burning state is red.
 	 */
 	public BurningState(Cell cell) {
 		super(cell);
-		setColor(Color.ORANGERED);
+		setColor(Color.RED);
 	}
 
 	/**

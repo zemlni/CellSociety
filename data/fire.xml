@@ -7,8 +7,8 @@
 		<size>400</size>
 	</info>
 	<special>
-		<percentTree>.5</percentTree>
-		<percentBurning>.05</percentBurning>
+		<percentTree>0.5</percentTree>
+		<percentBurning>0.1</percentBurning>
 		<fireChance>0.5</fireChance>
 	</special>
 </data>

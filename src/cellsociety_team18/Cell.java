@@ -64,7 +64,6 @@ public abstract class Cell {
 	
 	public void setNextState(State nextState) {
 		nextState.setCell(this);
-		System.out.println(nextState.getClass().toString());
 		this.nextState = nextState;
 	}
 	
