@@ -7,6 +7,8 @@
 		<size>25</size>
 	</info>
 	<special>
-		<percentLiving>0.1</percentLiving>
+		<percentBlue>0.25</percentBlue>
+		<percentRed>0.25</percentRed>
+		<satisfaction>0.5</satisfaction>
 	</special>
 </data>
