@@ -2,7 +2,8 @@
 <data>
 	<info>
 		<name>fire</name>
-		<title>Fire Spreading Simulation</title>
+		<title>Wildfire</title>
+		<description></description>
 		<author>Nikita Zemlevskiy</author>
 		<size>1600</size>
 	</info>

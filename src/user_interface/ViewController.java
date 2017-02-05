@@ -1,8 +1,11 @@
-package cellsociety_team18;
+package user_interface;
 
+import cellsociety_team18.Cell;
+import cellsociety_team18.Grid;
+import cellsociety_team18.Point;
+import cellsociety_team18.Simulation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
@@ -21,35 +24,35 @@ class GraphicCell extends Rectangle {
 	}
 }
 
-public class CellSociety extends Application {
-
-	public static final int FRAMES_PER_SECOND = 2;
+public class ViewController {
+	
+	public static final int FRAMES_PER_SECOND = 4;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
 	public static final int gridSize = 40;
 	public static final int actualGridSize = 600;
 
-	private Simulation simulation = new Simulation(0, 0);
+	private Simulation simulation = new Simulation(1, 0);
 	private Group myDisplayGrid;
+	private Timeline myAnimation;
 
-	/**
-	 * Start application.
-	 */
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		primaryStage.setTitle("CellSociety");
+	public ViewController(Stage stage) {
+		stage.setTitle("CellSociety");
 		myDisplayGrid = createDisplay();
 		Scene scene = new Scene(myDisplayGrid, actualGridSize, actualGridSize, Color.BLACK);
-		primaryStage.setScene(scene);
-		primaryStage.show();
+		stage.setScene(scene);
+		stage.show();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
-		Timeline myAnimation = new Timeline();
+		myAnimation = new Timeline();
 		myAnimation.setCycleCount(Timeline.INDEFINITE);
 		myAnimation.getKeyFrames().add(frame);
+	}
+	
+	public void start() {
 		myAnimation.play();
 	}
-
+	
 	private void step(double elapsedTime) {
 		Grid grid = simulation.step();
 		updateDisplay(grid);
@@ -83,11 +86,5 @@ public class CellSociety extends Application {
 		}
 	}
 
-	/**
-	 * Start the program.
-	 */
-	public static void main(String[] args) {
-		launch(args);
-	}
 
 }

@@ -1,8 +1,5 @@
 package wator;
 
-import java.util.Collections;
-import java.util.List;
-
 import cellsociety_team18.Cell;
 import javafx.scene.paint.Color;
 
@@ -12,6 +9,8 @@ import javafx.scene.paint.Color;
  */
 public class FishState extends AgentState {
 	
+	private int reproductionTime;
+	
 	/**
 	 * @param cell The cell that owns the state.
 	 * @param reproductionTime The number of iterations before the fish reproduces.
@@ -19,6 +18,7 @@ public class FishState extends AgentState {
 	 */
 	public FishState(Cell cell, int reproductionTime) {
 		super(cell, reproductionTime);
+		this.reproductionTime = reproductionTime;
 		setColor(Color.LAWNGREEN);
 	}
 
@@ -27,24 +27,7 @@ public class FishState extends AgentState {
 	 */
 	@Override
 	public void chooseState() {
-		// Get neighbors. Remove non-empty ones.
-		// Move to a non-empty one if there is one. Reproduce if I can.
-		//move(getOptions());
-		setSurvivalTime(getSurvivalTime() + 1);
-		List<Cell> neighbors = getCell().getNeighbors();
-		Collections.shuffle(neighbors);
-		if (neighbors.size() > 0) {
-			Cell neighbor = neighbors.get(0);
-			if (neighbor.getNextState() instanceof EmptyState) {
-				if (getSurvivalTime() >= getReproductionTime()) {
-					setSurvivalTime(0);
-					neighbor.setNextState(new FishState(neighbor, getReproductionTime()));
-					return;
-				}
-				getCell().setNextState(new EmptyState(getCell()));
-				neighbor.setNextState(new FishState(neighbor, getReproductionTime()));
-			}
-		}
+		moveTo(new FishState(null, reproductionTime));
 	}
 
 }

@@ -1,18 +1,21 @@
-package cellsociety_team18;
+package game_of_life;
 
-import game_of_life.*;
 import java.io.File;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import cellsociety_team18.Cell;
+import cellsociety_team18.Game;
+import cellsociety_team18.State;
+
 public class GameOfLifeGame extends Game {
 	private double percentLiving;
 
 	@Override
 	public void setup() {
-		setName("life");
+		setName("GameOfLife");
 		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
 		setupBasicInfo(xmlFile);
 		Element root = getRootElement(xmlFile);

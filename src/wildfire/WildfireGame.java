@@ -1,19 +1,22 @@
-package cellsociety_team18;
+package wildfire;
 
 import java.io.File;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import wildfire.*;
 
-public class FireGame extends Game {
+import cellsociety_team18.Cell;
+import cellsociety_team18.Game;
+import cellsociety_team18.State;
+
+public class WildfireGame extends Game {
 	private double fireChance;
 	private double percentBurning;
 	private double percentTree;
 
 	@Override
 	public void setup() {
-		setName("fire");
+		setName("Wildfire");
 		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
 		setupBasicInfo(xmlFile);
 		Element root = getRootElement(xmlFile);

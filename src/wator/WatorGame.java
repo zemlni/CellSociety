@@ -1,4 +1,4 @@
-package cellsociety_team18;
+package wator;
 
 import java.io.File;
 
@@ -6,7 +6,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import wator.*;
+import cellsociety_team18.Cell;
+import cellsociety_team18.Game;
+import cellsociety_team18.State;
 
 public class WatorGame extends Game {
 
@@ -17,11 +19,9 @@ public class WatorGame extends Game {
 	private int sharkEnergyPerFish;
 	private int fishReprodTime;
 
-	// lots of similar code with method in game. will need to extract method
-	// from there.
 	@Override
 	public void setup() {
-		setName("wator");
+		setName("Wator");
 		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
 		setupBasicInfo(xmlFile);
 		Element root = getRootElement(xmlFile);
@@ -43,9 +43,6 @@ public class WatorGame extends Game {
 		}
 	}
 
-	/*
-	 * if we do it this way we will get too many sharks and they will take over
-	 */
 	@Override
 	public State getRandomState(Cell cell) {
 		double rand = Math.random(); 

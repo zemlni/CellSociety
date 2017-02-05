@@ -16,64 +16,64 @@ public abstract class AgentState extends State {
 	private int survivalTime = 0;
 
 	/**
-	 * @param cell
-	 *            The cell that owns this state.
-	 * @param reproductionTime
-	 *            The time elapsed before reproduction takes place.
+	 * @param cell The cell that owns this state.
+	 * @param reproductionTime The time elapsed before reproduction takes place.
 	 */
 	public AgentState(Cell cell, int reproductionTime) {
 		super(cell);
 		this.reproductionTime = reproductionTime;
 	}
-
+	
+	public void setSurvivalTime(int survivalTime) {
+		this.survivalTime = survivalTime;
+	}
+		
 	/**
-	 * @return A randomized list of locations the agent can move to.
+	 * @return A random cell that the agent can move to.
 	 */
-	public List<Cell> getOptions() {
+	private Cell getPossibleMove() {
 		List<Cell> options = getCell().getNeighbors();
 		Iterator<Cell> i = options.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-			if (this instanceof FishState && !(cell.getNextState() instanceof EmptyState)
+			if (this instanceof FishState && !(cell.getNextState() instanceof EmptyState) 
 					|| this instanceof SharkState && cell.getState() instanceof SharkState) {
 				i.remove();
 			}
 		}
 		Collections.shuffle(options);
-		return options;
+		if (options.size() == 0) 
+			return null;
+		return options.get(0);
 	}
-
+	
 	/**
-	 * Move to new spot. Potentially reproduce.
-	 * 
-	 * @return The state the agent has replaced.
+	 * @return The state that the agent replaced.
 	 */
-	public State move(List<Cell> options) {
+	public State moveTo(AgentState state) {
 		survivalTime++;
-		if (options.size() > 0) {
-			Cell cell = options.get(0);
+		Cell destination = getPossibleMove();
+		if (destination != null) {
 			if (survivalTime >= reproductionTime) {
 				survivalTime = 0;
-				cell.setNextState(this);
-				return cell.getState();
+				return replace(destination, state);
 			}
 			getCell().setNextState(new EmptyState(getCell()));
-			cell.setNextState(this);
-			return cell.getState();
+			return replace(destination, state);
 		}
 		return null;
 	}
 	
-	public int getSurvivalTime() {
-		return survivalTime;
-	}
-	
-	public void setSurvivalTime(int value) {
-		survivalTime = value;
-	}
-	
-	public int getReproductionTime() {
-		return reproductionTime;
+	/**
+	 * Where the replacing is actually done.
+	 * @return The replaced state.
+	 */
+	private State replace(Cell neighbor, AgentState state) {
+		state.setCell(neighbor);
+		state.setSurvivalTime(survivalTime);
+		State replaced = neighbor.getNextState();
+		neighbor.setNextState(state);
+		return replaced;
 	}
 
 	@Override
