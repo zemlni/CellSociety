@@ -41,20 +41,6 @@ public abstract class Game {
 		}
 		locations = new HashMap<State, List<Point>>();
 
-		nList = navigateTo(root, "locations");
-		for (int i = 0; i < nList.getLength(); i++) {
-			Node temp = nList.item(i);
-			if (temp.getNodeType() == Node.ELEMENT_NODE) {
-				if (locations.get(temp.getNodeName()) == null) {
-
-					locations.put(temp.getNodeName(), new ArrayList<Point>());
-				}
-				String[] text = ((Element) temp).getTextContent().split(",");
-
-				Point p = new Point(Integer.parseInt(text[0].trim()), Integer.parseInt(text[1].trim()));
-				locations.get(temp.getNodeName()).add(p);
-			}
-		}
 	}
 
 	public NodeList navigateTo(Element root, String elemName) {

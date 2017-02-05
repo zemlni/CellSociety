@@ -7,6 +7,7 @@ import java.util.Map;
 public abstract class Grid {
 
 	Map<Point, Cell> cells;
+	Game game;
 
 	/*
 	 * This is get neighbors. Whether diagonal ones are included in
@@ -26,7 +27,7 @@ public abstract class Grid {
 		return cells.get(center);
 	}
 
-	public abstract void setup(int size, Map<State, List<Point>> locations);
+	public abstract void setup(int size, Map<State, List<Point>> locations, Game game);
 
 	public void shuffle(Game game) {
 		for (Cell cell : cells.values()) {
