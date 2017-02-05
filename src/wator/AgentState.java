@@ -6,7 +6,6 @@ import java.util.List;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
-import wator.EmptyState;
 
 /**
  * @author elliott This class represents an Agent in the Wator game.
@@ -35,7 +34,7 @@ public abstract class AgentState extends State {
 		Iterator<Cell> i = options.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-			if (this instanceof FishState && !(cell.getState() instanceof EmptyState)
+			if (this instanceof FishState && !(cell.getNextState() instanceof EmptyState)
 					|| this instanceof SharkState && cell.getState() instanceof SharkState) {
 				i.remove();
 			}
@@ -63,6 +62,18 @@ public abstract class AgentState extends State {
 			return cell.getState();
 		}
 		return null;
+	}
+	
+	public int getSurvivalTime() {
+		return survivalTime;
+	}
+	
+	public void setSurvivalTime(int value) {
+		survivalTime = value;
+	}
+	
+	public int getReproductionTime() {
+		return reproductionTime;
 	}
 
 	@Override

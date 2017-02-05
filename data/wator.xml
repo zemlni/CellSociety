@@ -7,10 +7,10 @@
 		<size>1600</size>
 	</info>
 	<special>
-		<percentFish>0.2</percentFish>
-		<fishReprodTime>3</fishReprodTime>
-		<percentSharks>0.2</percentSharks>
-		<sharkStartEnergy>3</sharkStartEnergy>
+		<percentFish>0.3</percentFish>
+		<fishReprodTime>5</fishReprodTime>
+		<percentSharks>0.3</percentSharks>
+		<sharkStartEnergy>10</sharkStartEnergy>
 		<sharkEnergyPerFish>1</sharkEnergyPerFish>
 		<sharkReprodTime>5</sharkReprodTime>
 		

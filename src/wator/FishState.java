@@ -1,5 +1,6 @@
 package wator;
 
+import java.util.Collections;
 import java.util.List;
 
 import cellsociety_team18.Cell;
@@ -26,8 +27,24 @@ public class FishState extends AgentState {
 	 */
 	@Override
 	public void chooseState() {
-		List<Cell> options = getOptions();
-		move(options);
+		// Get neighbors. Remove non-empty ones.
+		// Move to a non-empty one if there is one. Reproduce if I can.
+		//move(getOptions());
+		setSurvivalTime(getSurvivalTime() + 1);
+		List<Cell> neighbors = getCell().getNeighbors();
+		Collections.shuffle(neighbors);
+		if (neighbors.size() > 0) {
+			Cell neighbor = neighbors.get(0);
+			if (neighbor.getNextState() instanceof EmptyState) {
+				if (getSurvivalTime() >= getReproductionTime()) {
+					setSurvivalTime(0);
+					neighbor.setNextState(new FishState(neighbor, getReproductionTime()));
+					return;
+				}
+				getCell().setNextState(new EmptyState(getCell()));
+				neighbor.setNextState(new FishState(neighbor, getReproductionTime()));
+			}
+		}
 	}
 
 }

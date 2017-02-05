@@ -1,11 +1,11 @@
 package wator;
 
+import java.util.Collections;
 import java.util.List;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
-import wator.EmptyState;
 
 /**
  * @author elliott
@@ -40,10 +40,24 @@ public class SharkState extends AgentState {
 			getCell().setNextState(new EmptyState(getCell()));
 			return;
 		}
-		List<Cell> options = getOptions();
-		State replacedState = move(options);
-		if (replacedState instanceof FishState) {
-			energy += energyEarned;
+		//State replacedState = move(getOptions());
+		setSurvivalTime(getSurvivalTime() + 1);
+		List<Cell> neighbors = getCell().getNeighbors();
+		Collections.shuffle(neighbors);
+		if (neighbors.size() > 0) {
+			Cell neighbor = neighbors.get(0);
+			if (!(neighbor.getNextState() instanceof SharkState)) {
+				if (neighbor.getNextState() instanceof FishState) {
+					energy += energyEarned;
+				}
+				if (getSurvivalTime() >= getReproductionTime()) {
+					setSurvivalTime(0);
+					neighbor.setNextState(new SharkState(neighbor, energy, energyEarned, getReproductionTime()));
+					return;
+				}
+				getCell().setNextState(new EmptyState(getCell()));
+				neighbor.setNextState(new SharkState(neighbor, energy, energyEarned, getReproductionTime()));
+			}
 		}
 	}
 
