@@ -18,14 +18,13 @@ public class Simulation {
 		grid.setup(game.getSize(), game.getLocations(), game);
 	}
 
-	public Grid step() {
+	public void step() {
 		for (Cell cell : grid.getCellsAsList()) {
 			cell.chooseState();
 		}
 		for (Cell cell : grid.getCellsAsList()) {
 			cell.updateState();
 		}
-		return grid;
 	}
 
 	public void shuffle() {

@@ -11,4 +11,8 @@ public class GraphicCell extends Rectangle {
 		setFill(color);
 	}
 	
+	public void setColor(Color color) {
+		setFill(color);
+	}
+	
 }
