@@ -38,14 +38,11 @@ public abstract class AgentState extends State {
 				}
 			}
 		}
-		if (neighbors == 0) {
-			return 0;
-		}
 		return ((double) similar) / neighbors;
 	}
 
 	/**
-	 * @return Whether the Agent is satisfied or not.
+	 * @return Whether the agent is satisfied or not.
 	 */
 	private boolean isSatisfied() {
 		return satisfactionThreshold <= percentageOfSimilarNeighbors();
@@ -60,10 +57,9 @@ public abstract class AgentState extends State {
 			List<Cell> cells = getCell().getGrid().getCellsAsList();
 			Collections.shuffle(cells);
 			for (Cell cell: cells) {
-				if (cell.getNextState() instanceof EmptyState) {
-					cell.setNextState(this);
-					// Should we update the cell?
+				if (cell.getNextState() instanceof EmptyState && !cell.equals(getCell())) {
 					getCell().setNextState(new EmptyState(getCell()));
+					cell.setNextState(this);
 					return;
 				}
 			}
