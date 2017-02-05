@@ -13,6 +13,7 @@ public class RectGrid extends Grid {
 
 	@Override
 	public void setup(int size, Map<State, List<Point>> locations, Game game) {
+		this.cells = new HashMap<Point, Cell>();
 		this.size = size;
 		this.game = game;
 
@@ -36,7 +37,7 @@ public class RectGrid extends Grid {
 		int x = center.getX();
 		int y = center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y - 1; j <= j + 1; j++) {
+			for (int j = y - 1; j <= y + 1; j++) {
 				neighbors.add(getCell(new Point(i, j)));
 			}
 		}

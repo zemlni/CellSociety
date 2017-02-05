@@ -9,6 +9,7 @@ import org.w3c.dom.NodeList;
 
 public class GameOfLifeGame extends Game {
 	private double percentLiving;
+
 	@Override
 	public void setup() {
 		setName("life");
@@ -18,14 +19,16 @@ public class GameOfLifeGame extends Game {
 		NodeList nList = navigateTo(root, "special");
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node temp = nList.item(i);
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentLiving"))
+			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentLiving")) {
 				percentLiving = Double.parseDouble(((Element) temp).getTextContent());
+			}
 		}
 	}
 
 	@Override
 	public State getRandomState(Cell cell) {
 		double rand = Math.random();
+		// System.out.println(rand + " " + percentLiving);
 		return rand < percentLiving ? new LiveState(cell) : new DeadState(cell);
 	}
 

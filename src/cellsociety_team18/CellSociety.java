@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 class GraphicCell extends Rectangle {
-	public static final int gridSize = 40;
+	public static final int gridSize = 19;
 	public static final int actualGridSize = 800;
 	public GraphicCell(Color color) {
 		setHeight(actualGridSize / gridSize);
@@ -22,14 +22,14 @@ class GraphicCell extends Rectangle {
 
 public class CellSociety extends Application {
 
-	public static final int FRAMES_PER_SECOND = 120;
+	public static final int FRAMES_PER_SECOND = 1;
 	public static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	
-	public static final int gridSize = 40;
+	public static final int gridSize = 19;
 	public static final int actualGridSize = 800;
 	
-	private Simulation simulation;
+	private Simulation simulation = new Simulation(3, 0);
 	private Group myDisplayGrid;
 	
 	/**
@@ -63,7 +63,7 @@ public class CellSociety extends Application {
 				GraphicCell cell = new GraphicCell(data.getColor());
 				cell.setX(j * actualGridSize / gridSize);
 				cell.setY(i * actualGridSize / gridSize);
-				myDisplayGrid.getChildren().add(cell);
+				group.getChildren().add(cell);
 			}
 		}
 		return group;

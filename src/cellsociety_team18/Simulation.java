@@ -16,8 +16,10 @@ public class Simulation {
 	}
 
 	public Grid step() {
-		for (Cell cell : grid.getCellsAsList())
+		for (Cell cell : grid.getCellsAsList()) {
+			cell.chooseState();
 			cell.updateState();
+		}
 		return grid;
 	}
 

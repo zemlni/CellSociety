@@ -44,7 +44,7 @@ public abstract class Game {
 	}
 
 	public NodeList navigateTo(Element root, String elemName) {
-		NodeList nList = root.getElementsByTagName("info");
+		NodeList nList = root.getElementsByTagName(elemName);
 		Node info = nList.item(0);
 		nList = info.getChildNodes();
 		return nList;

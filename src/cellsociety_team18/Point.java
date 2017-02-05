@@ -38,4 +38,9 @@ public class Point {
 		return (other instanceof Point && ((Point)other).getX() == x && ((Point)other).getY() == y);
 	}
 	
+	@Override
+	public int hashCode(){
+		return 17*x + 10000 * y;
+	}
+	
 }
