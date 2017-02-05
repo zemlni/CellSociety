@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<info>
+		<name>fire</name>
+		<title>Fire Spreading Simulation</title>
+		<author>Nikita Zemlevskiy</author>
+		<size>400</size>
+	</info>
+	<special>
+		<percentTree>.5</percentTree>
+		<percentBurning>.05</percentBurning>
+		<fireChance>0.5</fireChance>
+	</special>
+</data>

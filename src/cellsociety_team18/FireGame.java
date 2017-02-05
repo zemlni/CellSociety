@@ -8,6 +8,8 @@ import wildfire.*;
 
 public class FireGame extends Game {
 	private double fireChance;
+	private double percentBurning;
+	private double percentTree;
 
 	@Override
 	public void setup() {
@@ -20,16 +22,19 @@ public class FireGame extends Game {
 			Node temp = nList.item(i);
 			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("fireChance"))
 				fireChance = Double.parseDouble(((Element) temp).getTextContent());
-
+			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentTree"))
+				percentTree = Double.parseDouble(((Element) temp).getTextContent());
+			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentBurning"))
+				percentTree = Double.parseDouble(((Element) temp).getTextContent());
 		}
 	}
 
 	@Override
 	public State getRandomState(Cell cell) {
-		int rand = (int)Math.random()*3;
-		if (rand == 0)
+		double rand = Math.random();
+		if (rand < percentBurning)
 			return new BurningState(cell);
-		if (rand == 1)
+		if (rand >= percentBurning && rand <(percentBurning + percentTree))
 			return new TreeState(cell, fireChance);
 		return new EmptyState(cell);
 	}
