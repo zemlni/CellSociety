@@ -30,7 +30,7 @@ public class CellSociety extends Application {
 	public static final int gridSize = 20;
 	public static final int actualGridSize = 600;
 
-	private Simulation simulation = new Simulation(0, 0);
+	private Simulation simulation = new Simulation(3, 0);
 	private Group myDisplayGrid;
 
 	/**

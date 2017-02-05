@@ -62,6 +62,7 @@ public abstract class AgentState extends State {
 			for (Cell cell: cells) {
 				if (cell.getNextState() instanceof EmptyState) {
 					cell.setNextState(this);
+					// Should we update the cell?
 					getCell().setNextState(new EmptyState(getCell()));
 					return;
 				}

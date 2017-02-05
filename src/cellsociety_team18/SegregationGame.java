@@ -36,8 +36,8 @@ public class SegregationGame extends Game {
 		double rand = Math.random();
 		if (rand < percentRed)
 			return new RedState(cell, satisfaction);
-		if (rand >= percentRed && rand <(percentRed + percentBlue))
-			return new RedState(cell, satisfaction);
+		if (rand >= percentRed && rand < (percentRed + percentBlue))
+			return new BlueState(cell, satisfaction);
 		return new EmptyState(cell);
 	}
 

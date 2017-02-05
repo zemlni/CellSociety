@@ -4,9 +4,9 @@
 		<name>life</name>
 		<title>Game of Life Simulation</title>
 		<author>Nikita Zemlevskiy</author>
-		<size>25</size>
+		<size>400</size>
 	</info>
 	<special>
-		<percentLiving>0.1</percentLiving>
+		<percentLiving>0.2</percentLiving>
 	</special>
 </data>

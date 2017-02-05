@@ -15,7 +15,7 @@ public class BlueState extends AgentState {
 	 */
 	public BlueState(Cell cell, double satisfactionThreshold) {
 		super(cell, satisfactionThreshold);
-		setColor(Color.RED);
+		setColor(Color.BLUE);
 	}
 
 }
