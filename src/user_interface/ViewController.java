@@ -4,7 +4,10 @@ import java.awt.Dimension;
 import java.io.File;
 import java.util.ResourceBundle;
 
+import javax.swing.plaf.synth.SynthSeparatorUI;
+
 import cellsociety_team18.Simulation;
+import javafx.animation.Animation.Status;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.Orientation;
@@ -63,7 +66,7 @@ public class ViewController {
 	 * Create and start the animation.
 	 */
 	public void start() {
-		KeyFrame frame = new KeyFrame(Duration.millis(Integer.parseInt(myDelayField.getText())), e -> step());
+		KeyFrame frame = new KeyFrame(Duration.millis(delay), e -> step());
 		myAnimation = new Timeline();
 		myAnimation.setCycleCount(Timeline.INDEFINITE);
 		myAnimation.getKeyFrames().add(frame);
@@ -231,6 +234,15 @@ public class ViewController {
 		myDelayField = new TextField();
 		myDelayField.setText(Integer.toString(delay));
 		myDelayField.setPrefWidth(55);
+		myDelayField.textProperty().addListener(e -> {
+			if (myDelayField.getText().length() > 0) {
+				try {
+					delay = Integer.parseInt(myDelayField.getText());
+				} catch (NumberFormatException exception) {
+
+				}
+			}
+		});
 		delayBox.getChildren().addAll(delayLabel, myDelayField);
 		delayBox.setAlignment(Pos.CENTER_LEFT);
 		return delayBox;
@@ -268,7 +280,7 @@ public class ViewController {
 	 * Updates the simulation on each time step.
 	 */
 	private void step() {
-		if (mySimulation != null) {
+		if (mySimulation != null && myAnimation.getStatus() != Status.PAUSED) {
 			mySimulation.step();
 			updateGrid();
 		}
