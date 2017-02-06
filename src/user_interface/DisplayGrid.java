@@ -30,7 +30,10 @@ public class DisplayGrid extends Group {
 			}
 		}
 	}
-
+	public void changeSizeInCells(int newSize){
+		sizeInCells = newSize;
+		createCells();
+	}
 	public void update(Grid grid) {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {

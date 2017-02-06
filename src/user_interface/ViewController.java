@@ -31,7 +31,7 @@ import javafx.util.Duration;
 
 public class ViewController {
 
-	private static final Dimension DEFAULT_SIZE = new Dimension(900, 600);
+	private static final Dimension DEFAULT_SIZE = new Dimension(920, 600);
 
 	private int delay = 250;
 	private int gridSizeInCells = 40;
@@ -43,10 +43,14 @@ public class ViewController {
 
 	private ComboBox<String> myGames;
 	private TextField delayField;
+	private TextField gridSizeField;
+	
+	private Text description;
+	private Text title;
 
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
-		setupGrid(stage);
+		setupGrid();
 		setupUI(stage);
 	}
 
@@ -54,14 +58,15 @@ public class ViewController {
 		KeyFrame frame = new KeyFrame(Duration.millis(Integer.parseInt(delayField.getText())), e -> step());
 		myAnimation = new Timeline();
 		myAnimation.setCycleCount(Timeline.INDEFINITE);
-		myAnimation.getKeyFrames().add(frame);		myAnimation.play();
+		myAnimation.getKeyFrames().add(frame);		
+		myAnimation.play();
 	}
 	
 	public void stop() {
 		myAnimation.pause();
 	}
-
-	private void setupGrid(Stage stage) {
+	//changed signature here. you were taking a stage but weren't doing anything with it. 
+	private void setupGrid() {
 		myDisplayGrid = new DisplayGrid(gridSizeInPixels, gridSizeInCells);
 	}
 	
@@ -92,10 +97,10 @@ public class ViewController {
 	
 	private Node setupLabels() {
 		VBox result = new VBox(16);
-		Text title = new Text("Simulation Game");
+		title = new Text("Simulation Game");
 		title.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
-		Text description = new Text(
-				"This is a description of a simulation game. It should be able to go on for several lines.");
+		description = new Text(
+				"Select the simulation below to begin:");
 		description.setFont(Font.font("Helvetica", 16));
 		description.setWrappingWidth(260);
 		description.setTextAlignment(TextAlignment.JUSTIFY);
@@ -116,7 +121,9 @@ public class ViewController {
 			}
 		}
 		myGames.valueProperty().addListener(e -> {
-			initializeSimulation(myGames.getValue());
+			myDisplayGrid.changeSizeInCells(gridSizeInCells);
+			if(myAnimation != null) stop();
+			initializeSimulation(myGames.getValue(), gridSizeInCells);
 		});
 		result.getChildren().addAll(pick, myGames);
 		result.setAlignment(Pos.CENTER_LEFT);
@@ -136,7 +143,10 @@ public class ViewController {
 		step.setOnAction(e -> step());
 		startStop.getChildren().addAll(start, stop, separator, step);
 		Button shuffle = new Button("Shuffle Cells");
-		shuffle.setOnAction(e -> shuffleGrid());
+		shuffle.setOnAction(e -> {
+			stop();
+			shuffleGrid();
+			});
 		result.getChildren().addAll(startStop, shuffle);
 		return result;
 	}
@@ -146,14 +156,19 @@ public class ViewController {
 		Label delayLabel = new Label("Delay (ms):");
 		delayField = new TextField();
 		delayField.setText(Integer.toString(delay));
-		delayField.setPrefWidth(40);
+		delayField.setPrefWidth(55);
 		HBox delayBox = new HBox(8);
 		delayBox.getChildren().addAll(delayLabel, delayField);
 		delayBox.setAlignment(Pos.CENTER_LEFT);
+		
 		Label gridSizeLabel = new Label("Grid Size:");
-		TextField gridSizeField = new TextField();
+		gridSizeField = new TextField();
 		gridSizeField.setText(Integer.toString(gridSizeInCells));
 		gridSizeField.setPrefWidth(40);
+		gridSizeField.textProperty().addListener(e -> {
+			if (gridSizeField.getText().length() > 0)
+				gridSizeInCells = Integer.parseInt(gridSizeField.getText());
+		});
 		HBox gridSizeBox = new HBox(8);
 		gridSizeBox.getChildren().addAll(gridSizeLabel, gridSizeField);
 		gridSizeBox.setAlignment(Pos.CENTER_LEFT);
@@ -166,9 +181,11 @@ public class ViewController {
 		updateGrid();
 	}
 
-	private void initializeSimulation(String game) {
-		//mySimulation = new Simulation(game); CREATE THIS CONSTRUCTOR
-		mySimulation = new Simulation(1, 0);
+	private void initializeSimulation(String game, int size) {
+		mySimulation = new Simulation(game, size); //CREATE THIS CONSTRUCTOR
+		//mySimulation = new Simulation(1, 0);
+		title.setText(mySimulation.getGrid().getGame().getTitle());
+		description.setText(mySimulation.getGrid().getGame().getDescription());
 		myDisplayGrid.update(mySimulation.getGrid());
 	}
 	

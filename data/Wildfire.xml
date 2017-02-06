@@ -3,9 +3,8 @@
 	<info>
 		<name>fire</name>
 		<title>Wildfire</title>
-		<description></description>
+		<description>Simulation of the Wildfire system using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
-		<size>1600</size>
 	</info>
 	<special>
 		<percentTree>0.7</percentTree>

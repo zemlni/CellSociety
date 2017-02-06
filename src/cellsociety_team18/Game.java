@@ -18,29 +18,30 @@ import java.util.Map;
 public abstract class Game {
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private Map<String, String> basicInfo;
-	private Map<State, List<Point>> locations;
-	private State[] states;
+	private Map<String, String> specialInfo;
 	private String name;
+	private Element root;
 
-	/*
-	 * TODO: fix duplicated code in here and in subclass
-	 */
-	public Map<State, List<Point>> getLocations() {
-		return locations;
-	}
-
-	public void setupBasicInfo(File xmlFile) {
-		Element root = getRootElement(xmlFile);
+	public void setupBasicInfo() {
+		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
+		root = getRootElement(xmlFile);
 		basicInfo = new HashMap<String, String>();
-
-		NodeList nList = navigateTo(root, "info");
+		specialInfo = new HashMap<String, String>();
+		
+		populateMap(basicInfo, "info");
+		populateMap(specialInfo, "special");
+	}
+	
+	public Map<String, String> getSpecialInfo(){
+		return specialInfo;
+	}
+	public void populateMap(Map<String, String> map, String section){
+		NodeList nList = navigateTo(root, section);
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node temp = nList.item(i);
 			if (temp.getNodeType() == Node.ELEMENT_NODE)
-				basicInfo.put(temp.getNodeName(), ((Element) temp).getTextContent());
+				map.put(temp.getNodeName(), ((Element) temp).getTextContent());
 		}
-		locations = new HashMap<State, List<Point>>();
-
 	}
 
 	public NodeList navigateTo(Element root, String elemName) {
@@ -50,20 +51,12 @@ public abstract class Game {
 		return nList;
 	}
 
-	public int getSize() {
-		return Integer.parseInt(basicInfo.get("size"));
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public String getName() {
 		return name;
-	}
-
-	public void setStates(State[] states) {
-		this.states = states;
 	}
 
 	public abstract State getRandomState(Cell cell);
@@ -87,4 +80,11 @@ public abstract class Game {
 	}
 
 	public abstract void setup();
+
+	public String getDescription() {
+		return basicInfo.get("description");
+	}
+	public String getTitle(){
+		return basicInfo.get("title");
+	}
 }
