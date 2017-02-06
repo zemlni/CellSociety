@@ -58,7 +58,8 @@ public class ViewController {
 		KeyFrame frame = new KeyFrame(Duration.millis(Integer.parseInt(delayField.getText())), e -> step());
 		myAnimation = new Timeline();
 		myAnimation.setCycleCount(Timeline.INDEFINITE);
-		myAnimation.getKeyFrames().add(frame);		myAnimation.play();
+		myAnimation.getKeyFrames().add(frame);		
+		myAnimation.play();
 	}
 	
 	public void stop() {
@@ -121,6 +122,7 @@ public class ViewController {
 		}
 		myGames.valueProperty().addListener(e -> {
 			myDisplayGrid.changeSizeInCells(gridSizeInCells);
+			if(myAnimation != null) stop();
 			initializeSimulation(myGames.getValue(), gridSizeInCells);
 		});
 		result.getChildren().addAll(pick, myGames);
@@ -141,7 +143,10 @@ public class ViewController {
 		step.setOnAction(e -> step());
 		startStop.getChildren().addAll(start, stop, separator, step);
 		Button shuffle = new Button("Shuffle Cells");
-		shuffle.setOnAction(e -> shuffleGrid());
+		shuffle.setOnAction(e -> {
+			stop();
+			shuffleGrid();
+			});
 		result.getChildren().addAll(startStop, shuffle);
 		return result;
 	}
