@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<info>
+		<name>wator</name>
+		<title>Wator: Predator-Prey</title>
+		<description>A simulation of the Wator Predator-Prey system using Cellular Automata.</description>
+		<author>Nikita Zemlevskiy</author>
+	</info>
+	<special>
+		<percentFish>0.2</percentFish>
+		<fishReprodTime>20</fishReprodTime>
+		<percentSharks>0.2</percentSharks>
+		<sharkStartEnergy>3</sharkStartEnergy>
+		<sharkEnergyPerFish>1</sharkEnergyPerFish>
+		<sharkReprodTime>20</sharkReprodTime>
+		
+	</special>
+</data>

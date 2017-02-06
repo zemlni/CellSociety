@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<info>
+		<name>life</name>
+		<title>Segregation</title>
+		<description>A simulation of Schelling's model of segregation using Cellular Automata.</description>
+		<author>Nikita Zemlevskiy</author>
+	</info>
+	<special>
+		<percentBlue>0.25</percentBlue>
+		<percentRed>0.25</percentRed>
+		<satisfaction>0.7</satisfaction>
+	</special>
+</data>
