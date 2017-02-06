@@ -74,7 +74,8 @@ public class ViewController {
 	 * Pause the animation.
 	 */
 	public void stop() {
-		myAnimation.pause();
+		if (myAnimation != null)
+			myAnimation.pause();
 	}
 
 	/**
@@ -174,8 +175,7 @@ public class ViewController {
 		}
 		myGames.valueProperty().addListener(e -> {
 			myDisplayGrid.changeSizeInCells(gridSizeInCells);
-			if (myAnimation != null)
-				stop();
+			stop();
 			initializeSimulation(myGames.getValue(), gridSizeInCells);
 		});
 		result.getChildren().addAll(pick, myGames);
