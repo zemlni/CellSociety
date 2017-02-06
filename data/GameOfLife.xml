@@ -3,9 +3,8 @@
 	<info>
 		<name>life</name>
 		<title>Game of Life</title>
-		<description></description>
+		<description>Simulation of Conway's Game of Life using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
-		<size>1600</size>
 	</info>
 	<special>
 		<percentLiving>0.2</percentLiving>

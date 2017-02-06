@@ -3,9 +3,8 @@
 	<info>
 		<name>wator</name>
 		<title>Wator: Predator-Prey</title>
-		<description></description>
+		<description>Simulation of Wator Predator-Prey system using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
-		<size>1600</size>
 	</info>
 	<special>
 		<percentFish>0.2</percentFish>

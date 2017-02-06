@@ -6,8 +6,28 @@ import java.util.Map;
 
 public abstract class Grid {
 
-	Map<Point, Cell> cells;
-	Game game;
+	private Map<Point, Cell> cells;
+	private Game game;
+	private int size;
+
+	public Map<Point, Cell> getCells() {
+		return cells;
+	}
+
+	public void setCells(Map<Point, Cell> cells) {
+		this.cells = cells;
+	}
+
+	public void setGame(Game game) {
+		this.game = game;
+	}
+	public Game getGame(){
+		return game;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
 
 	/*
 	 * This is get neighbors. Whether diagonal ones are included in
@@ -27,7 +47,7 @@ public abstract class Grid {
 		return cells.get(center);
 	}
 
-	public abstract void setup(Game game);
+	public abstract void setup(Game game, int size);
 
 	public void shuffle(Game game) {
 		for (Cell cell : cells.values()) {

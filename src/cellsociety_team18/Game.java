@@ -51,10 +51,6 @@ public abstract class Game {
 		return nList;
 	}
 
-	public int getSize() {
-		return Integer.parseInt(basicInfo.get("size"));
-	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -84,4 +80,11 @@ public abstract class Game {
 	}
 
 	public abstract void setup();
+
+	public String getDescription() {
+		return basicInfo.get("description");
+	}
+	public String getTitle(){
+		return basicInfo.get("title");
+	}
 }

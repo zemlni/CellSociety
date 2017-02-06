@@ -2,10 +2,9 @@
 <data>
 	<info>
 		<name>life</name>
-		<title>Game of Life</title>
-		<description></description>
+		<title>Segregation</title>
+		<description>Simulation of Schelling's model of segregation using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
-		<size>1600</size>
 	</info>
 	<special>
 		<percentBlue>0.25</percentBlue>

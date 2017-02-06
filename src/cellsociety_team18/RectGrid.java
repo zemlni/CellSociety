@@ -8,21 +8,21 @@ import java.util.Map;
 
 public class RectGrid extends Grid {
 
-	private int size;
+	
 
 	@Override
-	public void setup(Game game) {
-		this.cells = new HashMap<Point, Cell>();
-		this.size = game.getSize();
-		this.game = game;
-		int sqrt = (int)Math.sqrt(size);
-		for (int i = 0; i < sqrt; i++){
-			for (int j = 0; j < sqrt; j++){
+	public void setup(Game game, int size) {
+		setCells(new HashMap<Point, Cell>());
+		setSize(size);
+		setGame(game);
+		//int sqrt = (int)Math.sqrt(size);
+		for (int i = 0; i < size; i++){
+			for (int j = 0; j < size; j++){
 				Point p = new Point(i, j);
 				Cell cell = new SquareCell(this, p, null);
 				cell.setNextState(game.getRandomState(cell));
 				cell.updateState();
-				cells.put(p, cell);
+				getCells().put(p, cell);
 			}
 		}
 	}
