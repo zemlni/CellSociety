@@ -34,12 +34,12 @@ import javafx.util.Duration;
 public class ViewController {
 
 	private static final Dimension DEFAULT_SIZE = new Dimension(920, 600);
-    public static final String DEFAULT_RESOURCE_PACKAGE = "resources";
+	public static final String DEFAULT_RESOURCE_PACKAGE = "resources";
 
 	private int delay = 250;
 	private int gridSizeInCells = 40;
 	private final int gridSizeInPixels = 600;
-	
+
 	private Simulation mySimulation;
 	private Group root;
 	private DisplayGrid myDisplayGrid;
@@ -50,11 +50,11 @@ public class ViewController {
 	private Text myDescription;
 	private Text myTitle;
 	private Node placeholder;
-    private ResourceBundle myResources;
+	private ResourceBundle myResources;
 
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
-        myResources = ResourceBundle.getBundle("UIStrings");
+		myResources = ResourceBundle.getBundle("UIStrings");
 		setupGrid();
 		setupUI(stage);
 	}
@@ -194,9 +194,10 @@ public class ViewController {
 		result.getChildren().addAll(controlButtons, reload);
 		return result;
 	}
-	
+
 	/**
-	 * @return The buttons used to control the simulation: start, stop, and step.
+	 * @return The buttons used to control the simulation: start, stop, and
+	 *         step.
 	 */
 	private Node createControlButtons() {
 		HBox result = new HBox(8);
@@ -246,29 +247,40 @@ public class ViewController {
 		myGridSizeField.setPrefWidth(55);
 		myGridSizeField.textProperty().addListener(e -> {
 			if (myGridSizeField.getText().length() > 0) {
-				gridSizeInCells = Integer.parseInt(myGridSizeField.getText());
+				try {
+					gridSizeInCells = Integer.parseInt(myGridSizeField.getText());
+				} catch (NumberFormatException exception) {
+
+				}
+
 				myDisplayGrid.changeSizeInCells(gridSizeInCells);
-				initializeSimulation(myGames.getValue(), gridSizeInCells);
+				if (myGames.getValue() != null)
+					initializeSimulation(myGames.getValue(), gridSizeInCells);
 			}
 		});
 		gridSizeBox.getChildren().addAll(gridSizeLabel, myGridSizeField);
 		gridSizeBox.setAlignment(Pos.CENTER_LEFT);
 		return gridSizeBox;
+
 	}
 
 	/**
 	 * Updates the simulation on each time step.
 	 */
 	private void step() {
-		mySimulation.step();
-		updateGrid();
+		if (mySimulation != null) {
+			mySimulation.step();
+			updateGrid();
+		}
 	}
 
 	/**
 	 * Initializes the simulation and game.
 	 * 
-	 * @param game A String identifying the game.
-	 * @param size The size of one side of the grid.
+	 * @param game
+	 *            A String identifying the game.
+	 * @param size
+	 *            The size of one side of the grid.
 	 */
 	private void initializeSimulation(String game, int size) {
 		hidePlaceholder();
@@ -282,9 +294,11 @@ public class ViewController {
 	 * Shuffles the cells and reloads the current simulation.
 	 */
 	private void shuffleGrid() {
-		stop();
-		mySimulation.shuffle();
-		updateGrid();
+		if (mySimulation != null) {
+			stop();
+			mySimulation.shuffle();
+			updateGrid();
+		}
 	}
 
 	/**
