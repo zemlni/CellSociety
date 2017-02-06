@@ -7,6 +7,10 @@ import cellsociety_team18.Point;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
+/**
+ * @author elliott
+ * This class represents a visual grid.
+ */
 public class DisplayGrid extends Group {
 	
 	private int sizeInPixels;
@@ -19,6 +23,9 @@ public class DisplayGrid extends Group {
 		createCells();
 	}
 	
+	/**
+	 * Originally create the graphic cells.
+	 */
 	private void createCells() {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {
@@ -30,10 +37,18 @@ public class DisplayGrid extends Group {
 			}
 		}
 	}
-	public void changeSizeInCells(int newSize){
+	
+	/**
+	 * Update the size of the grid in cells.
+	 */
+	public void changeSizeInCells(int newSize) {
 		sizeInCells = newSize;
 		createCells();
 	}
+	
+	/**
+	 * Update the colors of the visual grid.
+	 */
 	public void update(Grid grid) {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {

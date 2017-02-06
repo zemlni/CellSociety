@@ -3,7 +3,7 @@
 	<info>
 		<name>wator</name>
 		<title>Wator: Predator-Prey</title>
-		<description>Simulation of Wator Predator-Prey system using Cellular Automata.</description>
+		<description>A simulation of the Wator Predator-Prey system using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
 	</info>
 	<special>

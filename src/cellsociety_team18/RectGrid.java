@@ -4,20 +4,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class RectGrid extends Grid {
-
-	
 
 	@Override
 	public void setup(Game game, int size) {
 		setCells(new HashMap<Point, Cell>());
 		setSize(size);
 		setGame(game);
-		//int sqrt = (int)Math.sqrt(size);
-		for (int i = 0; i < size; i++){
-			for (int j = 0; j < size; j++){
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
 				Point p = new Point(i, j);
 				Cell cell = new SquareCell(this, p, null);
 				cell.setNextState(game.getRandomState(cell));
@@ -38,7 +34,7 @@ public class RectGrid extends Grid {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (!(i == x && j == y))
 					neighbors.add(getCell(new Point(i, j)));
-				
+
 			}
 		}
 		neighbors.removeAll(Collections.singleton(null));

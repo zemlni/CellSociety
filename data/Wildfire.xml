@@ -3,7 +3,7 @@
 	<info>
 		<name>fire</name>
 		<title>Wildfire</title>
-		<description>Simulation of the Wildfire system using Cellular Automata.</description>
+		<description>A simulation of a wild fire spreading using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
 	</info>
 	<special>

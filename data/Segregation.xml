@@ -3,7 +3,7 @@
 	<info>
 		<name>life</name>
 		<title>Segregation</title>
-		<description>Simulation of Schelling's model of segregation using Cellular Automata.</description>
+		<description>A simulation of Schelling's model of segregation using Cellular Automata.</description>
 		<author>Nikita Zemlevskiy</author>
 	</info>
 	<special>
