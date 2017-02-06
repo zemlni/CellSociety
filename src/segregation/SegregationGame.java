@@ -19,19 +19,10 @@ public class SegregationGame extends Game {
 	@Override
 	public void setup() {
 		setName("Segregation");
-		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
-		setupBasicInfo(xmlFile);
-		Element root = getRootElement(xmlFile);
-		NodeList nList = navigateTo(root, "special");
-		for (int i = 0; i < nList.getLength(); i++) {
-			Node temp = nList.item(i);
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("satisfaction"))
-				satisfaction = Double.parseDouble(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentRed"))
-				percentRed = Double.parseDouble(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentBlue"))
-				percentBlue = Double.parseDouble(((Element) temp).getTextContent());
-		}
+		setupBasicInfo();
+		satisfaction = Double.parseDouble(getSpecialInfo().get("satisfaction"));
+		percentRed = Double.parseDouble(getSpecialInfo().get("percentRed"));
+		percentBlue = Double.parseDouble(getSpecialInfo().get("percentBlue"));
 
 	}
 

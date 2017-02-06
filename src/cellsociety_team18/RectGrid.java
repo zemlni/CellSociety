@@ -11,9 +11,9 @@ public class RectGrid extends Grid {
 	private int size;
 
 	@Override
-	public void setup(int size, Map<State, List<Point>> locations, Game game) {
+	public void setup(Game game) {
 		this.cells = new HashMap<Point, Cell>();
-		this.size = size;
+		this.size = game.getSize();
 		this.game = game;
 		int sqrt = (int)Math.sqrt(size);
 		for (int i = 0; i < sqrt; i++){

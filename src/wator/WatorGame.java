@@ -22,25 +22,13 @@ public class WatorGame extends Game {
 	@Override
 	public void setup() {
 		setName("Wator");
-		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
-		setupBasicInfo(xmlFile);
-		Element root = getRootElement(xmlFile);
-		NodeList nList = navigateTo(root, "special");
-		for (int i = 0; i < nList.getLength(); i++) {
-			Node temp = nList.item(i);
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentFish"))
-				percentFish = Double.parseDouble(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("percentSharks"))
-				percentSharks = Double.parseDouble(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("sharkReprodTime"))
-				sharkReprodTime = Integer.parseInt(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("sharkStartEnergy"))
-				sharkStartEnergy = Integer.parseInt(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("sharkEnergyPerFish"))
-				sharkEnergyPerFish = Integer.parseInt(((Element) temp).getTextContent());
-			if (temp.getNodeType() == Node.ELEMENT_NODE && temp.getNodeName().equals("fishReprodTime"))
-				fishReprodTime = Integer.parseInt(((Element) temp).getTextContent());
-		}
+		setupBasicInfo();
+		percentFish = Double.parseDouble(getSpecialInfo().get("percentFish"));
+		percentSharks = Double.parseDouble(getSpecialInfo().get("percentSharks"));
+		sharkReprodTime = Integer.parseInt(getSpecialInfo().get("sharkReprodTime"));
+		sharkStartEnergy = Integer.parseInt(getSpecialInfo().get("sharkStartEnergy"));
+		sharkEnergyPerFish = Integer.parseInt(getSpecialInfo().get("sharkEnergyPerFish"));
+		fishReprodTime = Integer.parseInt(getSpecialInfo().get("fishReprodTime"));
 	}
 
 	@Override

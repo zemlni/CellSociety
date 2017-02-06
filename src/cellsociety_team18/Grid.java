@@ -27,7 +27,7 @@ public abstract class Grid {
 		return cells.get(center);
 	}
 
-	public abstract void setup(int size, Map<State, List<Point>> locations, Game game);
+	public abstract void setup(Game game);
 
 	public void shuffle(Game game) {
 		for (Cell cell : cells.values()) {
