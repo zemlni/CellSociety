@@ -2,20 +2,18 @@ package cellsociety_team18;
 
 import java.util.Objects;
 
+/**
+ * @author Nikita Zemlevskiy This class represents a simple cartesian point.
+ *         There are methods to access its coordinates and get distances between
+ *         them.
+ */
 public class Point {
 	private int x;
 	private int y;
-	
-	public Point(int x, int y){
+
+	public Point(int x, int y) {
 		this.x = x;
 		this.y = y;
-	}
-	/**
-	 * Get distance between this point and another point.
-	 * @param p2 other point
-	 */
-	public int distance(Point p2){
-		return (int) Math.hypot(x - p2.getX(), y - p2.getY());
 	}
 
 	public int getX() {
@@ -33,15 +31,30 @@ public class Point {
 	public void setY(int y) {
 		this.y = y;
 	}
+
+	/**
+	 * Check if one point is equal to another object
+	 * 
+	 * @param other
+	 *            object to which comparing
+	 * @return if the object is a point and if its coordinates are equal to
+	 *         those of this
+	 * 
+	 */
 	@Override
-	public boolean equals(Object other){
-		
-		return (other instanceof Point && ((Point)other).getX() == x && ((Point)other).getY() == y);
+	public boolean equals(Object other) {
+
+		return (other instanceof Point && ((Point) other).getX() == x && ((Point) other).getY() == y);
 	}
-	
+
+	/**
+	 * Generate hashcode for this object.
+	 * 
+	 * @return hashcode for this point.
+	 */
 	@Override
-	public int hashCode(){
+	public int hashCode() {
 		return Objects.hash(x, y);
 	}
-	
+
 }

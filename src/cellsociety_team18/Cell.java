@@ -3,6 +3,7 @@ package cellsociety_team18;
 import java.util.List;
 
 import javafx.scene.paint.Color;
+import wator.*;
 
 /**
  * @author elliott

@@ -10,6 +10,7 @@ import javafx.scene.paint.Color;
  */
 public class SharkState extends AgentState {
 	
+	private int originalEnergy;
 	private int energy;
 	private int energyEarned;
 	private int reproductionTime;
@@ -22,6 +23,7 @@ public class SharkState extends AgentState {
 	public SharkState(Cell cell, int energy, int energyEarned, int reproductionTime) {
 		super(cell, reproductionTime);
 		setColor(Color.BLACK);
+		this.originalEnergy = energy;
 		this.energy = energy;
 		this.energyEarned = energyEarned;
 		this.reproductionTime = reproductionTime;
@@ -34,14 +36,20 @@ public class SharkState extends AgentState {
 	 */
 	@Override
 	public void chooseState() {
-		State replaced = moveTo(new SharkState(null, energy, energyEarned, reproductionTime));
-		if (replaced instanceof FishState) {
-			energy += energyEarned;
-		}
 		energy--;
 		if (energy <= 0) {
+			//System.out.println("died");
 			getCell().setNextState(new EmptyState(getCell()));
+			return;
 		}
+		moveTo(new SharkState(null, originalEnergy, energyEarned, reproductionTime));
+	}
+	
+	/**
+	 * Add the energy earned by eating a fish to our energy.
+	 */
+	public void incrementEnergy() {
+		energy += energyEarned;
 	}
 
 }

@@ -7,12 +7,12 @@
 		<author>Nikita Zemlevskiy</author>
 	</info>
 	<special>
-		<percentFish>0.2</percentFish>
-		<fishReprodTime>20</fishReprodTime>
-		<percentSharks>0.2</percentSharks>
-		<sharkStartEnergy>3</sharkStartEnergy>
+		<percentFish>0.1</percentFish>
+		<fishReprodTime>10</fishReprodTime>
+		<percentSharks>0.5</percentSharks>
+		<sharkStartEnergy>5</sharkStartEnergy>
 		<sharkEnergyPerFish>1</sharkEnergyPerFish>
-		<sharkReprodTime>20</sharkReprodTime>
+		<sharkReprodTime>10</sharkReprodTime>
 		
 	</special>
 </data>

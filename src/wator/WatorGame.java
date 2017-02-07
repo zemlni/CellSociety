@@ -10,6 +10,11 @@ import cellsociety_team18.Cell;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 
+/**
+ * @author Nikita Zemlevskiy This class is the implementation of the Wator game.
+ *         It contains setup related to Wator and method to get a random Wator
+ *         state.
+ */
 public class WatorGame extends Game {
 
 	private double percentFish;
@@ -31,13 +36,20 @@ public class WatorGame extends Game {
 		fishReprodTime = Integer.parseInt(getSpecialInfo().get("fishReprodTime"));
 	}
 
+	/**
+	 * Get a random Wator state.
+	 * 
+	 * @param cell
+	 *            the cell to which the new state will belong.
+	 * @return new random state.
+	 */
 	@Override
 	public State getRandomState(Cell cell) {
-		double rand = Math.random(); 
+		double rand = Math.random();
 		if (rand < percentFish)
 			return new FishState(cell, fishReprodTime);
 		else if (rand >= percentFish && rand < (percentFish + percentSharks))
-				return new SharkState(cell, sharkStartEnergy, sharkEnergyPerFish, sharkReprodTime);
+			return new SharkState(cell, sharkStartEnergy, sharkEnergyPerFish, sharkReprodTime);
 		return new EmptyState(cell);
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
+import javafx.scene.paint.Color;
 
 /**
  * @author elliott This class represents an Agent in the Wator game.
@@ -24,10 +25,14 @@ public abstract class AgentState extends State {
 		this.reproductionTime = reproductionTime;
 	}
 	
+	public int getSurvivalTime() {
+		return survivalTime;
+	}
+	
 	public void setSurvivalTime(int survivalTime) {
 		this.survivalTime = survivalTime;
 	}
-		
+	
 	/**
 	 * @return A random cell that the agent can move to.
 	 */
@@ -37,7 +42,7 @@ public abstract class AgentState extends State {
 		while (i.hasNext()) {
 			Cell cell = i.next();
 			if (this instanceof FishState && !(cell.getNextState() instanceof EmptyState) 
-					|| this instanceof SharkState && cell.getState() instanceof SharkState) {
+					|| this instanceof SharkState && cell.getNextState() instanceof SharkState) {
 				i.remove();
 			}
 		}
@@ -48,32 +53,36 @@ public abstract class AgentState extends State {
 	}
 	
 	/**
-	 * @return The state that the agent replaced.
+	 * Move to a specific spot on the grid.
 	 */
-	public State moveTo(AgentState state) {
+	public void moveTo(AgentState state) {
 		survivalTime++;
 		Cell destination = getPossibleMove();
 		if (destination != null) {
 			if (survivalTime >= reproductionTime) {
 				survivalTime = 0;
-				return replace(destination, state);
+				getCell().setNextState(this);
+				replace(destination, state);
+				return;
 			}
-			getCell().setNextState(new EmptyState(getCell()));
-			return replace(destination, state);
+			if (!(this instanceof FishState && getCell().getNextState() instanceof SharkState)) {
+				getCell().setNextState(new EmptyState(getCell()));
+			}
+			replace(destination, this);
 		}
-		return null;
 	}
 	
 	/**
 	 * Where the replacing is actually done.
-	 * @return The replaced state.
 	 */
-	private State replace(Cell neighbor, AgentState state) {
+	private void replace(Cell neighbor, AgentState state) {
 		state.setCell(neighbor);
-		state.setSurvivalTime(survivalTime);
 		State replaced = neighbor.getNextState();
+		if (this instanceof SharkState && replaced instanceof FishState) {
+			
+			((SharkState) state).incrementEnergy();
+		}
 		neighbor.setNextState(state);
-		return replaced;
 	}
 
 	@Override

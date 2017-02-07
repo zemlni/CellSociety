@@ -280,7 +280,7 @@ public class ViewController {
 	 * Updates the simulation on each time step.
 	 */
 	private void step() {
-		if (mySimulation != null && myAnimation.getStatus() != Status.PAUSED) {
+		if (mySimulation != null) {
 			mySimulation.step();
 			updateGrid();
 		}

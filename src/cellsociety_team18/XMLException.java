@@ -1,5 +1,9 @@
 package cellsociety_team18;
-
+/**
+ * @author Robert Duvall
+ * This class was taken from lecture example for handling XML 
+ * errors.
+ */
 public class XMLException extends RuntimeException {
     // for serialization
     private static final long serialVersionUID = 1L;
