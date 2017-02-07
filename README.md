@@ -21,11 +21,17 @@ All files under `data`, which are XML files specifying parameters for each simul
 All files under `resources`, which specify user facing strings.
 # Any information about using the program (i.e., command-line/applet arguments, key inputs, interesting example data files, or easter eggs)
 Once app is launched from Main, the UI is self explanatory. 
+
 Click on the combo box to select a simulation, and the respective grid will pop up in place of the text.
+
 Click `Start` to begin the simulation. If you wish to speed up the simulation, enter a smaller delay time in ms. If you wish to pause the simulation, click `Stop`. 
+
 Clicking `Start` will start the simulation back up again. If you wish to step through one iteration of the simulation, pause it, then click `Step`. 
+
 If you wish to restart the simulation with a new random distribution of cells according to the parameters specified in the XML file, click `Reload`. 
+
 If you wish to load a new simulation, select the desired simulation from the combo box, and it will load on your click. 
+
 If you wish to change the grid size, enter a positive number into the Grid Size field.
 # Any known bugs, crashes, or problems with the project's functionality
 Project is fully functional.
