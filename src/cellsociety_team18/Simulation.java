@@ -16,8 +16,19 @@ import wildfire.WildfireGame;
  *         all possible games and grids are maintained.
  */
 public class Simulation {
-	private Map<String, Game> games;
-	private Map<String, Grid> grids;
+	private Map<String, Game> games = new HashMap<String, Game>() {
+		{
+			put("Wator", new WatorGame());
+			put("Segregation", new SegregationGame());
+			put("Wildfire", new WildfireGame());
+			put("GameOfLife", new GameOfLifeGame());
+		}
+	};
+	private Map<String, Grid> grids = new HashMap<String, Grid>() {
+		{
+			put("Rect", new RectGrid());
+		}
+	};
 	private Grid grid;
 	private Game game;
 
@@ -31,17 +42,8 @@ public class Simulation {
 	 * @return new simulation with the specified parameters
 	 */
 	public Simulation(String gameName, int size) {
-		games = new HashMap<String, Game>();
-		games.put("Wator", new WatorGame());
-		games.put("Segregation", new SegregationGame());
-		games.put("Wildfire", new WildfireGame());
-		games.put("GameOfLife", new GameOfLifeGame());
 		game = games.get(gameName);
-		grids = new HashMap<String, Grid>();
-		grids.put("Rect", new RectGrid());
-
 		game.setup();
-
 		// if more than one grid
 		// grid = grids[gridType];
 		// for now like this.

@@ -14,13 +14,17 @@ import javafx.scene.paint.Color;
 public class DisplayGrid extends Group {
 	
 	private int sizeInPixels;
-	private int sizeInCells;
+	private int sizeInCells = 40;
+	
 	private HashMap<Point, GraphicCell> cells = new HashMap<Point, GraphicCell>();
 
-	public DisplayGrid(int sizeInPixels, int sizeInCells) {
+	public DisplayGrid(int sizeInPixels) {
 		this.sizeInPixels = sizeInPixels;
-		this.sizeInCells = sizeInCells;
 		createCells();
+	}
+	
+	public int getSizeInCells() {
+		return sizeInCells;
 	}
 	
 	/**
