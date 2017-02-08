@@ -1,9 +1,7 @@
 package cellsociety_team18;
 
 import java.util.List;
-
 import javafx.scene.paint.Color;
-import wator.*;
 
 /**
  * @author elliott
@@ -11,7 +9,7 @@ import wator.*;
  * The cell has a state, a next state, and a Point coordinate object.
  * The cell also has a reference to the grid that owns it.
  */
-public abstract class Cell {
+public class Cell {
 	
 	private Grid grid;
 	private Point point;
