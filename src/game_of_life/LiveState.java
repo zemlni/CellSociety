@@ -1,6 +1,5 @@
 package game_of_life;
 
-import cellsociety_team18.Cell;
 import javafx.scene.paint.Color;
 
 /**
@@ -9,8 +8,7 @@ import javafx.scene.paint.Color;
  */
 public class LiveState extends GameOfLifeState {
 
-	public LiveState(Cell cell) {
-		super(cell);
+	public LiveState() {
 		setColor(Color.BLACK);
 	}
 
@@ -20,7 +18,7 @@ public class LiveState extends GameOfLifeState {
 	@Override
 	public void chooseState() {
 		if (getLiveNeighbors() < 2 || getLiveNeighbors() > 3) {
-			getCell().setNextState(new DeadState(getCell()));
+			getCell().setNextState(new DeadState());
 		}
 	}
 	

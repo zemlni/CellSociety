@@ -1,6 +1,5 @@
 package segregation;
 
-import cellsociety_team18.Cell;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 
@@ -15,24 +14,28 @@ public class SegregationGame extends Game {
 	public void setup() {
 		setName("Segregation");
 		setParameters("satisfaction", "percentRed", "percentBlue");
-		setupBasicInfo();
+		parseXML();
+	}
+	
+	@Override
+	public void setStates() {
+		getStates().put("Red", new RedState(getDoubleParameter("satisfaction")));
+		getStates().put("Blue", new BlueState(getDoubleParameter("satisfaction")));
+		getStates().put("Empty", new EmptyState());
 	}
 	
 	/**
 	 * Get a random segregation state.
-	 * 
-	 * @param cell
-	 *            the cell to which the new state will belong.
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState(Cell cell) {
+	public State getRandomState() {
 		double rand = Math.random();
-		if (rand < Double.parseDouble(getParameter("percentRed")))
-			return new RedState(cell, Double.parseDouble(getParameter("satisfaction")));
-		if (rand >= Double.parseDouble(getParameter("percentRed")) && rand < (Double.parseDouble(getParameter("percentRed")) + Double.parseDouble(getParameter("percentBlue"))))
-			return new BlueState(cell, Double.parseDouble(getParameter("satisfaction")));
-		return new EmptyState(cell);
+		if (rand < getDoubleParameter("percentRed"))
+			return new RedState(getDoubleParameter("satisfaction"));
+		if (rand >= getDoubleParameter("percentRed") && rand < (getDoubleParameter("percentRed") + getDoubleParameter("percentBlue")))
+			return new BlueState(getDoubleParameter("satisfaction"));
+		return new EmptyState();
 	}
 
 }

@@ -12,7 +12,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -21,10 +20,11 @@ import java.util.Map;
  *         XML.
  */
 public abstract class Game {
-	
+
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private Map<String, String> basicInfo;
 	private Map<String, String> specialInfo;
+	private HashMap<String, State> states = new HashMap<String, State>();
 	private ArrayList<String> parameters = new ArrayList<String>();
 	private String name;
 	private Element root;
@@ -34,7 +34,7 @@ public abstract class Game {
 	 * other variables. Also populates the maps of special information pertinent
 	 * to each game subclass.
 	 */
-	public void setupBasicInfo() {
+	public void parseXML() {
 		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
 		root = getRootElement(xmlFile);
 		basicInfo = new HashMap<String, String>();
@@ -42,27 +42,39 @@ public abstract class Game {
 		populateMap(basicInfo, "info");
 		populateMap(specialInfo, "special");
 	}
-	
+
 	public void setParameter(String parameter, String value) {
 		specialInfo.put(parameter, value);
 	}
-	
+
 	public String getParameter(String parameter) {
 		return specialInfo.get(parameter);
 	}
 	
+	public double getDoubleParameter(String parameter) {
+		return Double.parseDouble(specialInfo.get(parameter));
+	}
+	
+	public int getIntParameter(String parameter) {
+		return Integer.parseInt(specialInfo.get(parameter));
+	}
+
 	public HashMap<String, String> getParametersAndValues() {
 		HashMap<String, String> result = new HashMap<String, String>();
-		for (String parameter: parameters) {
+		for (String parameter : parameters) {
 			result.put(parameter, getParameter(parameter));
 		}
 		return result;
 	}
-	
-	public void setParameters(String ...objects) {
-		for (String parameter: objects) {
+
+	public void setParameters(String... objects) {
+		for (String parameter : objects) {
 			parameters.add(parameter);
 		}
+	}
+
+	public HashMap<String, State> getStates() {
+		return states;
 	}
 
 	private void populateMap(Map<String, String> map, String section) {
@@ -91,12 +103,9 @@ public abstract class Game {
 
 	/**
 	 * Get a random state of this type of game.
-	 * 
-	 * @param cell
-	 *            the cell which that state will belong to
 	 * @return the random state requested
 	 */
-	public abstract State getRandomState(Cell cell);
+	public abstract State getRandomState();
 
 	private static DocumentBuilder getDocumentBuilder() {
 		try {
@@ -121,6 +130,8 @@ public abstract class Game {
 	 */
 	public abstract void setup();
 	
+	public abstract void setStates();
+
 	/**
 	 * Return the description for this kind of game to be displayed to the user
 	 * 

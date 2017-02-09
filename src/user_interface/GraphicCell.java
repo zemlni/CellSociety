@@ -1,5 +1,10 @@
 package user_interface;
 
+import java.util.Map;
+import java.util.Map.Entry;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -8,6 +13,8 @@ import javafx.scene.shape.Rectangle;
  * This class represents a visual, square cell.
  */
 public class GraphicCell extends Rectangle {
+	
+	private Cell data;
 
 	/**
 	 * @param color The color of the cell.
@@ -20,8 +27,34 @@ public class GraphicCell extends Rectangle {
 		setFill(color);
 	}
 	
-	public void setColor(Color color) {
+	private void setColor(Color color) {
 		setFill(color);
+	}
+	
+	public void setData(Cell cell) {
+		data = cell;
+		setColor(cell.getColor());
+	}
+	
+	public Cell getData() {
+		return data;
+	}
+	
+	public static String getStateName(Map<String, State> states, GraphicCell graphicCell) {
+		String currentState = "";
+		for (Entry<String, State> entry : states.entrySet()) {
+			if (entry.getValue().getClass().equals(graphicCell.getData().getState().getClass())) {
+				currentState = entry.getKey();
+				break;
+			}
+		}
+		return currentState;
+	}
+	
+	public void update(State state) {
+		state.setCell(data);
+		data.setNextState(state);
+		data.updateState();
 	}
 	
 }

@@ -22,9 +22,18 @@ public class Cell {
 	 * @param state The cell's state.
 	 */
 	public Cell(Grid grid, Point point, State state) {
+		this(grid, point);
+		state.setCell(this);
+		this.state = this.nextState = state;
+	}
+	
+	/**
+	 * @param grid The grid that owns the cell.
+	 * @param point The (X, Y) coordinates of the cell.
+	 */
+	public Cell(Grid grid, Point point) {
 		this.grid = grid;
 		this.point = point;
-		this.state = this.nextState = state;
 	}
 	
 	public Color getColor() {
@@ -55,6 +64,11 @@ public class Cell {
 	
 	public State getState() {
 		return state;
+	}
+	
+	public void setState(State state) {
+		state.setCell(this);
+		this.state = state;
 	}
 	
 	public State getNextState() {

@@ -1,6 +1,5 @@
 package wildfire;
 
-import cellsociety_team18.Cell;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
@@ -11,11 +10,9 @@ import javafx.scene.paint.Color;
 public class BurningState extends State {
 
 	/**
-	 * @param cell The cell that owns this state.
 	 * A Burning state is red.
 	 */
-	public BurningState(Cell cell) {
-		super(cell);
+	public BurningState() {
 		setColor(Color.RED);
 	}
 
@@ -24,7 +21,7 @@ public class BurningState extends State {
 	 */
 	@Override
 	public void chooseState() {
-		getCell().setNextState(new EmptyState(getCell()));
+		getCell().setNextState(new EmptyState());
 	}
 
 }
