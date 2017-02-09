@@ -28,8 +28,8 @@ public class RectGrid extends Grid {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				Point p = new Point(i, j);
-				Cell cell = new Cell(this, p, null);
-				cell.setNextState(game.getRandomState(cell));
+				Cell cell = new Cell(this, p);
+				cell.setNextState(game.getRandomState());
 				cell.updateState();
 				getCells().put(p, cell);
 			}

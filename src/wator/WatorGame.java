@@ -1,6 +1,5 @@
 package wator;
 
-import cellsociety_team18.Cell;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 
@@ -15,24 +14,28 @@ public class WatorGame extends Game {
 	public void setup() {
 		setName("Wator");
 		setParameters("percentFish", "percentSharks", "sharkReprodTime", "sharkStartEnergy", "sharkEnergyPerFish", "fishReprodTime");
-		setupBasicInfo();
+		parseXML();
 	}
-
+	
+	@Override
+	public void setStates() {
+		getStates().put("Fish", new FishState(getIntParameter("fishReprodTime")));
+		getStates().put("Shark", new SharkState(getIntParameter("sharkStartEnergy"), getIntParameter("sharkEnergyPerFish"), getIntParameter("sharkReprodTime")));
+		getStates().put("Empty", new EmptyState());
+	}
+	
 	/**
 	 * Get a random Wator state.
-	 * 
-	 * @param cell
-	 *            the cell to which the new state will belong.
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState(Cell cell) {
+	public State getRandomState() {
 		double rand = Math.random();
-		if (rand < Double.parseDouble(getParameter("percentFish")))
-			return new FishState(cell, Integer.parseInt(getParameter("fishReprodTime")));
-		else if (rand >= Double.parseDouble(getParameter("percentFish")) && rand < (Double.parseDouble(getParameter("percentFish")) + Double.parseDouble(getParameter("percentSharks"))))
-			return new SharkState(cell, Integer.parseInt(getParameter("sharkStartEnergy")), Integer.parseInt(getParameter("sharkEnergyPerFish")), Integer.parseInt(getParameter("sharkReprodTime")));
-		return new EmptyState(cell);
+		if (rand < getDoubleParameter("percentFish"))
+			return new FishState(getIntParameter("fishReprodTime"));
+		else if (rand >= getDoubleParameter("percentFish") && rand < (getDoubleParameter("percentFish") + getDoubleParameter("percentSharks")))
+			return new SharkState(getIntParameter("sharkStartEnergy"), getIntParameter("sharkEnergyPerFish"), getIntParameter("sharkReprodTime"));
+		return new EmptyState();
 	}
 
 }

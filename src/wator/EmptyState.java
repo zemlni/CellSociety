@@ -3,7 +3,6 @@
  */
 package wator;
 
-import cellsociety_team18.Cell;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
@@ -14,11 +13,9 @@ import javafx.scene.paint.Color;
 public class EmptyState extends State {
 
 	/**
-	 * @param cell The cell that owns the state.
 	 * An Empty state is blue in this game.
 	 */
-	public EmptyState(Cell cell) {
-		super(cell);
+	public EmptyState() {
 		setColor(Color.DEEPSKYBLUE);
 	}
 

@@ -1,6 +1,5 @@
 package segregation;
 
-import cellsociety_team18.Cell;
 import javafx.scene.paint.Color;
 
 /**
@@ -10,11 +9,10 @@ import javafx.scene.paint.Color;
 public class BlueState extends AgentState {
 
 	/**
-	 * @param cell The cell that owns the state.
 	 * @param satisfactionThreshold The percentage of neighbors that must be the same as the Agent in question.
 	 */
-	public BlueState(Cell cell, double satisfactionThreshold) {
-		super(cell, satisfactionThreshold);
+	public BlueState(double satisfactionThreshold) {
+		super(satisfactionThreshold);
 		setColor(Color.BLUE);
 	}
 

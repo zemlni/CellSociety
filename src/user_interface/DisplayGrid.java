@@ -16,10 +16,12 @@ public class DisplayGrid extends Group {
 	private int sizeInPixels;
 	private int sizeInCells = 40;
 	
+	private ViewController viewController;
 	private HashMap<Point, GraphicCell> cells = new HashMap<Point, GraphicCell>();
 
-	public DisplayGrid(int sizeInPixels) {
+	public DisplayGrid(ViewController viewController, int sizeInPixels) {
 		this.sizeInPixels = sizeInPixels;
+		this.viewController = viewController;
 		createCells();
 	}
 	
@@ -36,6 +38,9 @@ public class DisplayGrid extends Group {
 				GraphicCell cell = new GraphicCell(Color.WHITE, sizeInPixels, sizeInCells);
 				cell.setX(j * sizeInPixels / sizeInCells);
 				cell.setY(i * sizeInPixels / sizeInCells);
+				cell.setOnMouseClicked((event) -> {
+				    viewController.cellClicked(cell);
+				});
 				cells.put(new Point(i, j), cell);
 				getChildren().add(cell);
 			}
@@ -58,7 +63,7 @@ public class DisplayGrid extends Group {
 			for (int j = 0; j < sizeInCells; j++) {
 				Point point = new Point(i, j);
 				GraphicCell cell = cells.get(point);
-				cell.setColor(grid.getCell(point).getColor());
+				cell.setData(grid.getCell(point));
 				cells.put(point, cell);
 			}
 		}

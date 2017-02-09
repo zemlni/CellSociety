@@ -6,8 +6,6 @@ package user_interface;
 import cellsociety_team18.Parameter;
 
 import java.io.File;
-import java.text.NumberFormat;
-import java.text.ParsePosition;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -37,6 +35,9 @@ import javafx.scene.text.TextAlignment;
  */
 public class ControlPanel extends VBox {
 
+	private final static int HORIZONTAL_SPACING = 8;
+	private final static int VERTICAL_SPACING = 16;
+
 	private ViewController viewController;
 	private ResourceBundle resources;
 
@@ -47,11 +48,13 @@ public class ControlPanel extends VBox {
 	private TextField myGridSizeField;
 	private ParameterTable myParameterTable;
 
+	private boolean gameLoaded = false;
+
 	/**
 	 * 
 	 */
 	public ControlPanel(ViewController viewController, ResourceBundle resources) {
-		super(16);
+		super(VERTICAL_SPACING);
 		this.viewController = viewController;
 		this.resources = resources;
 		setPrefWidth(280);
@@ -63,18 +66,24 @@ public class ControlPanel extends VBox {
 	private void setup() {
 		Node labels = setupLabels();
 		Node simulationSelector = setupSimulationSelector();
-		Node configurationFields = setupFields();
-		Node controlButtons = setupControlButtons();
-		Node showGraph = makeButton("ShowGraphTitle", e -> viewController.start());
-		getChildren().addAll(labels, simulationSelector, makeSeparator(false), configurationFields, controlButtons,
-				makeSeparator(false), showGraph);
+		getChildren().addAll(labels, simulationSelector);
+	}
+
+	private void addControls() {
+		if (gameLoaded == false) {
+			Node configurationFields = setupFields();
+			Node controlButtons = setupControlButtons();
+			Node showGraph = makeButton("ShowGraphTitle", e -> viewController.start());
+			getChildren().addAll(configurationFields, makeSeparator(false), controlButtons, makeSeparator(false), showGraph);
+			gameLoaded = true;
+		}
 	}
 
 	/**
 	 * @return The control panel's labels.
 	 */
 	private Node setupLabels() {
-		VBox result = new VBox(16);
+		VBox result = new VBox(VERTICAL_SPACING);
 		myTitle = new Text(resources.getString("PlaceholderTitle"));
 		myTitle.setFont(Font.font("Helvetica", FontWeight.BOLD, 24));
 		myDescription = new Text(resources.getString("PlaceholderDescription"));
@@ -90,7 +99,7 @@ public class ControlPanel extends VBox {
 	 * @return The combo box and its label.
 	 */
 	private Node setupSimulationSelector() {
-		HBox result = new HBox(8);
+		HBox result = new HBox(HORIZONTAL_SPACING);
 		Text pick = new Text(resources.getString("PickString"));
 		pick.setFont(Font.font("Helvetica", 16));
 		myGames = new ComboBox<String>();
@@ -116,7 +125,7 @@ public class ControlPanel extends VBox {
 	 * @return The control panel's buttons.
 	 */
 	private Node setupControlButtons() {
-		HBox result = new HBox(8);
+		HBox result = new HBox(HORIZONTAL_SPACING);
 		Button start = makeButton("StartTitle", e -> viewController.start());
 		Button stop = makeButton("StopTitle", e -> viewController.stop());
 		Button step = makeButton("StepTitle", e -> viewController.step());
@@ -145,57 +154,32 @@ public class ControlPanel extends VBox {
 	 */
 	private Node setupFields() {
 		HBox result = new HBox(20);
-		result.getChildren().addAll(createDelayBox(), createGridSizeBox());
+		result.getChildren().addAll(createDelaySettings(), createGridSizeSettings());
 		return result;
 	}
 
-	/**
-	 * @return A box containing the delay text field and its label.
-	 */
-	private Node createDelayBox() {
-		HBox delayBox = new HBox(8);
-		Label delayLabel = new Label(resources.getString("DelayString"));
-		myDelayField = new TextField(Integer.toString(viewController.getDelay()));
-		myDelayField.setPrefWidth(55);
-		myDelayField.textProperty().addListener(e -> {
-			if (myDelayField.getText().length() > 0) {
-				try {
-					viewController.setDelay(Integer.parseInt(myDelayField.getText()));
-				} catch (NumberFormatException exception) {
-
-				}
-			}
-		});
-		delayBox.getChildren().addAll(delayLabel, myDelayField);
-		delayBox.setAlignment(Pos.CENTER_LEFT);
-		return delayBox;
+	private Node createDelaySettings() {
+		HBox box = new HBox(HORIZONTAL_SPACING);
+		Label label = new Label(resources.getString("DelayString"));
+		myDelayField = createField(Integer.toString(viewController.getDelay()));
+		box.getChildren().addAll(label, myDelayField);
+		box.setAlignment(Pos.CENTER_LEFT);
+		return box;
 	}
 
-	/**
-	 * @return A box containing the grid size text field and its label.
-	 */
-	private Node createGridSizeBox() {
-		HBox gridSizeBox = new HBox(8);
-		Label gridSizeLabel = new Label(resources.getString("GridSizeString"));
-		myGridSizeField = new TextField(Integer.toString(viewController.getGridSizeInCells()));
-		myGridSizeField.setPrefWidth(55);
-		myGridSizeField.textProperty().addListener(e -> {
-			if (myGridSizeField.getText().length() > 0) {
-				try {
-					viewController.getGrid().changeSizeInCells(Integer.parseInt(myGridSizeField.getText()));
-				} catch (NumberFormatException exception) {
+	private Node createGridSizeSettings() {
+		HBox box = new HBox(HORIZONTAL_SPACING);
+		Label label = new Label(resources.getString("GridSizeString"));
+		myGridSizeField = createField(Integer.toString(viewController.getGridSizeInCells()));
+		box.getChildren().addAll(label, myGridSizeField);
+		box.setAlignment(Pos.CENTER_LEFT);
+		return box;
+	}
 
-				}
-				viewController.getGrid().changeSizeInCells(viewController.getGridSizeInCells());
-				if (myGames.getValue() != null) {
-					newSimulation();
-					viewController.displaySimulation(viewController.getGridSizeInCells());
-				}
-			}
-		});
-		gridSizeBox.getChildren().addAll(gridSizeLabel, myGridSizeField);
-		gridSizeBox.setAlignment(Pos.CENTER_LEFT);
-		return gridSizeBox;
+	private TextField createField(String value) {
+		TextField field = new TextField(value);
+		field.setPrefWidth(55);
+		return field;
 	}
 
 	private ParameterTable createParameters() {
@@ -212,12 +196,14 @@ public class ControlPanel extends VBox {
 		viewController.initializeSimulation(myGames.getValue());
 		myTitle.setText(viewController.getTitle());
 		myDescription.setText(viewController.getDescription());
+		addControls();
 		setupParameters();
 	}
 
 	private void loadGame() {
 		if (didUpdateGameParameters()) {
-			viewController.getGrid().changeSizeInCells(viewController.getGridSizeInCells());
+			viewController.setDelay(Integer.parseInt(myDelayField.getText()));
+			viewController.getGrid().changeSizeInCells(Integer.parseInt(myGridSizeField.getText()));
 			viewController.stop();
 			viewController.displaySimulation(viewController.getGridSizeInCells());
 		}

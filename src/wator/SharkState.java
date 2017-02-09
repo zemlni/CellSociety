@@ -1,7 +1,5 @@
 package wator;
 
-import cellsociety_team18.Cell;
-import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
 /**
@@ -16,12 +14,11 @@ public class SharkState extends AgentState {
 	private int reproductionTime;
 
 	/**
-	 * @param cell The cell that owns the state.
 	 * @param energy The shark's original energy.
 	 * Shark states are black.
 	 */
-	public SharkState(Cell cell, int energy, int energyEarned, int reproductionTime) {
-		super(cell, reproductionTime);
+	public SharkState( int energy, int energyEarned, int reproductionTime) {
+		super(reproductionTime);
 		setColor(Color.BLACK);
 		this.originalEnergy = energy;
 		this.energy = energy;
@@ -38,11 +35,10 @@ public class SharkState extends AgentState {
 	public void chooseState() {
 		energy--;
 		if (energy <= 0) {
-			//System.out.println("died");
-			getCell().setNextState(new EmptyState(getCell()));
+			getCell().setNextState(new EmptyState());
 			return;
 		}
-		moveTo(new SharkState(null, originalEnergy, energyEarned, reproductionTime));
+		moveTo(new SharkState(originalEnergy, energyEarned, reproductionTime));
 	}
 	
 	/**

@@ -11,13 +11,6 @@ import cellsociety_team18.State;
 public abstract class GameOfLifeState extends State {
 
 	/**
-	 * @param cell The cell that owns the state.
-	 */
-	public GameOfLifeState(Cell cell) {
-		super(cell);
-	}
-	
-	/**
 	 * @return The number of live neighbors of the state's cell..
 	 */
 	public int getLiveNeighbors() {

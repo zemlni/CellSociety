@@ -92,7 +92,7 @@ public abstract class Grid {
 	 */
 	public void shuffle(Game game) {
 		for (Cell cell : cells.values()) {
-			cell.setNextState(game.getRandomState(cell));
+			cell.setNextState(game.getRandomState());
 			cell.updateState();
 		}
 	}

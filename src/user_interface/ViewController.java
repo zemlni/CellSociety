@@ -1,10 +1,14 @@
 package user_interface;
 
 import java.awt.Dimension;
+import java.util.HashMap;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import cellsociety_team18.Game;
 import cellsociety_team18.Simulation;
+import cellsociety_team18.State;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Group;
@@ -17,6 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.scene.control.ChoiceDialog;
 
 /**
  * @author elliott This class controls the user interface.
@@ -104,7 +109,7 @@ public class ViewController {
 	private void setupUI(Stage stage) {
 		root = new Group();
 		Node controlPanel = new ControlPanel(this, myResources);
-		myDisplayGrid = new DisplayGrid(gridSize);
+		myDisplayGrid = new DisplayGrid(this, gridSize);
 		myDisplayGrid.setLayoutX(DEFAULT_SIZE.width - gridSize);
 		placeholder = createPlaceholder();
 		root.getChildren().addAll(controlPanel, setupDivider(), myDisplayGrid, placeholder);
@@ -164,6 +169,7 @@ public class ViewController {
 
 	public void displaySimulation(int size) {
 		mySimulation.setupGrid(size);
+		mySimulation.getGame().setStates();
 		myDisplayGrid.update(mySimulation.getGrid());
 	}
 
@@ -192,4 +198,19 @@ public class ViewController {
 		root.getChildren().remove(placeholder);
 	}
 
+	public void cellClicked(GraphicCell graphicCell) {
+		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
+			HashMap<String, State> states = mySimulation.getGame().getStates();
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicCell.getStateName(states, graphicCell), states.keySet());
+			dialog.setTitle("State");
+			dialog.setHeaderText("Each cell can have several states.");
+			dialog.setContentText("Choose your cell's state:");
+			Optional<String> result = dialog.showAndWait();
+			result.ifPresent(picked -> {
+				graphicCell.update(states.get(picked));
+				updateGrid();
+			});
+		}
+	}
+	
 }
