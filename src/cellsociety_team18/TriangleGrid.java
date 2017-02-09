@@ -66,4 +66,28 @@ public class TriangleGrid extends Grid {
 		return vertices;
 
 	}
+
+	@Override
+	public List<Cell> getNeighborsToroidal(Point center) {
+		List<Cell> neighbors = new ArrayList<Cell>();
+		int x = (int)center.getX();
+		int y = (int)center.getY();
+		for (int i = x - 2; i <= x + 2; i++){
+			for (int j = y - 1; j <= y + 1; j++){
+				Point temp = new Point(i % getSize(), j % getSize());
+				if (!temp.equals(center))
+					neighbors.add(getCell(temp));
+			}
+		}
+		if (downDecider(center)){
+			neighbors.remove(getCell(new Point(x - 2, y + 1)));
+			neighbors.remove(getCell(new Point(x + 2, y + 1)));
+		}
+		else {
+			neighbors.remove(getCell(new Point(x - 2, y - 1)));
+			neighbors.remove(getCell(new Point(x + 2, y - 1)));
+		}
+		neighbors.removeAll(Collections.singleton(null));
+		return neighbors;
+	}
 }

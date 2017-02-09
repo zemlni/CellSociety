@@ -47,4 +47,21 @@ public class HexagonGrid extends Grid {
 		return vertices;
 	}
 
+	@Override
+	public List<Cell> getNeighborsToroidal(Point center) {
+		List<Cell> neighbors = new ArrayList<Cell>();
+		int x = (int) center.getX();
+		int y = (int) center.getY();
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y; j <= y + 1; j++) {
+				Point temp = new Point(i % getSize(), j % getSize());
+				if (!temp.equals(center))
+					neighbors.add(getCell(temp));
+			}
+		}
+		neighbors.add(getCell(new Point(center.getX(), center.getY() - 1)));
+		neighbors.removeAll(Collections.singleton(null));
+		return neighbors;
+	}
+
 }

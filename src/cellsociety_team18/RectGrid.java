@@ -55,4 +55,20 @@ public class RectGrid extends Grid {
 		return neighbors;
 	}
 
+	@Override
+	public List<Cell> getNeighborsToroidal(Point center) {
+		List<Cell> neighbors = new ArrayList<Cell>();
+		int x = (int)center.getX();
+		int y = (int)center.getY();
+		for (int i = x - 1; i <= x + 1; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
+				if (!(i == x && j == y))
+					neighbors.add(getCell(new Point(i % getSize(), j % getSize())));
+
+			}
+		}
+		neighbors.removeAll(Collections.singleton(null));
+		return neighbors;
+	}
+
 }

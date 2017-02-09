@@ -56,7 +56,9 @@ public abstract class Grid {
 	 * @return list with all adjacent neighbors
 	 */
 	public abstract List<Cell> getNeighborsDiagonal(Point center);
-
+	/**TODO need to fix duplicated code across all getNeighbors type methods.
+	 * */
+	public abstract List<Cell> getNeighborsToroidal(Point center);
 	/**
 	 * Return list of all cells.
 	 * 
@@ -73,6 +75,10 @@ public abstract class Grid {
 	 */
 	public Cell getCell(Point center) {
 		return cells.get(center);
+	}
+	
+	public int getSize(){
+		return size;
 	}
 
 	/**
@@ -97,7 +103,7 @@ public abstract class Grid {
 			}
 		}
 	}
-
+	
 	/**
 	 * Randomize states of all cells in the grid
 	 * 
