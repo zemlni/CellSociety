@@ -2,7 +2,6 @@ package cellsociety_team18;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 public class HexagonGrid extends Grid {
@@ -13,11 +12,18 @@ public class HexagonGrid extends Grid {
 		int x = (int) center.getX();
 		int y = (int) center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y; j <= y + 1; j++) {
+			for (int j = y - 1; j <= y + 1; j++) {
 				Point temp = new Point(i, j);
 				if (!temp.equals(center))
 					neighbors.add(getCell(temp));
 			}
+		}
+		if (Math.floorMod(x, 2) == 0) {
+			neighbors.remove(getCell(new Point(x - 1, y - 1)));
+			neighbors.remove(getCell(new Point(x + 1, y - 1)));
+		} else {
+			neighbors.remove(getCell(new Point(x - 1, y + 1)));
+			neighbors.remove(getCell(new Point(x + 1, y + 1)));
 		}
 		neighbors.add(getCell(new Point(center.getX(), center.getY() - 1)));
 		neighbors.removeAll(Collections.singleton(null));
@@ -32,9 +38,11 @@ public class HexagonGrid extends Grid {
 		// TODO: remove this from abstract class
 		return null;
 	}
-	/**Might need to fix, need to check what this returns. 
-	 * Dimensions might be bigger than we need
-	 * */
+
+	/**
+	 * Might need to fix, need to check what this returns. Dimensions might be
+	 * bigger than we need
+	 */
 	public List<Point> getVertices(Point center) {
 		List<Point> vertices = new ArrayList<Point>();
 		int x = (int) center.getX();

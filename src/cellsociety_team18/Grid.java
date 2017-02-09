@@ -98,13 +98,15 @@ public abstract class Grid {
 			for (int j = 0; j < size; j++) {
 				Point p = new Point(i, j);
 				Cell cell = new Cell(this, p);
-				cell.setNextState(game.getRandomState());
-				cell.updateState();
+				randomize(game, cell);
 				getCells().put(p, cell);
 			}
 		}
 	}
-	
+	public void randomize(Game game, Cell cell){
+		cell.setNextState(game.getRandomState());
+		cell.updateState();
+	}
 	/**
 	 * Randomize states of all cells in the grid
 	 * 
@@ -113,8 +115,7 @@ public abstract class Grid {
 	 */
 	public void shuffle(Game game) {
 		for (Cell cell : cells.values()) {
-			cell.setNextState(game.getRandomState());
-			cell.updateState();
+			randomize(game, cell);
 		}
 	}
 	

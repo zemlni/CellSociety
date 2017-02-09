@@ -63,7 +63,7 @@ public class RectGrid extends Grid {
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (!(i == x && j == y))
-					neighbors.add(getCell(new Point(i % getSize(), j % getSize())));
+					neighbors.add(getCell(new Point(Math.floorMod(i, getSize()), Math.floorMod(j, getSize()))));
 
 			}
 		}

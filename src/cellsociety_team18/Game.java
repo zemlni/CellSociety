@@ -73,7 +73,7 @@ public abstract class Game {
 		}
 	}
 
-	public HashMap<String, State> getStates() {
+	public Map<String, State> getStates() {
 		return states;
 	}
 

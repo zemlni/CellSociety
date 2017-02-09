@@ -2,6 +2,7 @@ package user_interface;
 
 import java.awt.Dimension;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -205,7 +206,7 @@ public class ViewController {
 
 	public void cellClicked(GraphicCell graphicCell) {
 		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
-			HashMap<String, State> states = mySimulation.getGame().getStates();
+			Map<String, State> states = mySimulation.getGame().getStates();
 			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicCell.getStateName(states, graphicCell),
 					states.keySet());
 			dialog.setTitle("State");
