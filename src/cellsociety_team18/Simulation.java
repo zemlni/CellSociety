@@ -45,6 +45,7 @@ public class Simulation {
 	 */
 	public Simulation(String gameName) {
 		game = games.get(gameName);
+		game.parseXML(gameName);
 		game.setup();
 	}
 	

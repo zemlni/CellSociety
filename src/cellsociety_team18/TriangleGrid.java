@@ -7,7 +7,7 @@ import java.util.List;
 public class TriangleGrid extends Grid {
 
 	@Override
-	public List<Cell> getNeighbors(Point center) {
+	public List<Cell> getNeighborsCardinal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int)center.getX();
 		int y = (int)center.getY();

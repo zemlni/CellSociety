@@ -47,8 +47,8 @@ public abstract class Grid {
 	 *            point where cell is located
 	 * @return list with all adjacent neighbors
 	 */
-	public abstract List<Cell> getNeighbors(Point center);
-
+	public abstract List<Cell> getNeighborsCardinal(Point center);
+	
 	/**
 	 * same as above but get neighbors including diagonal ones
 	 * 

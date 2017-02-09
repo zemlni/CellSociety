@@ -2,7 +2,6 @@ package cellsociety_team18;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -11,7 +10,6 @@ import java.util.List;
  *         cell as well as setup that is specific to a rectangular grid.
  */
 public class RectGrid extends Grid {
-
 
 	/**
 	 * Get list of neighbors, including diagonal ones.
@@ -22,13 +20,13 @@ public class RectGrid extends Grid {
 	 */
 	public List<Cell> getNeighborsDiagonal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = (int)center.getX();
-		int y = (int)center.getY();
+		int x = (int) center.getX();
+		int y = (int) center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
-				if (!(i == x && j == y))
+				if (!(i == x && j == y)) {
 					neighbors.add(getCell(new Point(i, j)));
-
+				}
 			}
 		}
 		neighbors.removeAll(Collections.singleton(null));
@@ -43,28 +41,27 @@ public class RectGrid extends Grid {
 	 * @return list of neighbors not including diagonal ones
 	 */
 	@Override
-	public List<Cell> getNeighbors(Point center) {
-		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = (int)center.getX();
-		int y = (int)center.getY();
+	public List<Cell> getNeighborsCardinal(Point center) {
+		ArrayList<Cell> neighbors = new ArrayList<Cell>();
+		int x = (int) center.getX();
+		int y = (int) center.getY();
 		neighbors.add(getCell(new Point(x - 1, y)));
 		neighbors.add(getCell(new Point(x + 1, y)));
 		neighbors.add(getCell(new Point(x, y - 1)));
 		neighbors.add(getCell(new Point(x, y + 1)));
-		neighbors.removeAll(Collections.singleton(null));
 		return neighbors;
 	}
 
 	@Override
 	public List<Cell> getNeighborsToroidal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = (int)center.getX();
-		int y = (int)center.getY();
+		int x = (int) center.getX();
+		int y = (int) center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
-				if (!(i == x && j == y))
+				if (!(i == x && j == y)) {
 					neighbors.add(getCell(new Point(i % getSize(), j % getSize())));
-
+				}
 			}
 		}
 		neighbors.removeAll(Collections.singleton(null));

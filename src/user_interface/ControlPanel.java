@@ -11,7 +11,6 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -132,10 +131,14 @@ public class ControlPanel extends HBox {
 		File folder = new File("data/");
 		for (File file : folder.listFiles()) {
 			String name = file.getName();
-			if (name.substring(name.lastIndexOf('.') + 1).equals("xml")) {
+			if (isXMLFile(name)) {
 				myGames.getItems().add(name.substring(0, name.length() - 4));
 			}
 		}
+	}
+	
+	private boolean isXMLFile(String fileName) {
+		return fileName.substring(fileName.lastIndexOf('.') + 1).equals("xml");
 	}
 
 	/**
@@ -171,26 +174,10 @@ public class ControlPanel extends HBox {
 	 */
 	private Node setupFields() {
 		HBox result = new HBox(20);
-		result.getChildren().addAll(createDelaySettings(), createGridSizeSettings());
-		return result;
-	}
-
-	private Node createDelaySettings() {
-		HBox box = new HBox(HORIZONTAL_SPACING);
-		Label label = new Label(resources.getString("DelayString"));
 		myDelayField = createField(Integer.toString(viewController.getDelay()));
-		box.getChildren().addAll(label, myDelayField);
-		box.setAlignment(Pos.CENTER_LEFT);
-		return box;
-	}
-
-	private Node createGridSizeSettings() {
-		HBox box = new HBox(HORIZONTAL_SPACING);
-		Label label = new Label(resources.getString("GridSizeString"));
 		myGridSizeField = createField(Integer.toString(viewController.getGridSizeInCells()));
-		box.getChildren().addAll(label, myGridSizeField);
-		box.setAlignment(Pos.CENTER_LEFT);
-		return box;
+		result.getChildren().addAll(addLabelToField(myDelayField, "DelayString"), addLabelToField(myGridSizeField, "GridSizeString"));
+		return result;
 	}
 
 	private TextField createField(String value) {
@@ -199,6 +186,14 @@ public class ControlPanel extends HBox {
 		return field;
 	}
 
+	private Node addLabelToField(TextField field, String property) {
+		HBox box = new HBox(HORIZONTAL_SPACING);
+		Label label = new Label(resources.getString(property));
+		box.getChildren().addAll(label, field);
+		box.setAlignment(Pos.CENTER_LEFT);
+		return box;
+	}
+	
 	private ParameterTable createParameters() {
 		return new ParameterTable(viewController.getGame().getParametersAndValues());
 	}
