@@ -1,8 +1,10 @@
 package cellsociety_team18;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * @author Nikita Zemlevskiy This class is the superclass for grids. It contains
@@ -96,4 +98,23 @@ public abstract class Grid {
 			cell.updateState();
 		}
 	}
+	
+	public Map<String, Double> getProportions(Map<String, State> states) {
+		HashMap<String, Double> result = new HashMap<String, Double>();
+		for (Entry<String, State> entry : states.entrySet()) {
+			result.put(entry.getKey(), getProportion(entry.getValue()));
+		}
+		return result;
+	}
+	
+	private Double getProportion(State state) {
+		int count = 0;
+		for (Cell cell: cells.values()) {
+			if (cell.getState().getClass().equals(state.getClass())) {
+				count++;
+			}
+		}
+		return ((double) count) / cells.size();
+	}
+	
 }

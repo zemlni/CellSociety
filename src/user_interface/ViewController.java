@@ -11,6 +11,7 @@ import cellsociety_team18.State;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,21 +23,26 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.control.ChoiceDialog;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.CornerRadii;
 
 /**
  * @author elliott This class controls the user interface.
  */
 public class ViewController {
 
-	private final Dimension DEFAULT_SIZE = new Dimension(920, 600);
+	private final Dimension DEFAULT_SIZE = new Dimension(780, 600);
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources";
-	private final int gridSize = 600;
-
+	private final int gridSize = 460;
+	
 	private int delay = 250;
 
 	private Simulation mySimulation;
-	private Group root;
+	private Group center;
 	private DisplayGrid myDisplayGrid;
+	private PopulationGraph myGraph;
 	private Timeline myAnimation;
 	private Node placeholder;
 	private ResourceBundle myResources;
@@ -107,27 +113,24 @@ public class ViewController {
 	 * Created all the UI components.
 	 */
 	private void setupUI(Stage stage) {
-		root = new Group();
-		Node controlPanel = new ControlPanel(this, myResources);
-		myDisplayGrid = new DisplayGrid(this, gridSize);
-		myDisplayGrid.setLayoutX(DEFAULT_SIZE.width - gridSize);
-		placeholder = createPlaceholder();
-		root.getChildren().addAll(controlPanel, setupDivider(), myDisplayGrid, placeholder);
-		Scene scene = new Scene(root, DEFAULT_SIZE.width, DEFAULT_SIZE.height, Color.WHITE);
+		Scene scene = new Scene(createPane(), DEFAULT_SIZE.width, DEFAULT_SIZE.height, Color.WHITE);
 		stage.setScene(scene);
 		stage.show();
 	}
 
-	/**
-	 * @return A divider for the grid and control panel.
-	 */
-	private Node setupDivider() {
-		Group result = new Group();
-		Rectangle separator = new Rectangle(2, DEFAULT_SIZE.height);
-		separator.setX(DEFAULT_SIZE.width - gridSize - separator.getWidth());
-		separator.setFill(Color.GRAY);
-		result.getChildren().add(separator);
-		return result;
+	private BorderPane createPane() {
+		BorderPane borderPane = new BorderPane();
+		borderPane.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		ControlPanel controlPanel = new ControlPanel(this, myResources);
+		borderPane.setLeft(controlPanel);
+		center = new Group();
+		myDisplayGrid = new DisplayGrid(this, gridSize);
+		placeholder = createPlaceholder();
+		center.getChildren().addAll(myDisplayGrid, placeholder);
+		borderPane.setCenter(center);
+		myGraph = new PopulationGraph(DEFAULT_SIZE.width);
+		borderPane.setBottom(myGraph);
+		return borderPane;
 	}
 
 	/**
@@ -138,8 +141,8 @@ public class ViewController {
 		Text placeholder = new Text(myResources.getString("PlaceholderGrid"));
 		placeholder.setFont(Font.font("Helvetica", FontWeight.BOLD, 80));
 		placeholder.setFill(Color.LIGHTGRAY);
-		placeholder.setX((gridSize - placeholder.getBoundsInParent().getWidth()) / 2 + DEFAULT_SIZE.width - gridSize);
-		placeholder.setY(DEFAULT_SIZE.height / 2 + placeholder.getBoundsInParent().getHeight() / 4);
+		placeholder.setX((gridSize - placeholder.getBoundsInParent().getWidth()) / 2);
+		placeholder.setY(gridSize / 2 + placeholder.getBoundsInParent().getHeight() / 4);
 		result.getChildren().add(placeholder);
 		return result;
 	}
@@ -150,6 +153,7 @@ public class ViewController {
 	public void step() {
 		if (mySimulation != null) {
 			mySimulation.step();
+			myGraph.update(mySimulation.getProportions());
 			updateGrid();
 		}
 	}
@@ -163,11 +167,11 @@ public class ViewController {
 	 *            The size of one side of the grid.
 	 */
 	public void initializeSimulation(String game) {
-		hidePlaceholder();
 		mySimulation = new Simulation(game);
 	}
 
 	public void displaySimulation(int size) {
+		hidePlaceholder();
 		mySimulation.setupGrid(size);
 		mySimulation.getGame().setStates();
 		myDisplayGrid.update(mySimulation.getGrid());
@@ -180,6 +184,7 @@ public class ViewController {
 		if (mySimulation != null) {
 			stop();
 			mySimulation.shuffle();
+			myGraph.clear();
 			updateGrid();
 		}
 	}
@@ -195,13 +200,14 @@ public class ViewController {
 	 * Hides the grid's placeholder.
 	 */
 	private void hidePlaceholder() {
-		root.getChildren().remove(placeholder);
+		center.getChildren().remove(placeholder);
 	}
 
 	public void cellClicked(GraphicCell graphicCell) {
 		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
 			HashMap<String, State> states = mySimulation.getGame().getStates();
-			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicCell.getStateName(states, graphicCell), states.keySet());
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicCell.getStateName(states, graphicCell),
+					states.keySet());
 			dialog.setTitle("State");
 			dialog.setHeaderText("Each cell can have several states.");
 			dialog.setContentText("Choose your cell's state:");
@@ -212,5 +218,5 @@ public class ViewController {
 			});
 		}
 	}
-	
+
 }

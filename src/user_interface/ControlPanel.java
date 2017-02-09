@@ -11,8 +11,11 @@ import java.util.ResourceBundle;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -23,6 +26,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -33,7 +38,7 @@ import javafx.scene.text.TextAlignment;
  *         Control Panel is comprised of description labels, combo boxes, and
  *         action buttons.
  */
-public class ControlPanel extends VBox {
+public class ControlPanel extends HBox {
 
 	private final static int HORIZONTAL_SPACING = 8;
 	private final static int VERTICAL_SPACING = 16;
@@ -41,6 +46,7 @@ public class ControlPanel extends VBox {
 	private ViewController viewController;
 	private ResourceBundle resources;
 
+	private VBox panelElements;
 	private Text myDescription;
 	private Text myTitle;
 	private ComboBox<String> myGames;
@@ -54,27 +60,39 @@ public class ControlPanel extends VBox {
 	 * 
 	 */
 	public ControlPanel(ViewController viewController, ResourceBundle resources) {
-		super(VERTICAL_SPACING);
+		super(HORIZONTAL_SPACING);
 		this.viewController = viewController;
 		this.resources = resources;
-		setPrefWidth(280);
-		setLayoutY(20);
-		setLayoutX(20);
+		setPrefWidth(300);
+		setPadding(new Insets(20, 0, 0, 20));
 		setup();
 	}
 
 	private void setup() {
+		panelElements = new VBox(VERTICAL_SPACING);
 		Node labels = setupLabels();
 		Node simulationSelector = setupSimulationSelector();
-		getChildren().addAll(labels, simulationSelector);
+		panelElements.getChildren().addAll(labels, simulationSelector);
+		getChildren().addAll(panelElements, setupDivider());
+	}
+	
+	/**
+	 * @return A divider for the grid and control panel.
+	 */
+	private Node setupDivider() {
+		Group result = new Group();
+		Rectangle separator = new Rectangle(1, 400);
+		separator.setFill(Color.LIGHTGRAY);
+		result.getChildren().add(separator);
+		return result;
 	}
 
 	private void addControls() {
 		if (gameLoaded == false) {
 			Node configurationFields = setupFields();
+			Button loadButton = makeButton("LoadTitle", e -> loadGame());
 			Node controlButtons = setupControlButtons();
-			Node showGraph = makeButton("ShowGraphTitle", e -> viewController.start());
-			getChildren().addAll(configurationFields, makeSeparator(false), controlButtons, makeSeparator(false), showGraph);
+			panelElements.getChildren().addAll(configurationFields, loadButton, makeSeparator(false), controlButtons);
 			gameLoaded = true;
 		}
 	}
@@ -105,8 +123,7 @@ public class ControlPanel extends VBox {
 		myGames = new ComboBox<String>();
 		myGames.valueProperty().addListener(e -> newSimulation());
 		readGamesFromDisk();
-		Button loadButton = makeButton("LoadTitle", e -> loadGame());
-		result.getChildren().addAll(pick, myGames, loadButton);
+		result.getChildren().addAll(pick, myGames);
 		result.setAlignment(Pos.CENTER_LEFT);
 		return result;
 	}
@@ -187,9 +204,9 @@ public class ControlPanel extends VBox {
 	}
 
 	private void setupParameters() {
-		getChildren().remove(myParameterTable);
+		panelElements.getChildren().remove(myParameterTable);
 		myParameterTable = createParameters();
-		getChildren().add(2, myParameterTable);
+		panelElements.getChildren().add(2, myParameterTable);
 	}
 
 	private void newSimulation() {
