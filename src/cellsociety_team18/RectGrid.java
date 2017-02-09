@@ -45,8 +45,8 @@ public class RectGrid extends Grid {
 	 */
 	public List<Cell> getNeighborsDiagonal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = center.getX();
-		int y = center.getY();
+		int x = (int)center.getX();
+		int y = (int)center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (!(i == x && j == y))
@@ -68,8 +68,8 @@ public class RectGrid extends Grid {
 	@Override
 	public List<Cell> getNeighbors(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = center.getX();
-		int y = center.getY();
+		int x = (int)center.getX();
+		int y = (int)center.getY();
 		neighbors.add(getCell(new Point(x - 1, y)));
 		neighbors.add(getCell(new Point(x + 1, y)));
 		neighbors.add(getCell(new Point(x, y - 1)));
