@@ -57,7 +57,9 @@ public abstract class Grid {
 	 * @return list with all adjacent neighbors
 	 */
 	public abstract List<Cell> getNeighborsDiagonal(Point center);
-
+	/**TODO need to fix duplicated code across all getNeighbors type methods.
+	 * */
+	public abstract List<Cell> getNeighborsToroidal(Point center);
 	/**
 	 * Return list of all cells.
 	 * 
@@ -75,6 +77,10 @@ public abstract class Grid {
 	public Cell getCell(Point center) {
 		return cells.get(center);
 	}
+	
+	public int getSize(){
+		return size;
+	}
 
 	/**
 	 * Grid specific setups
@@ -84,8 +90,21 @@ public abstract class Grid {
 	 * @param size
 	 *            size of the grid
 	 */
-	public abstract void setup(Game game, int size);
-
+	public void setup(Game game, int size) {
+		setCells(new HashMap<Point, Cell>());
+		setSize(size);
+		setGame(game);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				Point p = new Point(i, j);
+				Cell cell = new Cell(this, p, null);
+				cell.setNextState(game.getRandomState(cell));
+				cell.updateState();
+				getCells().put(p, cell);
+			}
+		}
+	}
+	
 	/**
 	 * Randomize states of all cells in the grid
 	 * 
