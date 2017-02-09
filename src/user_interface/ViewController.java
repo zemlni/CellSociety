@@ -3,6 +3,7 @@ package user_interface;
 import java.awt.Dimension;
 import java.util.ResourceBundle;
 
+import cellsociety_team18.Game;
 import cellsociety_team18.Simulation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -49,7 +50,7 @@ public class ViewController {
 	public double getGridSize() {
 		return gridSize;
 	}
-	
+
 	public int getGridSizeInCells() {
 		if (myDisplayGrid == null) {
 			return 40;
@@ -64,13 +65,17 @@ public class ViewController {
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
-	
+
 	public String getTitle() {
-		return mySimulation.getGrid().getGame().getTitle();
+		return getGame().getTitle();
 	}
-	
+
 	public String getDescription() {
-		return mySimulation.getGrid().getGame().getDescription();
+		return getGame().getDescription();
+	}
+
+	public Game getGame() {
+		return mySimulation.getGame();
 	}
 
 	/**
@@ -107,7 +112,7 @@ public class ViewController {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+
 	/**
 	 * @return A divider for the grid and control panel.
 	 */
@@ -152,9 +157,13 @@ public class ViewController {
 	 * @param size
 	 *            The size of one side of the grid.
 	 */
-	public void initializeSimulation(String game, int size) {
+	public void initializeSimulation(String game) {
 		hidePlaceholder();
-		mySimulation = new Simulation(game, size);
+		mySimulation = new Simulation(game);
+	}
+
+	public void displaySimulation(int size) {
+		mySimulation.setupGrid(size);
 		myDisplayGrid.update(mySimulation.getGrid());
 	}
 

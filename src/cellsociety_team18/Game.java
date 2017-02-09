@@ -21,9 +21,11 @@ import java.util.Map;
  *         XML.
  */
 public abstract class Game {
+	
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private Map<String, String> basicInfo;
 	private Map<String, String> specialInfo;
+	private ArrayList<String> parameters = new ArrayList<String>();
 	private String name;
 	private Element root;
 
@@ -37,13 +39,30 @@ public abstract class Game {
 		root = getRootElement(xmlFile);
 		basicInfo = new HashMap<String, String>();
 		specialInfo = new HashMap<String, String>();
-
 		populateMap(basicInfo, "info");
 		populateMap(specialInfo, "special");
 	}
-
-	public Map<String, String> getSpecialInfo() {
-		return specialInfo;
+	
+	public void setParameter(String parameter, String value) {
+		specialInfo.put(parameter, value);
+	}
+	
+	public String getParameter(String parameter) {
+		return specialInfo.get(parameter);
+	}
+	
+	public HashMap<String, String> getParametersAndValues() {
+		HashMap<String, String> result = new HashMap<String, String>();
+		for (String parameter: parameters) {
+			result.put(parameter, getParameter(parameter));
+		}
+		return result;
+	}
+	
+	public void setParameters(String ...objects) {
+		for (String parameter: objects) {
+			parameters.add(parameter);
+		}
 	}
 
 	private void populateMap(Map<String, String> map, String section) {
@@ -101,7 +120,7 @@ public abstract class Game {
 	 * Game specific setup happens in here
 	 */
 	public abstract void setup();
-
+	
 	/**
 	 * Return the description for this kind of game to be displayed to the user
 	 * 

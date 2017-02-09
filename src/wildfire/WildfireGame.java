@@ -1,10 +1,5 @@
 package wildfire;
 
-import java.io.File;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import cellsociety_team18.Cell;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
@@ -15,17 +10,12 @@ import cellsociety_team18.State;
  *         wildfire state.
  */
 public class WildfireGame extends Game {
-	private double fireChance;
-	private double percentBurning;
-	private double percentTree;
 
 	@Override
 	public void setup() {
 		setName("Wildfire");
+		setParameters("fireChance", "percentTree", "percentBurning");
 		setupBasicInfo();
-		fireChance = Double.parseDouble(getSpecialInfo().get("fireChance"));
-		percentTree = Double.parseDouble(getSpecialInfo().get("percentTree"));
-		percentBurning = Double.parseDouble(getSpecialInfo().get("percentBurning"));
 	}
 
 	/**
@@ -38,11 +28,11 @@ public class WildfireGame extends Game {
 	@Override
 	public State getRandomState(Cell cell) {
 		double rand = Math.random();
-		if (rand < percentBurning) {
+		if (rand < Double.parseDouble(getParameter("percentBurning"))) {
 			return new BurningState(cell);
 		}
-		if (rand >= percentBurning && rand < (percentBurning + percentTree))
-			return new TreeState(cell, fireChance);
+		if (rand >= Double.parseDouble(getParameter("percentBurning")) && rand < (Double.parseDouble(getParameter("percentBurning")) + Double.parseDouble(getParameter("percentTree"))))
+			return new TreeState(cell, Double.parseDouble(getParameter("fireChance")));
 		return new EmptyState(cell);
 	}
 
