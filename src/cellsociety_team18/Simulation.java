@@ -41,9 +41,12 @@ public class Simulation {
 	 *            the size in cells across that the simulation should be.
 	 * @return new simulation with the specified parameters
 	 */
-	public Simulation(String gameName, int size) {
+	public Simulation(String gameName) {
 		game = games.get(gameName);
 		game.setup();
+	}
+	
+	public void setupGrid(int size) {
 		// if more than one grid
 		// grid = grids[gridType];
 		// for now like this.
@@ -74,5 +77,9 @@ public class Simulation {
 
 	public Grid getGrid() {
 		return grid;
+	}
+
+	public Game getGame() {
+		return game;
 	}
 }
