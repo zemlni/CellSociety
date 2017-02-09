@@ -1,6 +1,7 @@
 package cellsociety_team18;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -82,7 +83,20 @@ public abstract class Grid {
 	 * @param size
 	 *            size of the grid
 	 */
-	public abstract void setup(Game game, int size);
+	public void setup(Game game, int size) {
+		setCells(new HashMap<Point, Cell>());
+		setSize(size);
+		setGame(game);
+		for (int i = 0; i < size; i++) {
+			for (int j = 0; j < size; j++) {
+				Point p = new Point(i, j);
+				Cell cell = new Cell(this, p, null);
+				cell.setNextState(game.getRandomState(cell));
+				cell.updateState();
+				getCells().put(p, cell);
+			}
+		}
+	}
 
 	/**
 	 * Randomize states of all cells in the grid

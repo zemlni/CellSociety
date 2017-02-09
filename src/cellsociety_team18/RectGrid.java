@@ -12,29 +12,6 @@ import java.util.List;
  */
 public class RectGrid extends Grid {
 
-	/**
-	 * Setup related to rectangular grid.
-	 * 
-	 * @param game
-	 *            the game to be played in this grid
-	 * @param size
-	 *            the size of the grid in one dimension
-	 */
-	@Override
-	public void setup(Game game, int size) {
-		setCells(new HashMap<Point, Cell>());
-		setSize(size);
-		setGame(game);
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				Point p = new Point(i, j);
-				Cell cell = new Cell(this, p, null);
-				cell.setNextState(game.getRandomState(cell));
-				cell.updateState();
-				getCells().put(p, cell);
-			}
-		}
-	}
 
 	/**
 	 * Get list of neighbors, including diagonal ones.

@@ -32,23 +32,9 @@ public class HexagonGrid extends Grid {
 		// TODO: remove this from abstract class
 		return null;
 	}
-
-	@Override
-	public void setup(Game game, int size) {
-		setCells(new HashMap<Point, Cell>());
-		setSize(size);
-		setGame(game);
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				Point p = new Point(i, j);
-				Cell cell = new Cell(this, p, null);
-				cell.setNextState(game.getRandomState(cell));
-				cell.updateState();
-				getCells().put(p, cell);
-			}
-		}
-	}
-
+	/**Might need to fix, need to check what this returns. 
+	 * Dimensions might be bigger than we need
+	 * */
 	public List<Point> getVertices(Point center) {
 		List<Point> vertices = new ArrayList<Point>();
 		int x = (int) center.getX();
