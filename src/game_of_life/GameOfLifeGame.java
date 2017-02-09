@@ -1,6 +1,5 @@
 package game_of_life;
 
-import cellsociety_team18.Cell;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 
@@ -14,21 +13,24 @@ public class GameOfLifeGame extends Game {
 	@Override
 	public void setup() {
 		setName("GameOfLife");
+		parseXML();
 		setParameters("percentLiving");
-		setupBasicInfo();
+	}
+	
+	@Override
+	public void setStates() {
+		getStates().put("Live", new LiveState());
+		getStates().put("Dead", new DeadState());
 	}
 
 	/**
 	 * Get a random GOF state.
-	 * 
-	 * @param cell
-	 *            the cell to which the new state will belong.
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState(Cell cell) {
+	public State getRandomState() {
 		double rand = Math.random();
-		return rand < Double.parseDouble(getParameter("percentLiving")) ? new LiveState(cell) : new DeadState(cell);
+		return rand < getDoubleParameter("percentLiving") ? new LiveState() : new DeadState();
 	}
 
 }

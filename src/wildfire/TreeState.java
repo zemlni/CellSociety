@@ -12,10 +12,9 @@ public class TreeState extends State {
 	private double probCatch;
 
 	/**
-	 * @param cell The cell that owns this state. A Tree state is green.
+	 * A Tree cell in this game is green.
 	 */
-	public TreeState(Cell cell, double probCatch) {
-		super(cell);
+	public TreeState(double probCatch) {
 		this.probCatch = probCatch;
 		setColor(Color.FORESTGREEN);
 	}
@@ -28,7 +27,7 @@ public class TreeState extends State {
 	public void chooseState() {
 		for (Cell cell : getCell().getNeighbors()) {
 			if (cell.getState() instanceof BurningState && Math.random() <= probCatch) {
-				getCell().setNextState(new BurningState(getCell()));
+				getCell().setNextState(new BurningState());
 				return;
 			}
 		}

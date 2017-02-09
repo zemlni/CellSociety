@@ -12,13 +12,6 @@ public abstract class State {
 	
 	private Cell cell;
 	private Color color;
-
-	/**
-	 * @param cell The cell that owns the State object.
-	 */
-	public State(Cell cell) {
-		this.cell = cell;
-	}
 	
 	public Color getColor() {
 		return color;

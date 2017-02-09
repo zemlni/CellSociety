@@ -1,6 +1,5 @@
 package wildfire;
 
-import cellsociety_team18.Cell;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 
@@ -15,25 +14,29 @@ public class WildfireGame extends Game {
 	public void setup() {
 		setName("Wildfire");
 		setParameters("fireChance", "percentTree", "percentBurning");
-		setupBasicInfo();
+		parseXML();
+	}
+	
+	@Override
+	public void setStates() {
+		getStates().put("Burning",  new BurningState());
+		getStates().put("Tree", new TreeState(getDoubleParameter("fireChance")));
+		getStates().put("Empty", new EmptyState());
 	}
 
 	/**
 	 * Get a random Wator state.
-	 * 
-	 * @param cell
-	 *            the cell to which the new state will belong.
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState(Cell cell) {
+	public State getRandomState() {
 		double rand = Math.random();
-		if (rand < Double.parseDouble(getParameter("percentBurning"))) {
-			return new BurningState(cell);
+		if (rand < getDoubleParameter("percentBurning")) {
+			return new BurningState();
 		}
-		if (rand >= Double.parseDouble(getParameter("percentBurning")) && rand < (Double.parseDouble(getParameter("percentBurning")) + Double.parseDouble(getParameter("percentTree"))))
-			return new TreeState(cell, Double.parseDouble(getParameter("fireChance")));
-		return new EmptyState(cell);
+		if (rand >= getDoubleParameter("percentBurning") && rand < (getDoubleParameter("percentBurning") + getDoubleParameter("percentTree")))
+			return new TreeState(getDoubleParameter("fireChance"));
+		return new EmptyState();
 	}
 
 }

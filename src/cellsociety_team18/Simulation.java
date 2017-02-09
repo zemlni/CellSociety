@@ -1,5 +1,6 @@
 package cellsociety_team18;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -31,6 +32,7 @@ public class Simulation {
 	};
 	private Grid grid;
 	private Game game;
+	private ArrayList<Map<String, Double>> proportions = new ArrayList<Map<String, Double>>();
 
 	/**
 	 * Initialize a new simulation.
@@ -66,6 +68,11 @@ public class Simulation {
 		for (Cell cell : cells) {
 			cell.updateState();
 		}
+		recordProportions();
+	}
+	
+	private void recordProportions() {
+		proportions.add(grid.getProportions(game.getStates()));
 	}
 
 	/**
@@ -82,4 +89,9 @@ public class Simulation {
 	public Game getGame() {
 		return game;
 	}
+	
+	public ArrayList<Map<String, Double>> getProportions() {
+		return proportions;
+	}
+	
 }

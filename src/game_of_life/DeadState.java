@@ -1,6 +1,5 @@
 package game_of_life;
 
-import cellsociety_team18.Cell;
 import javafx.scene.paint.Color;
 
 /**
@@ -13,8 +12,7 @@ public class DeadState extends GameOfLifeState {
 	 * @param cell The owner of this state.
 	 * Dead cells are white.
 	 */
-	public DeadState(Cell cell) {
-		super(cell);
+	public DeadState() {
 		setColor(Color.WHITE);
 	}
 
@@ -24,7 +22,7 @@ public class DeadState extends GameOfLifeState {
 	@Override
 	public void chooseState() {
 		if (getLiveNeighbors() == 3) {
-			getCell().setNextState(new LiveState(getCell()));
+			getCell().setNextState(new LiveState());
 		}
 	}
 

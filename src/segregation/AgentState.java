@@ -16,11 +16,9 @@ public abstract class AgentState extends State {
 	private double satisfactionThreshold;
 
 	/**
-	 * @param cell The cell that owns the state.
 	 * @param satisfactionThreshold The percentage of neighbors that must be the same as the Agent in question.
 	 */
-	public AgentState(Cell cell, double satisfactionThreshold) {
-		super(cell);
+	public AgentState(double satisfactionThreshold) {
 		this.satisfactionThreshold = satisfactionThreshold;
 	}
 	
@@ -58,7 +56,7 @@ public abstract class AgentState extends State {
 			Collections.shuffle(cells);
 			for (Cell cell: cells) {
 				if (cell.getNextState() instanceof EmptyState && !cell.equals(getCell())) {
-					getCell().setNextState(new EmptyState(getCell()));
+					getCell().setNextState(new EmptyState());
 					cell.setNextState(this);
 					return;
 				}

@@ -1,6 +1,5 @@
 package wator;
 
-import cellsociety_team18.Cell;
 import javafx.scene.paint.Color;
 
 /**
@@ -12,12 +11,11 @@ public class FishState extends AgentState {
 	private int reproductionTime;
 	
 	/**
-	 * @param cell The cell that owns the state.
 	 * @param reproductionTime The number of iterations before the fish reproduces.
 	 * Fish states are green.
 	 */
-	public FishState(Cell cell, int reproductionTime) {
-		super(cell, reproductionTime);
+	public FishState(int reproductionTime) {
+		super(reproductionTime);
 		this.reproductionTime = reproductionTime;
 		setColor(Color.LAWNGREEN);
 	}
@@ -27,7 +25,7 @@ public class FishState extends AgentState {
 	 */
 	@Override
 	public void chooseState() {
-		moveTo(new FishState(null, reproductionTime));
+		moveTo(new FishState(reproductionTime));
 	}
 
 }

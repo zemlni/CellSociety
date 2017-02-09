@@ -6,7 +6,6 @@ import java.util.List;
 
 import cellsociety_team18.Cell;
 import cellsociety_team18.State;
-import javafx.scene.paint.Color;
 
 /**
  * @author elliott This class represents an Agent in the Wator game.
@@ -17,11 +16,9 @@ public abstract class AgentState extends State {
 	private int survivalTime = 0;
 
 	/**
-	 * @param cell The cell that owns this state.
 	 * @param reproductionTime The time elapsed before reproduction takes place.
 	 */
-	public AgentState(Cell cell, int reproductionTime) {
-		super(cell);
+	public AgentState(int reproductionTime) {
 		this.reproductionTime = reproductionTime;
 	}
 	
@@ -66,7 +63,7 @@ public abstract class AgentState extends State {
 				return;
 			}
 			if (!(this instanceof FishState && getCell().getNextState() instanceof SharkState)) {
-				getCell().setNextState(new EmptyState(getCell()));
+				getCell().setNextState(new EmptyState());
 			}
 			replace(destination, this);
 		}
