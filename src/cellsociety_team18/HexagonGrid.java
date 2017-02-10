@@ -39,22 +39,6 @@ public class HexagonGrid extends Grid {
 		return null;
 	}
 
-	/**
-	 * Might need to fix, need to check what this returns. Dimensions might be
-	 * bigger than we need
-	 */
-	public List<Point> getVertices(Point center) {
-		List<Point> vertices = new ArrayList<Point>();
-		int x = (int) center.getX();
-		int y = (int) center.getY();
-		for (int i = 0; i < 6; i++) {
-			double angle = Math.PI * 60 * i / 180;
-			Point temp = new Point(x + Math.cos(angle), y + Math.sin(angle));
-			vertices.add(temp);
-		}
-		return vertices;
-	}
-
 	@Override
 	public List<Cell> getNeighborsToroidal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();

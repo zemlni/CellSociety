@@ -1,32 +1,61 @@
 package user_interface;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import cellsociety_team18.Cell;
 import cellsociety_team18.Point;
+import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class GraphicPolygon extends Polygon {
+public abstract class GraphicPolygon extends Polygon {
 
 	/**
 	 * Make different shapes with list of vertices. Not sure how to do it here.
 	 */
 
-	public GraphicPolygon(Color color, int gridSizePixels, int gridSizeCells, List<Point> vertices) {
-		Double[] verts = new Double[vertices.size() * 2];
-		for (int i = 0; i < vertices.size(); i++) {
-			verts[i] = vertices.get(i).getX();
-			verts[i + 1] = vertices.get(i).getY();
-		}
-		getPoints().addAll(verts);
+	private Cell data;
+	private double size;
 
-		// need to check if this works
-		setScaleX(gridSizePixels / gridSizeCells);
-		setScaleY(gridSizePixels / gridSizeCells);
-		setFill(color);
+	public void setSize(double size){
+		this.size = size;
+	}
+	public double getSize(){
+		return size;
+	}
+	public void setData(Cell cell) {
+		data = cell;
+		setColor(cell.getColor());
+	}
+
+	public Cell getData() {
+		return data;
 	}
 
 	public void setColor(Color color) {
 		setFill(color);
 	}
+
+	public abstract Double[] getVertices(Point center);
+
+	public static String getStateName(Map<String, State> states, GraphicPolygon cell) {
+		String currentState = "";
+		for (Entry<String, State> entry : states.entrySet()) {
+			if (entry.getValue().getClass().equals(cell.getData().getState().getClass())) {
+				currentState = entry.getKey();
+				break;
+			}
+		}
+		return currentState;
+	}
+
+	public void update(State state) {
+		state.setCell(data);
+		data.setNextState(state);
+		data.updateState();
+	}
+
 }

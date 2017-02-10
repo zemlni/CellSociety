@@ -204,17 +204,18 @@ public class ViewController {
 		center.getChildren().remove(placeholder);
 	}
 
-	public void cellClicked(GraphicCell graphicCell) {
+	//public void cellClicked(GraphicCell graphicCell) {
+	public void cellClicked(GraphicPolygon cell) {
 		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
 			Map<String, State> states = mySimulation.getGame().getStates();
-			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicCell.getStateName(states, graphicCell),
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicPolygon.getStateName(states, cell),
 					states.keySet());
 			dialog.setTitle("State");
 			dialog.setHeaderText("Each cell can have several states.");
 			dialog.setContentText("Choose your cell's state:");
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(picked -> {
-				graphicCell.update(states.get(picked));
+				cell.update(states.get(picked));
 				updateGrid();
 			});
 		}
