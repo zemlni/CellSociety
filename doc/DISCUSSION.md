@@ -1,7 +1,0 @@
-Discussion
-=============
-naz7 & jr286
-# Code smells refactoring
-I refactored several code smells occurrences in my code that were caught by google's tool. I had known about these issues before this, but this session helped in removing them. One of these occurrences was in the Grid inheritance hierarchy. There was duplicated code in type of grid with respect to various methods for getting neighbors. I pulled the common parts of each of those methods out and put them in to the superclass. Next, we attempted to remove some more duplication across methods by using a lambda function and passing that to other functions but were not successful in doing so and will continue to attempt this in the future.  Fixing this inheritance hierarchy, along with the one for the Games will decrease our code smells in the future and make the code much more clean.
-# Checklist refactoring
-I removed a few magic numbers and strings in our code and made them constants. Additionally, I changed the return type of a few methods from ArrayList to List and HashMap to map. This improves the quality of the code and makes it more extensible and more usable. Additionally, I shortened some methods in Grid, which also showed up on the checklist.
