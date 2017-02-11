@@ -220,7 +220,7 @@ public class ControlPanel extends HBox {
 		if (didUpdateGameParameters()) {
 			viewController.setDelay(Integer.parseInt(myDelayField.getText()));
 			viewController.stop();
-			viewController.displaySimulation(myCurrentSimulation, Integer.parseInt(myGridSizeField.getText()), "Triangle");
+			viewController.displaySimulation(myCurrentSimulation, Integer.parseInt(myGridSizeField.getText()), "Square");
 			getSimulation();
 		}
 	}
