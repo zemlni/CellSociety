@@ -34,7 +34,7 @@ public class ViewController {
 
 	private final Dimension DEFAULT_SIZE = new Dimension(900, 500);
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources";
-	private final int GRID_SIZE = 400;
+	private final int GRID_SIZE = 500;
 	private final int CONTROL_PANEL_WIDTH = 300;
 	
 	private SimulationController mySimulationController = new SimulationController();

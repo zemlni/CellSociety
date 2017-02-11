@@ -14,7 +14,6 @@ public class SlimeGame extends Game {
 	@Override
 	public void setup() {
 		setParameters("evaporationTime", "sniffThreshold", "percentSlime");
-
 	}
 
 	@Override
@@ -22,8 +21,6 @@ public class SlimeGame extends Game {
 		getStates().put("Slime", new SlimeState(getIntParameter("sniffThreshold")));
 		getStates().put("Chemical", new ChemicalState(getIntParameter("evaporationTime")));
 		getStates().put("Empty", new EmptyState());
-
-
 	}
 
 }

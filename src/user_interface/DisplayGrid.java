@@ -62,14 +62,6 @@ public class DisplayGrid extends Group {
 			return new GraphicHexagon(Color.WHITE, sizeInPixels, sizeInCells, center);
 		return new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, center);
 	}
-	
-	/**
-	 * Update the size of the grid in cells.
-	 */
-	/*public void changeSizeInCells(int newSize, String gridType) {
-		sizeInCells = newSize;
-		createCells(gridType);
-	}*/
 
 	/**
 	 * Update the colors of the visual grid.
