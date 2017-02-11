@@ -40,6 +40,11 @@ public class GraphicCell extends Rectangle {
 		return data;
 	}
 	
+	/**
+	 * @param states A map of states to names.
+	 * @param graphicCell The cell in question.
+	 * @return The name of the state of the graphic cell.
+	 */
 	public static String getStateName(Map<String, State> states, GraphicCell graphicCell) {
 		String currentState = "";
 		for (Entry<String, State> entry : states.entrySet()) {
@@ -51,6 +56,10 @@ public class GraphicCell extends Rectangle {
 		return currentState;
 	}
 	
+	/**
+	 * Updates the graphic cell's state.
+	 * @param state The graphic cell's new state.
+	 */
 	public void update(State state) {
 		state.setCell(data);
 		data.setNextState(state);

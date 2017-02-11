@@ -18,14 +18,11 @@ import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
-import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -60,7 +57,10 @@ public class ControlPanel extends HBox {
 	private boolean gameLoaded = false;
 
 	/**
-	 * 
+	 * @param viewController The owner of the control panel.
+	 * @param resources The ResourceBundle for the control panel.
+	 * @param width The control panel's width.
+	 * @return A control panel.
 	 */
 	public ControlPanel(ViewController viewController, ResourceBundle resources, int width) {
 		super(HORIZONTAL_SPACING);
@@ -237,13 +237,6 @@ public class ControlPanel extends HBox {
 		return true;
 	}
 
-	public void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle(resources.getString("ErrorTitle"));
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-	
 	private Game getGame() {
 		return myCurrentSimulation.getGame();
 	}

@@ -44,6 +44,10 @@ public class ViewController {
 	private Timeline myAnimation;
 	private ResourceBundle myResources = ResourceBundle.getBundle("UIStrings");
 
+	/**
+	 * @param stage The main window.
+	 * @return a View Controller.
+	 */
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
 		stage.setResizable(false);
@@ -107,13 +111,18 @@ public class ViewController {
 	}
 
 	/**
-	 * Initializes the simulation and game.
+	 * Creates a simulation.
 	 * @param game A String identifying the game.
 	 */
 	public Simulation newSimulation(String game) {
 		return mySimulationController.create(game);
 	}
 	
+	/**
+	 * Displays the simulation created by the user.
+	 * @param simulation The simulation to be displayed.
+	 * @param size The size of the grid to be displayed.
+	 */
 	public void displaySimulation(Simulation simulation, int size) {
 		simulation.setupGrid(size);
 		simulation.getGame().setStates();
@@ -151,6 +160,11 @@ public class ViewController {
 		}
 	}
 
+	/**
+	 * Handles a click on a cell.
+	 * @param graphicCell The cell that was clicked.
+	 * @param simulation The simulation that was clicked.
+	 */
 	public void cellClicked(GraphicCell graphicCell, Simulation simulation) {
 		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
 			HashMap<String, State> states = simulation.getGame().getStates();
