@@ -2,7 +2,7 @@
 <data>
 	<name>sugarcape</name>
 	<title>SugarScape</title>
-	<description>A simulation of the SugarScape model  using Cellular Automata.</description>
+	<description>A simulation of the SugarScape model using Cellular Automata.</description>
 	<author>Nikita Zemlevskiy</author>
 	<percentAgent></percentAgent>
 	<sugarStart></sugarStart>

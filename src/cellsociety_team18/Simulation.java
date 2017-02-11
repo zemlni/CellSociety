@@ -12,6 +12,8 @@ import grids.HexagonGrid;
 import grids.RectGrid;
 import grids.TriangleGrid;
 import segregation.SegregationGame;
+import slime.SlimeGame;
+import sugarscape.SugarScapeGame;
 import wator.WatorGame;
 import wildfire.WildfireGame;
 
@@ -27,6 +29,8 @@ public class Simulation {
 			put("Segregation", new SegregationGame());
 			put("Wildfire", new WildfireGame());
 			put("GameOfLife", new GameOfLifeGame());
+			put("SugarScape", new SugarScapeGame());
+			put("Slime", new SlimeGame());
 		}
 	};
 	private Map<String, Grid> grids = new HashMap<String, Grid>() {
