@@ -1,6 +1,8 @@
 package cellsociety_team18;
 
 import java.util.List;
+
+import grids.Grid;
 import javafx.scene.paint.Color;
 
 /**

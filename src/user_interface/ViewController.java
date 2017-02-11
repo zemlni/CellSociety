@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import cellsociety_team18.Game;
 import cellsociety_team18.Simulation;
 import cellsociety_team18.State;
+import graphic_elements.GraphicPolygon;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -128,7 +129,7 @@ public class ViewController {
 		// TODO: Make me this constructor pls gridType = string from combo box
 		// that you will make for selecting grids
 		// myDisplayGrid = new DisplayGrid(this, gridSize, gridType);
-		myDisplayGrid = new DisplayGrid(this, gridSize, "Hexagon");
+		myDisplayGrid = new DisplayGrid(this, gridSize, "Square");
 		placeholder = createPlaceholder();
 		center.getChildren().addAll(myDisplayGrid, placeholder);
 		borderPane.setCenter(center);
@@ -176,8 +177,8 @@ public class ViewController {
 
 	public void displaySimulation(int size) {
 		hidePlaceholder();
-		//TODO: fix this so it takes the variable instead of constant 
-		mySimulation.setupGrid(size, "Hexagon");
+		//TODO: fix this so it takes the variable instead of constant and take number of neighbors instead of 10 
+		mySimulation.setupGrid(size, "Square", 12);
 		mySimulation.getGame().setStates();
 		myDisplayGrid.update(mySimulation.getGrid());
 	}

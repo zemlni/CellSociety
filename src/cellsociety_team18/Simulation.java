@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 import game_of_life.GameOfLifeGame;
+import grids.Grid;
+import grids.HexagonGrid;
+import grids.RectGrid;
+import grids.TriangleGrid;
 import segregation.SegregationGame;
 import wator.WatorGame;
 import wildfire.WildfireGame;
@@ -50,9 +54,9 @@ public class Simulation {
 		game.setup();
 	}
 	
-	public void setupGrid(int size, String gridType) {
+	public void setupGrid(int size, String gridType, int numNeighbors) {
 		grid = grids.get(gridType);
-		grid.setup(game, size);
+		grid.setup(game, size, numNeighbors);
 	}
 
 	/**

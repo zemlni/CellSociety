@@ -1,4 +1,4 @@
-package user_interface;
+package graphic_elements;
 
 import cellsociety_team18.Point;
 import javafx.scene.paint.Color;

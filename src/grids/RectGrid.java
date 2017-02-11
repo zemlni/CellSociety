@@ -1,9 +1,12 @@
-package cellsociety_team18;
+package grids;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.Point;
 
 /**
  * @author Nikita Zemlevskiy This class is the implementation of a rectangular
@@ -32,6 +35,8 @@ public class RectGrid extends Grid {
 			}
 		}
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 

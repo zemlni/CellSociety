@@ -1,8 +1,11 @@
-package cellsociety_team18;
+package grids;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.Point;
 
 public class HexagonGrid extends Grid {
 
@@ -27,6 +30,8 @@ public class HexagonGrid extends Grid {
 		}
 		neighbors.add(getCell(new Point(center.getX(), center.getY() - 1)));
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 
@@ -35,8 +40,7 @@ public class HexagonGrid extends Grid {
 	 */
 	@Override
 	public List<Cell> getNeighborsDiagonal(Point center) {
-		// TODO: remove this from abstract class
-		return null;
+		return getNeighbors(center);
 	}
 
 	@Override
@@ -53,6 +57,8 @@ public class HexagonGrid extends Grid {
 		}
 		neighbors.add(getCell(new Point(center.getX(), center.getY() - 1)));
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 

@@ -2,8 +2,12 @@ package user_interface;
 
 import java.util.HashMap;
 
-import cellsociety_team18.Grid;
 import cellsociety_team18.Point;
+import graphic_elements.GraphicHexagon;
+import graphic_elements.GraphicPolygon;
+import graphic_elements.GraphicSquare;
+import graphic_elements.GraphicTriangle;
+import grids.Grid;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;

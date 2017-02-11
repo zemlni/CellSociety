@@ -1,8 +1,11 @@
-package cellsociety_team18;
+package grids;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.Point;
 
 public class TriangleGrid extends Grid {
 
@@ -26,6 +29,8 @@ public class TriangleGrid extends Grid {
 			neighbors.remove(getCell(new Point(x + 2, y - 1)));
 		}
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 
@@ -65,6 +70,8 @@ public class TriangleGrid extends Grid {
 			neighbors.remove(getCell(new Point(x + 2, y - 1)));
 		}
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 }
