@@ -16,7 +16,7 @@ public class DisplayGrid extends Group {
 	private int sizeInPixels;
 	private int sizeInCells = 40;
 	private boolean responsive = false;
-
+	
 	private ViewController viewController;
 	// private HashMap<Point, GraphicCell> cells = new HashMap<Point,
 	// GraphicCell>();
@@ -42,8 +42,7 @@ public class DisplayGrid extends Group {
 				 * GraphicCell cell = new GraphicCell(Color.WHITE, sizeInPixels,
 				 * sizeInCells);
 				 */
-				GraphicPolygon cell = new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, new Point(i, j));
-				//System.out.println(cell);
+				GraphicPolygon cell = new GraphicSquare(Color.WHITE, sizeInPixels, sizeInCells, new Point(i, j));
 				/*
 				 * cell.setX(j * sizeInPixels / sizeInCells); cell.setY(i *
 				 * sizeInPixels / sizeInCells);
