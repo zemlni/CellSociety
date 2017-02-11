@@ -8,9 +8,10 @@ public class GraphicTriangle extends GraphicPolygon {
 
 	public GraphicTriangle(Color color, int gridSizePixels, int gridSizeCells, Point center) {
 		setSize(gridSizePixels / gridSizeCells);
+		//line duplicated from triangle grid code
 		down = ((int) center.getX()) % 2 == ((int) center.getY() % 2);
 		
-		double width = getSize();
+		double width = getSize()/2;
 		double horizontalDistance = width * Math.sqrt(3)/2;
 		double height =  width * 1.5;
 		
@@ -21,17 +22,9 @@ public class GraphicTriangle extends GraphicPolygon {
 		else
 			center.setY(center.getY() + (Math.sqrt(3) / 6) * horizontalDistance);
 
-		//center.setY(center.getY()*getSize());
 		Double[] vertices = getVertices(center);
 		getPoints().addAll(vertices);
 		setFill(color);
-	}
-
-	/**
-	 * remove exact duplicated method from triangleGrid. try an import
-	 */
-	private boolean downDecider(Point center) {
-		return ((int) center.getX()) % 2 == ((int) center.getY() % 2);
 	}
 
 	@Override
@@ -47,8 +40,8 @@ public class GraphicTriangle extends GraphicPolygon {
 				angle += 180;
 
 			angle = angle * Math.PI / 180;
-			vertices[2 * i] = x + getSize() * Math.cos(angle);
-			vertices[2 * i + 1] = y + getSize() * Math.sin(angle);
+			vertices[2 * i] = x + getSize()/2 * Math.cos(angle);
+			vertices[2 * i + 1] = y + getSize()/2 * Math.sin(angle);
 		}
 
 		return vertices;

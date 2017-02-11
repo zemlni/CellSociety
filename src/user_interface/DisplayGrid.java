@@ -22,10 +22,10 @@ public class DisplayGrid extends Group {
 	// GraphicCell>();
 	private HashMap<Point, GraphicPolygon> cells = new HashMap<Point, GraphicPolygon>();
 
-	public DisplayGrid(ViewController viewController, int sizeInPixels) {
+	public DisplayGrid(ViewController viewController, int sizeInPixels, String gridType) {
 		this.sizeInPixels = sizeInPixels;
 		this.viewController = viewController;
-		createCells();
+		createCells(gridType);
 	}
 
 	public int getSizeInCells() {
@@ -35,14 +35,15 @@ public class DisplayGrid extends Group {
 	/**
 	 * Originally create the graphic cells.
 	 */
-	private void createCells() {
+	private void createCells(String gridType) {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {
 				/*
 				 * GraphicCell cell = new GraphicCell(Color.WHITE, sizeInPixels,
 				 * sizeInCells);
 				 */
-				GraphicPolygon cell = new GraphicSquare(Color.WHITE, sizeInPixels, sizeInCells, new Point(i, j));
+				GraphicPolygon cell = getNewCell(gridType, new Point(i, j));
+				
 				/*
 				 * cell.setX(j * sizeInPixels / sizeInCells); cell.setY(i *
 				 * sizeInPixels / sizeInCells);
@@ -57,13 +58,19 @@ public class DisplayGrid extends Group {
 			}
 		}
 	}
-
+	private GraphicPolygon getNewCell(String gridType, Point center){
+		if (gridType.equals("Square"))
+			return new GraphicSquare(Color.WHITE, sizeInPixels, sizeInCells, center);
+		if (gridType.equals("Hexagon"))
+			return new GraphicHexagon(Color.WHITE, sizeInPixels, sizeInCells, center);
+		return new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, center);
+	}
 	/**
 	 * Update the size of the grid in cells.
 	 */
-	public void changeSizeInCells(int newSize) {
+	public void changeSizeInCells(int newSize, String gridType) {
 		sizeInCells = newSize;
-		createCells();
+		createCells(gridType);
 	}
 
 	/**

@@ -27,7 +27,9 @@ public class Simulation {
 	};
 	private Map<String, Grid> grids = new HashMap<String, Grid>() {
 		{
-			put("Rect", new RectGrid());
+			put("Square", new RectGrid());
+			put("Triangle", new TriangleGrid());
+			put("Hexagon", new HexagonGrid());
 		}
 	};
 	private Grid grid;
@@ -48,11 +50,8 @@ public class Simulation {
 		game.setup();
 	}
 	
-	public void setupGrid(int size) {
-		// if more than one grid
-		// grid = grids[gridType];
-		// for now like this.
-		grid = grids.get("Rect");
+	public void setupGrid(int size, String gridType) {
+		grid = grids.get(gridType);
 		grid.setup(game, size);
 	}
 

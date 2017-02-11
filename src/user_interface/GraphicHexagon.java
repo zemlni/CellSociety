@@ -7,7 +7,7 @@ public class GraphicHexagon extends GraphicPolygon {
 
 	public GraphicHexagon(Color color, int gridSizePixels, int gridSizeCells, Point center) {
 		setSize(gridSizePixels/gridSizeCells);
-		double width = getSize() * 2;
+		double width = getSize();
 		double horizontalDistance = width * 3/4;
 		double height = Math.sqrt(3)/2 * width;
 		if (!(Math.floorMod(((int) center.getX()), 2) == 0)) {
@@ -28,8 +28,8 @@ public class GraphicHexagon extends GraphicPolygon {
 		int y = (int) center.getY();
 		for (int i = 0; i < 6; i++) {
 			double angle = Math.PI * 60 * i / 180;
-			vertices[2 * i] = x + getSize() * Math.cos(angle);
-			vertices[2 * i + 1] = y + getSize() * Math.sin(angle);
+			vertices[2 * i] = x + getSize()/2 * Math.cos(angle);
+			vertices[2 * i + 1] = y + getSize()/2 * Math.sin(angle);
 		}
 		return vertices;
 	}
