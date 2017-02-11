@@ -43,7 +43,7 @@ public class DisplayGrid extends Group {
 				 * sizeInCells);
 				 */
 				GraphicPolygon cell = new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, new Point(i, j));
-				System.out.println(cell);
+				//System.out.println(cell);
 				/*
 				 * cell.setX(j * sizeInPixels / sizeInCells); cell.setY(i *
 				 * sizeInPixels / sizeInCells);
