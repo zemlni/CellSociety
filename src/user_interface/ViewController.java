@@ -2,12 +2,14 @@ package user_interface;
 
 import java.awt.Dimension;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import cellsociety_team18.Game;
 import cellsociety_team18.Simulation;
 import cellsociety_team18.State;
+import graphic_elements.GraphicPolygon;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -36,7 +38,7 @@ public class ViewController {
 	private final Dimension DEFAULT_SIZE = new Dimension(780, 600);
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources";
 	private final int gridSize = 460;
-	
+
 	private int delay = 250;
 
 	private Simulation mySimulation;
@@ -124,7 +126,10 @@ public class ViewController {
 		ControlPanel controlPanel = new ControlPanel(this, myResources);
 		borderPane.setLeft(controlPanel);
 		center = new Group();
-		myDisplayGrid = new DisplayGrid(this, gridSize);
+		// TODO: Make me this constructor pls gridType = string from combo box
+		// that you will make for selecting grids
+		// myDisplayGrid = new DisplayGrid(this, gridSize, gridType);
+		myDisplayGrid = new DisplayGrid(this, gridSize, "Square");
 		placeholder = createPlaceholder();
 		center.getChildren().addAll(myDisplayGrid, placeholder);
 		borderPane.setCenter(center);
@@ -172,7 +177,8 @@ public class ViewController {
 
 	public void displaySimulation(int size) {
 		hidePlaceholder();
-		mySimulation.setupGrid(size);
+		//TODO: fix this so it takes the variable instead of constant and take number of neighbors instead of 10 
+		mySimulation.setupGrid(size, "Square", 12);
 		mySimulation.getGame().setStates();
 		myDisplayGrid.update(mySimulation.getGrid());
 	}
@@ -203,17 +209,18 @@ public class ViewController {
 		center.getChildren().remove(placeholder);
 	}
 
-	public void cellClicked(GraphicCell graphicCell) {
+	// public void cellClicked(GraphicCell graphicCell) {
+	public void cellClicked(GraphicPolygon cell) {
 		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
-			HashMap<String, State> states = mySimulation.getGame().getStates();
-			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicCell.getStateName(states, graphicCell),
+			Map<String, State> states = mySimulation.getGame().getStates();
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicPolygon.getStateName(states, cell),
 					states.keySet());
 			dialog.setTitle("State");
 			dialog.setHeaderText("Each cell can have several states.");
 			dialog.setContentText("Choose your cell's state:");
 			Optional<String> result = dialog.showAndWait();
 			result.ifPresent(picked -> {
-				graphicCell.update(states.get(picked));
+				cell.update(states.get(picked));
 				updateGrid();
 			});
 		}

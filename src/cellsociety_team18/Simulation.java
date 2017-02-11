@@ -7,7 +7,13 @@ import java.util.List;
 import java.util.Map;
 
 import game_of_life.GameOfLifeGame;
+import grids.Grid;
+import grids.HexagonGrid;
+import grids.RectGrid;
+import grids.TriangleGrid;
 import segregation.SegregationGame;
+import slime.SlimeGame;
+import sugarscape.SugarScapeGame;
 import wator.WatorGame;
 import wildfire.WildfireGame;
 
@@ -23,11 +29,15 @@ public class Simulation {
 			put("Segregation", new SegregationGame());
 			put("Wildfire", new WildfireGame());
 			put("GameOfLife", new GameOfLifeGame());
+			put("SugarScape", new SugarScapeGame());
+			put("Slime", new SlimeGame());
 		}
 	};
 	private Map<String, Grid> grids = new HashMap<String, Grid>() {
 		{
-			put("Rect", new RectGrid());
+			put("Square", new RectGrid());
+			put("Triangle", new TriangleGrid());
+			put("Hexagon", new HexagonGrid());
 		}
 	};
 	private Grid grid;
@@ -48,12 +58,9 @@ public class Simulation {
 		game.setup();
 	}
 	
-	public void setupGrid(int size) {
-		// if more than one grid
-		// grid = grids[gridType];
-		// for now like this.
-		grid = grids.get("Rect");
-		grid.setup(game, size);
+	public void setupGrid(int size, String gridType, int numNeighbors) {
+		grid = grids.get(gridType);
+		grid.setup(game, size, numNeighbors);
 	}
 
 	/**

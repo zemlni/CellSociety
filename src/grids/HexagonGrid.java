@@ -1,9 +1,11 @@
-package cellsociety_team18;
+package grids;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.Point;
 
 public class HexagonGrid extends Grid {
 
@@ -13,14 +15,23 @@ public class HexagonGrid extends Grid {
 		int x = (int) center.getX();
 		int y = (int) center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
-			for (int j = y; j <= y + 1; j++) {
+			for (int j = y - 1; j <= y + 1; j++) {
 				Point temp = new Point(i, j);
 				if (!temp.equals(center))
 					neighbors.add(getCell(temp));
 			}
 		}
+		if (Math.floorMod(x, 2) == 0) {
+			neighbors.remove(getCell(new Point(x - 1, y - 1)));
+			neighbors.remove(getCell(new Point(x + 1, y - 1)));
+		} else {
+			neighbors.remove(getCell(new Point(x - 1, y + 1)));
+			neighbors.remove(getCell(new Point(x + 1, y + 1)));
+		}
 		neighbors.add(getCell(new Point(center.getX(), center.getY() - 1)));
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 
@@ -29,22 +40,7 @@ public class HexagonGrid extends Grid {
 	 */
 	@Override
 	public List<Cell> getNeighborsDiagonal(Point center) {
-		// TODO: remove this from abstract class
-		return null;
-	}
-	/**Might need to fix, need to check what this returns. 
-	 * Dimensions might be bigger than we need
-	 * */
-	public List<Point> getVertices(Point center) {
-		List<Point> vertices = new ArrayList<Point>();
-		int x = (int) center.getX();
-		int y = (int) center.getY();
-		for (int i = 0; i < 6; i++) {
-			double angle = Math.PI * 60 * i / 180;
-			Point temp = new Point(x + Math.cos(angle), y + Math.sin(angle));
-			vertices.add(temp);
-		}
-		return vertices;
+		return getNeighbors(center);
 	}
 
 	@Override
@@ -61,6 +57,8 @@ public class HexagonGrid extends Grid {
 		}
 		neighbors.add(getCell(new Point(center.getX(), center.getY() - 1)));
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 

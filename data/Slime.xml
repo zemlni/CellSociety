@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<name>slime</name>
+	<title>Slime</title>
+	<description>A simulation of the Slime aggregation model using Cellular Automata.</description>
+	<author>Nikita Zemlevskiy</author>
+	<percentSlime></percentSlime>
+	<sniffThreshold></sniffThreshold>
+	<evaporationTime></evaporationTime>
+</data>

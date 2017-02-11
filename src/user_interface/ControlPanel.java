@@ -220,7 +220,8 @@ public class ControlPanel extends HBox {
 	private void loadGame() {
 		if (didUpdateGameParameters()) {
 			viewController.setDelay(Integer.parseInt(myDelayField.getText()));
-			viewController.getGrid().changeSizeInCells(Integer.parseInt(myGridSizeField.getText()));
+			//TODO: figure out how to put the string into here
+			viewController.getGrid().changeSizeInCells(Integer.parseInt(myGridSizeField.getText()), "Square");
 			viewController.stop();
 			viewController.displaySimulation(viewController.getGridSizeInCells());
 		}

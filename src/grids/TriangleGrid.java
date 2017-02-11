@@ -1,32 +1,36 @@
-package cellsociety_team18;
+package grids;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.Point;
 
 public class TriangleGrid extends Grid {
 
 	@Override
 	public List<Cell> getNeighbors(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = (int)center.getX();
-		int y = (int)center.getY();
-		for (int i = x - 2; i <= x + 2; i++){
-			for (int j = y - 1; j <= y + 1; j++){
+		int x = (int) center.getX();
+		int y = (int) center.getY();
+		for (int i = x - 2; i <= x + 2; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
 				Point temp = new Point(i, j);
 				if (!temp.equals(center))
 					neighbors.add(getCell(temp));
 			}
 		}
-		if (downDecider(center)){
+		if (downDecider(center)) {
 			neighbors.remove(getCell(new Point(x - 2, y + 1)));
 			neighbors.remove(getCell(new Point(x + 2, y + 1)));
-		}
-		else {
+		} else {
 			neighbors.remove(getCell(new Point(x - 2, y - 1)));
 			neighbors.remove(getCell(new Point(x + 2, y - 1)));
 		}
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 
@@ -46,48 +50,28 @@ public class TriangleGrid extends Grid {
 		return ((int) center.getX()) % 2 == ((int) center.getY() % 2);
 	}
 
-	/**
-	 * Need to check what this returns, Dimensions might be bigger than we need
-	 */
-	public List<Point> getVertices(Point center) {
-		List<Point> vertices = new ArrayList<Point>();
-		int x = (int) center.getX();
-		int y = (int) center.getY();
-
-		for (int i = 0; i < 3; i++) {
-			double angle = 120 * i;
-			if (downDecider(center))
-				angle += 120;
-			angle = angle * Math.PI / 180;
-			Point temp = new Point(x + Math.cos(angle), y + Math.sin(angle));
-			vertices.add(temp);
-		}
-
-		return vertices;
-
-	}
-
 	@Override
 	public List<Cell> getNeighborsToroidal(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
-		int x = (int)center.getX();
-		int y = (int)center.getY();
-		for (int i = x - 2; i <= x + 2; i++){
-			for (int j = y - 1; j <= y + 1; j++){
+		int x = (int) center.getX();
+		int y = (int) center.getY();
+		for (int i = x - 2; i <= x + 2; i++) {
+			for (int j = y - 1; j <= y + 1; j++) {
 				Point temp = new Point(i % getSize(), j % getSize());
 				if (!temp.equals(center))
 					neighbors.add(getCell(temp));
 			}
 		}
-		if (downDecider(center)){
+		if (downDecider(center)) {
 			neighbors.remove(getCell(new Point(x - 2, y + 1)));
 			neighbors.remove(getCell(new Point(x + 2, y + 1)));
-		}
-		else {
+		} else {
 			neighbors.remove(getCell(new Point(x - 2, y - 1)));
 			neighbors.remove(getCell(new Point(x + 2, y - 1)));
 		}
 		neighbors.removeAll(Collections.singleton(null));
+		while (neighbors.size() > getNumNeighbors())
+			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
 }

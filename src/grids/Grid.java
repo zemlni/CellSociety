@@ -1,10 +1,15 @@
-package cellsociety_team18;
+package grids;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
+import cellsociety_team18.Cell;
+import cellsociety_team18.Game;
+import cellsociety_team18.Point;
+import cellsociety_team18.State;
 
 /**
  * @author Nikita Zemlevskiy This class is the superclass for grids. It contains
@@ -16,7 +21,14 @@ public abstract class Grid {
 	private Map<Point, Cell> cells;
 	private Game game;
 	private int size;
-
+	private int numNeighbors;
+	
+	public void setNumNeighbors(int num){
+		this.numNeighbors = num;
+	}
+	public int getNumNeighbors(){
+		return numNeighbors;
+	}
 	public Map<Point, Cell> getCells() {
 		return cells;
 	}
@@ -90,21 +102,24 @@ public abstract class Grid {
 	 * @param size
 	 *            size of the grid
 	 */
-	public void setup(Game game, int size) {
+	public void setup(Game game, int size, int numNeighbors) {
 		setCells(new HashMap<Point, Cell>());
 		setSize(size);
 		setGame(game);
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				Point p = new Point(i, j);
-				Cell cell = new Cell(this, p);
-				cell.setNextState(game.getRandomState());
-				cell.updateState();
+				Cell cell = game.makeNewCell(this, p);
+				randomize(game, cell);
 				getCells().put(p, cell);
 			}
 		}
+		this.numNeighbors = numNeighbors;
 	}
-	
+	public void randomize(Game game, Cell cell){
+		cell.setNextState(game.getRandomState());
+		cell.updateState();
+	}
 	/**
 	 * Randomize states of all cells in the grid
 	 * 
@@ -113,8 +128,7 @@ public abstract class Grid {
 	 */
 	public void shuffle(Game game) {
 		for (Cell cell : cells.values()) {
-			cell.setNextState(game.getRandomState());
-			cell.updateState();
+			randomize(game, cell);
 		}
 	}
 	
