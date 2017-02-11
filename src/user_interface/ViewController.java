@@ -52,6 +52,11 @@ public class ViewController {
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
 		stage.setResizable(false);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) {
+	        	  System.exit(0);
+	          }
+	      });   
 		setupUI(stage);
 	}
 
