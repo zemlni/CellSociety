@@ -3,7 +3,9 @@
  */
 package user_interface;
 
+import cellsociety_team18.Game;
 import cellsociety_team18.Parameter;
+import cellsociety_team18.Simulation;
 
 import java.io.File;
 import java.util.ResourceBundle;
@@ -21,6 +23,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
@@ -41,8 +44,10 @@ public class ControlPanel extends HBox {
 
 	private final static int HORIZONTAL_SPACING = 8;
 	private final static int VERTICAL_SPACING = 16;
+	private final static int DEFAULT_GRID_SIZE_IN_CELLS = 40;
 
 	private ViewController viewController;
+	private Simulation myCurrentSimulation;
 	private ResourceBundle resources;
 
 	private VBox panelElements;
@@ -52,17 +57,16 @@ public class ControlPanel extends HBox {
 	private TextField myDelayField;
 	private TextField myGridSizeField;
 	private ParameterTable myParameterTable;
-
 	private boolean gameLoaded = false;
 
 	/**
 	 * 
 	 */
-	public ControlPanel(ViewController viewController, ResourceBundle resources) {
+	public ControlPanel(ViewController viewController, ResourceBundle resources, int width) {
 		super(HORIZONTAL_SPACING);
 		this.viewController = viewController;
 		this.resources = resources;
-		setPrefWidth(300);
+		setPrefWidth(width);
 		setPadding(new Insets(20, 0, 0, 20));
 		setup();
 	}
@@ -175,7 +179,7 @@ public class ControlPanel extends HBox {
 	private Node setupFields() {
 		HBox result = new HBox(20);
 		myDelayField = createField(Integer.toString(viewController.getDelay()));
-		myGridSizeField = createField(Integer.toString(viewController.getGridSizeInCells()));
+		myGridSizeField = createField(Integer.toString(DEFAULT_GRID_SIZE_IN_CELLS));
 		result.getChildren().addAll(addLabelToField(myDelayField, "DelayString"), addLabelToField(myGridSizeField, "GridSizeString"));
 		return result;
 	}
@@ -195,7 +199,7 @@ public class ControlPanel extends HBox {
 	}
 	
 	private ParameterTable createParameters() {
-		return new ParameterTable(viewController.getGame().getParametersAndValues());
+		return new ParameterTable(getGame().getParametersAndValues());
 	}
 
 	private void setupParameters() {
@@ -205,9 +209,9 @@ public class ControlPanel extends HBox {
 	}
 
 	private void newSimulation() {
-		viewController.initializeSimulation(myGames.getValue());
-		myTitle.setText(viewController.getTitle());
-		myDescription.setText(viewController.getDescription());
+		getSimulation();
+		myTitle.setText(getGame().getTitle());
+		myDescription.setText(getGame().getDescription());
 		addControls();
 		setupParameters();
 	}
@@ -215,16 +219,20 @@ public class ControlPanel extends HBox {
 	private void loadGame() {
 		if (didUpdateGameParameters()) {
 			viewController.setDelay(Integer.parseInt(myDelayField.getText()));
-			viewController.getGrid().changeSizeInCells(Integer.parseInt(myGridSizeField.getText()));
 			viewController.stop();
-			viewController.displaySimulation(viewController.getGridSizeInCells());
+			viewController.displaySimulation(myCurrentSimulation, Integer.parseInt(myGridSizeField.getText()));
+			getSimulation();
 		}
+	}
+	
+	private void getSimulation() {
+		myCurrentSimulation = viewController.newSimulation(myGames.getValue());
 	}
 
 	private Boolean didUpdateGameParameters() {
 		ObservableList<Parameter> data = myParameterTable.getData();
 		for (Parameter entry : data) {
-			viewController.getGame().setParameter(entry.getParameter(), entry.getValue());
+			getGame().setParameter(entry.getParameter(), entry.getValue());
 		}
 		return true;
 	}
@@ -235,5 +243,9 @@ public class ControlPanel extends HBox {
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
-
+	
+	private Game getGame() {
+		return myCurrentSimulation.getGame();
+	}
+	
 }

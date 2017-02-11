@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import cellsociety_team18.Grid;
 import cellsociety_team18.Point;
+import cellsociety_team18.Simulation;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
@@ -15,26 +16,25 @@ import javafx.scene.paint.Color;
 public class DisplayGrid extends Group {
 	
 	private int sizeInPixels;
-	private int sizeInCells = 40;
+	private int sizeInCells;
 	private boolean responsive = false;
 	
 	private ViewController viewController;
+	private Simulation simulation;
 	private HashMap<Point, GraphicCell> cells = new HashMap<Point, GraphicCell>();
 
-	public DisplayGrid(ViewController viewController, int sizeInPixels) {
-		this.sizeInPixels = sizeInPixels;
+	public DisplayGrid(ViewController viewController, Simulation simulation, int sizeInPixels) {
 		this.viewController = viewController;
+		this.simulation = simulation;
+		this.sizeInPixels = sizeInPixels;
+		this.sizeInCells = simulation.getGrid().getSize();
 		createCells();
-	}
-	
-	public int getSizeInCells() {
-		return sizeInCells;
 	}
 	
 	/**
 	 * Originally create the graphic cells.
 	 */
-	private void createCells() {
+	public void createCells() {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {
 				GraphicCell cell = new GraphicCell(Color.WHITE, sizeInPixels, sizeInCells);
@@ -42,7 +42,7 @@ public class DisplayGrid extends Group {
 				cell.setY(i * sizeInPixels / sizeInCells);
 				cell.setOnMouseClicked((event) -> {
 					if (responsive) {
-						viewController.cellClicked(cell);
+						viewController.cellClicked(cell, simulation);
 					}
 				});
 				cells.put(new Point(i, j), cell);
@@ -50,15 +50,7 @@ public class DisplayGrid extends Group {
 			}
 		}
 	}
-	
-	/**
-	 * Update the size of the grid in cells.
-	 */
-	public void changeSizeInCells(int newSize) {
-		sizeInCells = newSize;
-		createCells();
-	}
-	
+
 	/**
 	 * Update the colors of the visual grid.
 	 */

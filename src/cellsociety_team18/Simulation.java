@@ -75,6 +75,10 @@ public class Simulation {
 	private void recordProportions() {
 		proportions.add(grid.getProportions(game.getStates()));
 	}
+	
+	public void clearProportions() {
+		proportions = new ArrayList<Map<String, Double>>();
+	}
 
 	/**
 	 * Randomize the order of cells stored in the grid.

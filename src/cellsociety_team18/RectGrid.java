@@ -49,6 +49,7 @@ public class RectGrid extends Grid {
 		neighbors.add(getCell(new Point(x + 1, y)));
 		neighbors.add(getCell(new Point(x, y - 1)));
 		neighbors.add(getCell(new Point(x, y + 1)));
+		neighbors.removeAll(Collections.singleton(null));
 		return neighbors;
 	}
 
