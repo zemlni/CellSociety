@@ -38,7 +38,6 @@ public abstract class AgentState extends State {
 		Iterator<Cell> i = options.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-			System.out.println(cell);
 			if (this instanceof FishState && !(cell.getNextState() instanceof EmptyState) 
 					|| this instanceof SharkState && cell.getNextState() instanceof SharkState) {
 				i.remove();

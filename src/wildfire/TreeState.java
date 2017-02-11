@@ -26,7 +26,6 @@ public class TreeState extends State {
 	@Override
 	public void chooseState() {
 		for (Cell cell : getCell().getNeighbors()) {
-			System.out.println(cell);
 			if (cell.getState() instanceof BurningState && Math.random() <= probCatch) {
 				getCell().setNextState(new BurningState());
 				return;
