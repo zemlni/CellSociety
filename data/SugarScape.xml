@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<name>sugarcape</name>
+	<title>SugarScape</title>
+	<description>A simulation of the SugarScape model  using Cellular Automata.</description>
+	<author>Nikita Zemlevskiy</author>
+	<percentAgent></percentAgent>
+	<sugarStart></sugarStart>
+	<sugarMetabolism></sugarMetabolism>
+	<maxSugar></maxSugar>
+	<interval></interval>
+</data>
