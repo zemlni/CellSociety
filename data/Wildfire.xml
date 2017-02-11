@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <data>
-	<info>
-		<name>fire</name>
-		<title>Wildfire</title>
-		<description>A simulation of a wild fire spreading using Cellular Automata.</description>
-		<author>Nikita Zemlevskiy</author>
-	</info>
-	<special>
-		<percentTree>0.7</percentTree>
-		<percentBurning>0.1</percentBurning>
-		<fireChance>0.5</fireChance>
-	</special>
+	<name>fire</name>
+	<title>Wildfire</title>
+	<description>A simulation of a wild fire spreading using Cellular Automata.</description>
+	<author>Nikita Zemlevskiy</author>
+	<percentTree>0.7</percentTree>
+	<percentBurning>0.1</percentBurning>
+	<fireChance>0.5</fireChance>
 </data>

@@ -8,7 +8,7 @@ import graphic_elements.GraphicPolygon;
 import graphic_elements.GraphicSquare;
 import graphic_elements.GraphicTriangle;
 import grids.Grid;
-import javafx.geometry.Insets;
+import cellsociety_team18.Simulation;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
 
@@ -18,17 +18,18 @@ import javafx.scene.paint.Color;
 public class DisplayGrid extends Group {
 
 	private int sizeInPixels;
-	private int sizeInCells = 40;
+	private int sizeInCells;
 	private boolean responsive = false;
 	
 	private ViewController viewController;
-	// private HashMap<Point, GraphicCell> cells = new HashMap<Point,
-	// GraphicCell>();
+	private Simulation simulation;
 	private HashMap<Point, GraphicPolygon> cells = new HashMap<Point, GraphicPolygon>();
 
-	public DisplayGrid(ViewController viewController, int sizeInPixels, String gridType) {
-		this.sizeInPixels = sizeInPixels;
+	public DisplayGrid(ViewController viewController, Simulation simulation, int sizeInPixels, String gridType) {
 		this.viewController = viewController;
+		this.simulation = simulation;
+		this.sizeInPixels = sizeInPixels;
+		this.sizeInCells = simulation.getGrid().getSize();
 		createCells(gridType);
 	}
 
@@ -42,19 +43,10 @@ public class DisplayGrid extends Group {
 	private void createCells(String gridType) {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {
-				/*
-				 * GraphicCell cell = new GraphicCell(Color.WHITE, sizeInPixels,
-				 * sizeInCells);
-				 */
 				GraphicPolygon cell = getNewCell(gridType, new Point(i, j));
-				
-				/*
-				 * cell.setX(j * sizeInPixels / sizeInCells); cell.setY(i *
-				 * sizeInPixels / sizeInCells);
-				 */
 				cell.setOnMouseClicked((event) -> {
 					if (responsive) {
-						viewController.cellClicked(cell);
+						viewController.cellClicked(cell, simulation);
 					}
 				});
 				cells.put(new Point(i, j), cell);
@@ -62,6 +54,7 @@ public class DisplayGrid extends Group {
 			}
 		}
 	}
+
 	private GraphicPolygon getNewCell(String gridType, Point center){
 		if (gridType.equals("Square"))
 			return new GraphicSquare(Color.WHITE, sizeInPixels, sizeInCells, center);
@@ -69,13 +62,14 @@ public class DisplayGrid extends Group {
 			return new GraphicHexagon(Color.WHITE, sizeInPixels, sizeInCells, center);
 		return new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, center);
 	}
+	
 	/**
 	 * Update the size of the grid in cells.
 	 */
-	public void changeSizeInCells(int newSize, String gridType) {
+	/*public void changeSizeInCells(int newSize, String gridType) {
 		sizeInCells = newSize;
 		createCells(gridType);
-	}
+	}*/
 
 	/**
 	 * Update the colors of the visual grid.
@@ -85,7 +79,6 @@ public class DisplayGrid extends Group {
 		for (int i = 0; i < sizeInCells; i++) {
 			for (int j = 0; j < sizeInCells; j++) {
 				Point point = new Point(i, j);
-				// GraphicCell cell = cells.get(point);
 				GraphicPolygon cell = cells.get(point);
 				cell.setData(grid.getCell(point));
 				cells.put(point, cell);

@@ -13,23 +13,31 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 
+/**
+ * @author elliott
+ * This class displays the parameters of the simulation in a table view.
+ */
 public class ParameterTable extends TableView<Parameter> {
 	
 	private ObservableList<Parameter> data;
 
-	@SuppressWarnings("unchecked")
+	/**
+	 * @param parameters The parameters to display.
+	 * @return A table view of the parameters.
+	 */
 	public ParameterTable(Map<String, String> parameters) {
-
 		setEditable(true);
 		setPrefHeight(100);
 		setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+		createColumns(parameters);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private void createColumns(Map<String, String> parameters) {
 		TableColumn<Parameter, String> parameterCol = new TableColumn<Parameter, String>("Parameter");
 		parameterCol.setCellValueFactory(new PropertyValueFactory<Parameter, String>("parameter"));
-
 		TableColumn<Parameter, String> valueCol = new TableColumn<Parameter, String>("Value");
 		valueCol.setCellValueFactory(new PropertyValueFactory<Parameter, String>("value"));
-
 		valueCol.setCellFactory(TextFieldTableCell.forTableColumn());
 		valueCol.setOnEditCommit(new EventHandler<CellEditEvent<Parameter, String>>() {
 			@Override
@@ -37,15 +45,12 @@ public class ParameterTable extends TableView<Parameter> {
 				((Parameter) t.getTableView().getItems().get(t.getTablePosition().getRow())).setValue(t.getNewValue());
 			}
 		});
-
 		getColumns().addAll(parameterCol, valueCol);
-
 		data = FXCollections.observableArrayList();
 		for (HashMap.Entry<String, String> entry : parameters.entrySet()) {
 			data.add(new Parameter(entry.getKey(), entry.getValue()));
 		}
 		setItems(data);
-
 	}
 	
 	public ObservableList<Parameter> getData() {

@@ -12,9 +12,7 @@ public class WatorGame extends Game {
 
 	@Override
 	public void setup() {
-		setName("Wator");
 		setParameters("percentFish", "percentSharks", "sharkReprodTime", "sharkStartEnergy", "sharkEnergyPerFish", "fishReprodTime");
-		parseXML();
 	}
 	
 	@Override

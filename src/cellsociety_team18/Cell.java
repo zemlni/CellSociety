@@ -54,7 +54,7 @@ public class Cell {
 	 * @return A List of the cell's NSEW neighbors.
 	 */
 	public List<Cell> getNeighbors() {
-		return getGrid().getNeighbors(point);
+		return getGrid().getNeighborsCardinal(point);
 	}
 	
 	/**

@@ -12,9 +12,7 @@ public class SegregationGame extends Game {
 
 	@Override
 	public void setup() {
-		setName("Segregation");
 		setParameters("satisfaction", "percentRed", "percentBlue");
-		parseXML();
 	}
 	
 	@Override

@@ -49,37 +49,12 @@ public class Simulation {
 	 * 
 	 * @param gameName
 	 *            The name of the game being played
-	 * @param size
-	 *            the size in cells across that the simulation should be.
 	 * @return new simulation with the specified parameters
 	 */
 	public Simulation(String gameName) {
 		game = games.get(gameName);
+		game.parseXML(gameName);
 		game.setup();
-	}
-	
-	public void setupGrid(int size, String gridType, int numNeighbors) {
-		grid = grids.get(gridType);
-		grid.setup(game, size, numNeighbors);
-	}
-
-	/**
-	 * Step the simulation.
-	 */
-	public void step() {
-		List<Cell> cells = grid.getCellsAsList();
-		Collections.shuffle(cells);
-		for (Cell cell : cells) {
-			cell.chooseState();
-		}
-		for (Cell cell : cells) {
-			cell.updateState();
-		}
-		recordProportions();
-	}
-	
-	private void recordProportions() {
-		proportions.add(grid.getProportions(game.getStates()));
 	}
 
 	/**
@@ -96,9 +71,44 @@ public class Simulation {
 	public Game getGame() {
 		return game;
 	}
-	
+
 	public ArrayList<Map<String, Double>> getProportions() {
 		return proportions;
 	}
 	
+	/**
+	 * Sets up the grid for the simulation. 
+	 * @param size The size of the grid to be created.
+	 */
+	public void setupGrid(int size, String gridType, int numNeighbors) {
+		grid = grids.get(gridType);
+		grid.setup(game, size, numNeighbors);
+	}
+		
+	private void recordProportions() {
+		proportions.add(grid.getProportions(game.getStates()));
+	}
+
+	/**
+	 * Reset the count of the proportion of states.
+	 */
+	public void clearProportions() {
+		proportions = new ArrayList<Map<String, Double>>();
+	}
+	
+	/**
+	 * Step the simulation.
+	 */
+	public void step() {
+		List<Cell> cells = grid.getCellsAsList();
+		Collections.shuffle(cells);
+		for (Cell cell : cells) {
+			cell.chooseState();
+		}
+		for (Cell cell : cells) {
+			cell.updateState();
+		}
+		recordProportions();
+	}
+
 }

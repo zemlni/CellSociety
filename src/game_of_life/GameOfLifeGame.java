@@ -12,8 +12,6 @@ public class GameOfLifeGame extends Game {
 
 	@Override
 	public void setup() {
-		setName("GameOfLife");
-		parseXML();
 		setParameters("percentLiving");
 	}
 	

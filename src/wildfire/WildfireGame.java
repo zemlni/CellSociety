@@ -12,9 +12,7 @@ public class WildfireGame extends Game {
 
 	@Override
 	public void setup() {
-		setName("Wildfire");
 		setParameters("fireChance", "percentTree", "percentBurning");
-		parseXML();
 	}
 	
 	@Override

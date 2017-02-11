@@ -25,41 +25,34 @@ import java.util.Map;
 public abstract class Game {
 
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
-	private Map<String, String> basicInfo;
-	private Map<String, String> specialInfo;
+	private Map<String, String> data;
 	private HashMap<String, State> states = new HashMap<String, State>();
 	private ArrayList<String> parameters = new ArrayList<String>();
-	private String name;
-	private Element root;
 
 	/**
 	 * Setup the basic info of the game, such as its name and description and
 	 * other variables. Also populates the maps of special information pertinent
 	 * to each game subclass.
 	 */
-	public void parseXML() {
-		File xmlFile = new File(getClass().getClassLoader().getResource(getName() + ".xml").getPath());
-		root = getRootElement(xmlFile);
-		basicInfo = new HashMap<String, String>();
-		specialInfo = new HashMap<String, String>();
-		populateMap(basicInfo, "info");
-		populateMap(specialInfo, "special");
+	public void parseXML(String gameName) {
+		File xmlFile = new File(getClass().getClassLoader().getResource(gameName + ".xml").getPath());
+		data = populateMap(getRootElement(xmlFile));
 	}
 
 	public void setParameter(String parameter, String value) {
-		specialInfo.put(parameter, value);
+		data.put(parameter, value);
 	}
 
 	public String getParameter(String parameter) {
-		return specialInfo.get(parameter);
+		return data.get(parameter);
 	}
-	
+
 	public double getDoubleParameter(String parameter) {
-		return Double.parseDouble(specialInfo.get(parameter));
+		return Double.parseDouble(data.get(parameter));
 	}
-	
+
 	public int getIntParameter(String parameter) {
-		return Integer.parseInt(specialInfo.get(parameter));
+		return Integer.parseInt(data.get(parameter));
 	}
 
 	public HashMap<String, String> getParametersAndValues() {
@@ -80,28 +73,15 @@ public abstract class Game {
 		return states;
 	}
 
-	private void populateMap(Map<String, String> map, String section) {
-		NodeList nList = navigateTo(root, section);
+	private Map<String, String> populateMap(Element root) {
+		HashMap<String, String> map = new HashMap<String, String>();
+		NodeList nList = root.getChildNodes();
 		for (int i = 0; i < nList.getLength(); i++) {
 			Node temp = nList.item(i);
 			if (temp.getNodeType() == Node.ELEMENT_NODE)
 				map.put(temp.getNodeName(), ((Element) temp).getTextContent());
 		}
-	}
-
-	private NodeList navigateTo(Element root, String elemName) {
-		NodeList nList = root.getElementsByTagName(elemName);
-		Node info = nList.item(0);
-		nList = info.getChildNodes();
-		return nList;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
+		return map;
 	}
 
 	/**
@@ -129,26 +109,35 @@ public abstract class Game {
 	}
 
 	/**
-	 * Game specific setup happens in here
+	 * Game specific setup happens in here.
 	 */
 	public abstract void setup();
-	
+
+	/**
+	 * Create a Map of a game's states and their names.
+	 */
 	public abstract void setStates();
 
 	/**
-	 * Return the description for this kind of game to be displayed to the user
+	 * Return the description for this kind of game.
 	 * 
-	 * @return description.
+	 * @return the game's description.
 	 */
 	public String getDescription() {
-		return basicInfo.get("description");
+		return data.get("description");
 	}
 
+	/**
+	 * Return the title for this kind of game.
+	 * 
+	 * @return the game's title.
+	 */
 	public String getTitle() {
-		return basicInfo.get("title");
+		return data.get("title");
 	}
 
 	public Cell makeNewCell(Grid grid, Point p) {
 		return new Cell(grid, p);
 	}
+
 }
