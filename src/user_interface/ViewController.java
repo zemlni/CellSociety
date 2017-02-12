@@ -2,7 +2,6 @@ package user_interface;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -34,7 +33,7 @@ public class ViewController {
 
 	private final Dimension DEFAULT_SIZE = new Dimension(900, 500);
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources";
-	private final int GRID_SIZE = 400;
+	private final int GRID_SIZE = 480;
 	private final int CONTROL_PANEL_WIDTH = 300;
 	
 	private SimulationController mySimulationController = new SimulationController();
@@ -52,6 +51,11 @@ public class ViewController {
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
 		stage.setResizable(false);
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+	          public void handle(WindowEvent we) {
+	        	  System.exit(0);
+	          }
+	      });   
 		setupUI(stage);
 	}
 
