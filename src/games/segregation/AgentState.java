@@ -11,23 +11,20 @@ import javafx.scene.paint.Color;
 
 /**
  * @author elliott
- * This class represents a population in Segregation.
+ * This abstract class represents an Agent in Segregation.
+ * It calculates the percentage of similar neighbors and determines the movement of agents.
  */
-public class Population extends State {
-
+public abstract class AgentState extends State {
+	
 	private Game game;
 	private double satisfactionThreshold;
-	private int populationID;
-	
-	public Population(Game game, String color, int populationID) {
+
+	/**
+	 */
+	public AgentState(Game game, String color) {
 		this.satisfactionThreshold = game.getDoubleParameter("satisfaction");
 		this.game = game;
-		this.populationID = populationID;
 		setColor(Color.web(color.toUpperCase()));
-	}
-	
-	public int getPopulationID() {
-		return populationID;
 	}
 	
 	/**
@@ -39,10 +36,7 @@ public class Population extends State {
 		for (Cell cell: getCell().getNeighborsDiagonal()) {
 			if (!(cell.getState() instanceof EmptyState)) {
 				neighbors++;
-				/*if (cell.getState().getClass().equals(this.getClass())) {
-					similar++;
-				}*/
-				if (populationID == ((Population) cell.getState()).getPopulationID()) {
+				if (cell.getState().getClass().equals(this.getClass())) {
 					similar++;
 				}
 			}

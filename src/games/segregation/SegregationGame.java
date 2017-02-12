@@ -18,8 +18,8 @@ public class SegregationGame extends Game {
 	
 	@Override
 	public void setStates() {
-		getStates().put("Population 1", new Population(this, getParameter("population1Color"), 1));
-		getStates().put("Population 2", new Population(this, getParameter("population2Color"), 2));
+		getStates().put("Population 1", new PopulationOne(this));
+		getStates().put("Population 2", new PopulationTwo(this));
 		getStates().put("Empty", new EmptyState(this));
 	}
 	
@@ -31,9 +31,9 @@ public class SegregationGame extends Game {
 	public State getRandomState() {
 		double rand = Math.random();
 		if (rand < getDoubleParameter("percentPopulation1"))
-			return new Population(this, getParameter("population1Color"), 1);
+			return new PopulationOne(this);
 		if (rand >= getDoubleParameter("percentPopulation1") && rand < (getDoubleParameter("percentPopulation1") + getDoubleParameter("percentPopulation2")))
-			return new Population(this, getParameter("population2Color"), 2);
+			return new PopulationTwo(this);
 		return new EmptyState(this);
 	}
 
