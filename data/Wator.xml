@@ -10,4 +10,7 @@
 	<sharkStartEnergy>5</sharkStartEnergy>
 	<sharkEnergyPerFish>1</sharkEnergyPerFish>
 	<sharkReprodTime>10</sharkReprodTime>
+	<fishColor>LAWNGREEN</fishColor>
+	<sharkColor>BLACK</sharkColor>
+	<emptyColor>DEEPSKYBLUE</emptyColor>
 </data>

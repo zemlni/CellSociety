@@ -7,4 +7,7 @@
 	<percentTree>0.7</percentTree>
 	<percentBurning>0.1</percentBurning>
 	<fireChance>0.5</fireChance>
+	<treeColor>FORESTGREEN</treeColor>
+	<burningColor>RED</burningColor>
+	<emptyColor>LIGHTYELLOW</emptyColor>
 </data>

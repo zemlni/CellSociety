@@ -5,4 +5,6 @@
 	<description>A simulation of Conway's Game of Life using Cellular Automata.</description>
 	<author>Nikita Zemlevskiy</author>
 	<percentLiving>0.2</percentLiving>
+	<deadColor>WHITE</deadColor>
+	<liveColor>BLACK</liveColor>
 </data>
