@@ -16,6 +16,7 @@ public class TreeState extends State {
 	 * A Tree cell in this game is green.
 	 */
 	public TreeState(Game game) {
+		this.game = game;
 		setColor(Color.web(game.getParameter("treeColor").toUpperCase()));
 	}
 
