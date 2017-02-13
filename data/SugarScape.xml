@@ -7,6 +7,9 @@
 	<percentAgent>0.25</percentAgent>
 	<sugarStart>5</sugarStart>
 	<sugarMetabolism>1</sugarMetabolism>
-	<maxSugar>3</maxSugar>
+	<maxSugar>20</maxSugar>
 	<interval>1</interval>
+	<agentColor>BLUE</agentColor>
+	<sugarColor>ORANGE</sugarColor>
+
 </data>

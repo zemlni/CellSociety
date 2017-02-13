@@ -8,19 +8,18 @@ import java.util.List;
 import java.util.Set;
 
 import cellsociety_team18.Cell;
+import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
 public class SlimeState extends State {
 	private int sniffThreshold;
-	private int evaporationTime;
-	private double diffusionChance;
+	private Game game;
 
-	public SlimeState(int sniffThreshold, int evaporationTime, double diffusionChance) {
-		this.sniffThreshold = sniffThreshold;
-		this.evaporationTime = evaporationTime;
-		this.diffusionChance = diffusionChance;
-		setColor(Color.RED);
+	public SlimeState(Game game) {
+		this.game = game;
+		this.sniffThreshold = game.getIntParameter("sniffThreshold");
+		setColor(Color.web(game.getParameter("slimeColor").toUpperCase()));
 	}
 
 	@Override
@@ -28,13 +27,15 @@ public class SlimeState extends State {
 
 		Cell move = getPossibleMove();
 		Cell temp = getCell();
-		if (move != null && !(move.getNextState() instanceof SlimeState)) {
-			move.setNextState(this);
-			if (temp.getNextState().equals(this)) {
-				temp.setNextState(new ChemicalState(evaporationTime, diffusionChance));
+
+		if (move != null && !(move.getNextState() instanceof SlimeState) && !move.equals(temp)) {
+			move.setNextState(new SlimeState(game));
+			if (temp.getNextState().hashCode() == this.hashCode()){
+				temp.setNextState(new ChemicalState(game));
 			}
 			return;
 		}
+
 	}
 
 	private Set<Cell> addNeighborsRecursive(int i, List<Cell> neighbors) {
@@ -42,7 +43,7 @@ public class SlimeState extends State {
 		if (i > 0) {
 			for (Cell cell : neighbors) {
 				answer.add(cell);
-				answer.addAll(addNeighborsRecursive(i - 1, cell.getNeighborsDiagonal()));
+				answer.addAll(addNeighborsRecursive(i - 1, cell.getNeighbors()));
 			}
 		}
 		return answer;
@@ -74,7 +75,7 @@ public class SlimeState extends State {
 			return null;
 		}
 		Cell highest = options.get(0);
-		options = getCell().getNeighborsDiagonal();
+		options = getCell().getNeighbors();
 		Collections.shuffle(options);
 		Cell answer = null;
 		for (Cell cell : options) {
