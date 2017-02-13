@@ -62,11 +62,13 @@ public class ViewController {
 	 * Create and start the animation.
 	 */
 	public void start(int delay) {
-		KeyFrame frame = new KeyFrame(Duration.millis(delay), e -> step());
-		myAnimation = new Timeline();
-		myAnimation.setCycleCount(Timeline.INDEFINITE);
-		myAnimation.getKeyFrames().add(frame);
-		myAnimation.play();
+		if (mySimulationViews.size() > 0) {
+			KeyFrame frame = new KeyFrame(Duration.millis(delay), e -> step());
+			myAnimation = new Timeline();
+			myAnimation.setCycleCount(Timeline.INDEFINITE);
+			myAnimation.getKeyFrames().add(frame);
+			myAnimation.play();
+		}
 	}
 
 	/**
@@ -101,9 +103,11 @@ public class ViewController {
 	 * Updates the simulation on each time step.
 	 */
 	public void step() {
-		mySimulationController.step();
-		myGraph.update(mySimulationController.getProportions());
-		updateGrids();
+		if (mySimulationViews.size() > 0) {
+			mySimulationController.step();
+			myGraph.update(mySimulationController.getProportions());
+			updateGrids();
+		}
 	}
 
 	/**

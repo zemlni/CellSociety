@@ -373,19 +373,10 @@ public class ControlPanel extends ScrollPane {
 	}
 	
 	private Boolean checkParameters() {
-		
-		//invalid cell state values given
-		//cell locations given that are outside the bounds of the grid's size
-		// check game params?
-		// check locations and number is right
-		
 		try {
 			Integer.parseInt(myGridSizeField.getText());
 			Integer.parseInt(myNeighborsField.getText());
 			Double.parseDouble(myCellSizeField.getText());
-			if (myCellDistributions.getValue().equals("From List")) {
-				System.out.println(myCurrentSimulation.getParameter("locations"));
-			}
 		}
 		catch (Exception e) {
 			showMessage();
