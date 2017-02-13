@@ -13,9 +13,13 @@ import javafx.scene.paint.Color;
 
 public class SlimeState extends State {
 	private int sniffThreshold;
+	private int evaporationTime;
+	private double diffusionChance;
 
-	public SlimeState(int sniffThreshold) {
+	public SlimeState(int sniffThreshold, int evaporationTime, double diffusionChance) {
 		this.sniffThreshold = sniffThreshold;
+		this.evaporationTime = evaporationTime;
+		this.diffusionChance = diffusionChance;
 		setColor(Color.RED);
 	}
 
@@ -23,9 +27,13 @@ public class SlimeState extends State {
 	public void chooseState() {
 
 		Cell move = getPossibleMove();
-		if (move != null) {
+		Cell temp = getCell();
+		if (move != null && !(move.getNextState() instanceof SlimeState)) {
 			move.setNextState(this);
-			getCell().setNextState(new EmptyState());
+			if (temp.getNextState().equals(this)) {
+				temp.setNextState(new ChemicalState(evaporationTime, diffusionChance));
+			}
+			return;
 		}
 	}
 
@@ -34,34 +42,50 @@ public class SlimeState extends State {
 		if (i > 0) {
 			for (Cell cell : neighbors) {
 				answer.add(cell);
-				answer.addAll(addNeighborsRecursive(i - 1, cell.getNeighbors()));
+				answer.addAll(addNeighborsRecursive(i - 1, cell.getNeighborsDiagonal()));
 			}
 		}
 		return answer;
 	}
 
 	private Cell getPossibleMove() {
-		Set<Cell> optionsSet = addNeighborsRecursive(sniffThreshold - 1, getCell().getNeighbors());
+		Set<Cell> optionsSet = addNeighborsRecursive(sniffThreshold, getCell().getNeighbors());
 		optionsSet.remove(getCell());
 		Iterator<Cell> i = optionsSet.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-			if (cell.getState() instanceof SlimeState)
+			if (cell.getNextState() instanceof SlimeState) {
 				i.remove();
+			}
 		}
 		List<Cell> options = new ArrayList<Cell>(optionsSet);
 		Collections.sort(options, (a, b) -> {
-			State aState = ((Cell) a).getState();
-			State bState = ((Cell) b).getState();
-			if (!(aState instanceof ChemicalState))
-				return -1;
-			if (!(bState instanceof ChemicalState))
+			State aState = ((Cell) a).getNextState();
+			State bState = ((Cell) b).getNextState();
+			if (!(aState instanceof ChemicalState) && !(bState instanceof ChemicalState))
+				return 0;
+			if (aState instanceof ChemicalState && !(bState instanceof ChemicalState))
 				return 1;
+			if (bState instanceof ChemicalState && !(aState instanceof ChemicalState))
+				return -1;
 			return ((ChemicalState) aState).getSlimeContent() - ((ChemicalState) bState).getSlimeContent();
 		});
-		if (options.size() == 0)
+		if (options.size() == 0) {
 			return null;
-		return options.get(0);
+		}
+		Cell highest = options.get(0);
+		options = getCell().getNeighborsDiagonal();
+		Collections.shuffle(options);
+		Cell answer = null;
+		for (Cell cell : options) {
+			Set<Cell> temp = addNeighborsRecursive(sniffThreshold - 1, cell.getNeighbors());
+			if (temp.contains(highest)) {
+				answer = cell;
+				break;
+			}
+		}
+
+		return answer;
 	}
 
 }

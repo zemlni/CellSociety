@@ -137,9 +137,4 @@ public abstract class Game {
 	public String getTitle() {
 		return data.get("title");
 	}
-
-	public Cell makeNewCell(Grid grid, Point p) {
-		return new Cell(grid, p);
-	}
-
 }

@@ -1,12 +1,17 @@
 package games.slime;
 
+import java.util.List;
+
+import cellsociety_team18.Cell;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
 public class ChemicalState extends State {
 	private int time;
-	public ChemicalState(int evaporationTime) {
+	private double diffusionChance;
+	public ChemicalState(int evaporationTime, double diffusionChance) {
 		time = evaporationTime;
+		this.diffusionChance = diffusionChance;
 		setColor(Color.GREEN);
 	}
 
@@ -18,6 +23,13 @@ public class ChemicalState extends State {
 		}
 		setColor(getColor().darker());
 		time--;
+		List<Cell> neighbors = getCell().getNeighbors();
+		/*for (Cell neighbor: neighbors){
+			double rand = Math.random();
+			if (rand < diffusionChance && !(neighbor.getNextState() instanceof SlimeState) && !(neighbor.getState() instanceof SlimeState)){
+				neighbor.setNextState(new ChemicalState(time - 1, diffusionChance));
+			}
+		}*/
 	}
 	public int getSlimeContent(){
 		return time;

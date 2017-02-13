@@ -4,9 +4,9 @@
 	<title>SugarScape</title>
 	<description>A simulation of the SugarScape model using Cellular Automata.</description>
 	<author>Nikita Zemlevskiy</author>
-	<percentAgent></percentAgent>
-	<sugarStart></sugarStart>
-	<sugarMetabolism></sugarMetabolism>
-	<maxSugar></maxSugar>
-	<interval></interval>
+	<percentAgent>0.25</percentAgent>
+	<sugarStart>5</sugarStart>
+	<sugarMetabolism>1</sugarMetabolism>
+	<maxSugar>3</maxSugar>
+	<interval>1</interval>
 </data>

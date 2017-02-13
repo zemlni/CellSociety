@@ -8,7 +8,9 @@ public class SlimeGame extends Game {
 	@Override
 	public State getRandomState() {
 		double rand = Math.random();
-		return rand < getDoubleParameter("percentSlime") ? new SlimeState(getIntParameter("sniffThreshold")) : new EmptyState();
+		return rand < getDoubleParameter("percentSlime")
+				? new SlimeState(getIntParameter("sniffThreshold"), getIntParameter("evaporationTime"), getDoubleParameter("diffusionChance"))
+				: new EmptyState();
 	}
 
 	@Override
@@ -18,9 +20,8 @@ public class SlimeGame extends Game {
 
 	@Override
 	public void setStates() {
-		getStates().put("Slime", new SlimeState(getIntParameter("sniffThreshold")));
-		getStates().put("Chemical", new ChemicalState(getIntParameter("evaporationTime")));
+		getStates().put("Slime", new SlimeState(getIntParameter("sniffThreshold"), getIntParameter("evaporationTime"), getDoubleParameter("diffusionChance")));
+		getStates().put("Chemical", new ChemicalState(getIntParameter("evaporationTime"), getDoubleParameter("diffusionChance")));
 		getStates().put("Empty", new EmptyState());
 	}
-
 }

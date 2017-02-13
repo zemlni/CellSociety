@@ -11,25 +11,31 @@ import javafx.scene.paint.Color;
 public class AgentState extends State {
 	private int sugarMetabolism;
 	private int sugar;
+	private int maxSugar;
+	private int interval;
 	
-	public AgentState(int sugarStart, int sugarMetabolism){
+	public AgentState(int sugarStart, int sugarMetabolism, int maxSugar, int interval){
 		this.sugar = sugarStart;
 		this.sugarMetabolism = sugarMetabolism;
+		this.maxSugar = maxSugar;
+		this.interval = interval;
 		setColor(Color.BLUE);
 	}
 	@Override
 	public void chooseState() {
 		if (sugar <= 0) {
-			getCell().setNextState(new EmptyState());
+			getCell().setNextState(new EmptyState(0, maxSugar, interval));
+			System.out.println("DEATh");
 			return;
 		}
-
-		SugarScapeCell move = (SugarScapeCell) getPossibleMove();
+		Cell temp = getCell();
+		Cell move =  getPossibleMove();
 		if (move != null) {
+			eatSugar(move.getNextState());
 			move.setNextState(this);
-			getCell().setNextState(new EmptyState());
+			temp.setNextState(new EmptyState(0, maxSugar, interval));
 		}
-		eatSugar(move);
+		
 		sugar -= sugarMetabolism;
 	}
 
@@ -38,17 +44,17 @@ public class AgentState extends State {
 		Iterator<Cell> i = options.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-			if (!(cell.getState() instanceof EmptyState))
+			if (!(cell.getNextState() instanceof EmptyState))
 				i.remove();
 		}
-		Collections.sort(options, (a, b) -> ((SugarScapeCell) a).getCurSugar() - ((SugarScapeCell) b).getCurSugar());
+		Collections.sort(options, (a, b) -> ((EmptyState)a.getNextState()).getCurSugar() - ((EmptyState)b.getNextState()).getCurSugar());
 		if (options.size() == 0)
 			return null;
 		return options.get(0);
 	}
 
-	private void eatSugar(SugarScapeCell cell) {
-		this.sugar += cell.getCurSugar();
-		cell.resetCurSugar();
+	private void eatSugar(State state) {
+		this.sugar += ((EmptyState)state).getCurSugar();
+		((EmptyState)state).resetCurSugar();
 	}
 }
