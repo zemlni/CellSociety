@@ -6,8 +6,6 @@ import java.util.Arrays;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import games.EmptyState;
-import games.game_of_life.DeadState;
-import games.game_of_life.LiveState;
 
 /**
  * @author Nikita Zemlevskiy This class is the implementation of the Wator game.
@@ -29,8 +27,7 @@ public class WatorGame extends Game {
 	}
 	
 	/**
-	 * Get a random Wator state.
-	 * @return new random state.
+	 * @return a new state probabilistically.
 	 */
 	@Override
 	public State getStateProbabilistically() {
@@ -42,6 +39,10 @@ public class WatorGame extends Game {
 		return new EmptyState(this);
 	}
 	
+	/**
+	 * @return a new state randomly.
+	 */
+	@Override
 	public State getStateRandomly() {
 		return getStateRandomly(new ArrayList<>(Arrays.asList(new EmptyState(this), new FishState(this), new SharkState(this))));
 	}

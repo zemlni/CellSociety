@@ -13,7 +13,7 @@ public class TreeState extends State {
 	private Game game;
 
 	/**
-	 * A Tree cell in this game is green.
+	 * @param game The state's game.
 	 */
 	public TreeState(Game game) {
 		this.game = game;

@@ -20,6 +20,8 @@ public abstract class AgentState extends State {
 	private double satisfactionThreshold;
 
 	/**
+	 * @param game The state's game.
+	 * @param color The state's color.
 	 */
 	public AgentState(Game game, String color) {
 		this.satisfactionThreshold = game.getDoubleParameter("satisfaction");

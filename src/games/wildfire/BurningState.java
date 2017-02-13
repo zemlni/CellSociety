@@ -14,7 +14,7 @@ public class BurningState extends State {
 	private Game game;
 
 	/**
-	 * @return A burning state.
+	 * @param game The state's game.
 	 */
 	public BurningState(Game game) {
 		this.game = game;

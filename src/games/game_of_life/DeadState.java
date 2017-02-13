@@ -12,6 +12,7 @@ public class DeadState extends GameOfLifeState {
 	private Game game;
 	
 	/**
+	 * @param game The state's game.
 	 */
 	public DeadState(Game game) {
 		this.game = game;

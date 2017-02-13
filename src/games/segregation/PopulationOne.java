@@ -9,6 +9,7 @@ import cellsociety_team18.Game;
 public class PopulationOne extends AgentState {
 
 	/**
+	 * @param game The state's game.
 	 */
 	public PopulationOne(Game game) {
 		super(game, game.getParameter("population1Color").toUpperCase());
