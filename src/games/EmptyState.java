@@ -17,7 +17,7 @@ public class EmptyState extends State {
 	 * @return An empty state.
 	 */
 	public EmptyState(Game game) {
-		setColor(Color.web(game.getParameter("emptyColor").toUpperCase()));
+		setColor(Color.web(game.getSettings().getParameter("emptyColor").toUpperCase()));
 	}
 
 	/**

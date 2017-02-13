@@ -17,7 +17,7 @@ public class TreeState extends State {
 	 */
 	public TreeState(Game game) {
 		this.game = game;
-		setColor(Color.web(game.getParameter("treeColor").toUpperCase()));
+		setColor(Color.web(game.getSettings().getParameter("treeColor").toUpperCase()));
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class TreeState extends State {
 	@Override
 	public void chooseState() {
 		for (Cell cell : getCell().getNeighbors()) {
-			if (cell.getState() instanceof BurningState && Math.random() <= game.getDoubleParameter("fireChance")) {
+			if (cell.getState() instanceof BurningState && Math.random() <= game.getSettings().getDoubleParameter("fireChance")) {
 				getCell().setNextState(new BurningState(game));
 				return;
 			}

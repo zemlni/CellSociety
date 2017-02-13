@@ -32,10 +32,10 @@ public class WildfireGame extends Game {
 	@Override
 	public State getStateProbabilistically() {
 		double rand = Math.random();
-		if (rand < getDoubleParameter("percentBurning")) {
+		if (rand < getSettings().getDoubleParameter("percentBurning")) {
 			return new BurningState(this);
 		}
-		if (rand >= getDoubleParameter("percentBurning") && rand < (getDoubleParameter("percentBurning") + getDoubleParameter("percentTree")))
+		if (rand >= getSettings().getDoubleParameter("percentBurning") && rand < (getSettings().getDoubleParameter("percentBurning") + getSettings().getDoubleParameter("percentTree")))
 			return new TreeState(this);
 		return new EmptyState(this);
 	}

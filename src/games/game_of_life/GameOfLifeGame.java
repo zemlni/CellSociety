@@ -29,7 +29,7 @@ public class GameOfLifeGame extends Game {
 	 */
 	@Override
 	public State getStateProbabilistically() {
-		return Math.random() < getDoubleParameter("percentLiving") ? new LiveState(this) : new DeadState(this);
+		return Math.random() < getSettings().getDoubleParameter("percentLiving") ? new LiveState(this) : new DeadState(this);
 	}
 	
 	/**

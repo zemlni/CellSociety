@@ -12,7 +12,7 @@ public class PopulationOne extends AgentState {
 	 * @param game The state's game.
 	 */
 	public PopulationOne(Game game) {
-		super(game, game.getParameter("population1Color").toUpperCase());
+		super(game, game.getSettings().getParameter("population1Color").toUpperCase());
 	}
 
 }

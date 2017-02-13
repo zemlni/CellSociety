@@ -32,9 +32,9 @@ public class SegregationGame extends Game {
 	@Override
 	public State getStateProbabilistically() {
 		double rand = Math.random();
-		if (rand < getDoubleParameter("percentPopulation1"))
+		if (rand < getSettings().getDoubleParameter("percentPopulation1"))
 			return new PopulationOne(this);
-		if (rand >= getDoubleParameter("percentPopulation1") && rand < (getDoubleParameter("percentPopulation1") + getDoubleParameter("percentPopulation2")))
+		if (rand >= getSettings().getDoubleParameter("percentPopulation1") && rand < (getSettings().getDoubleParameter("percentPopulation1") + getSettings().getDoubleParameter("percentPopulation2")))
 			return new PopulationTwo(this);
 		return new EmptyState(this);
 	}

@@ -9,6 +9,10 @@ import cellsociety_team18.Simulation;
 import cellsociety_team18.XMLParser;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
@@ -165,8 +169,9 @@ public class ControlPanel extends ScrollPane {
 	}
 
 	private void addOptionsFromDisk(ComboBox<String> box, boolean configurationFiles) {
-		File folder = new File(dataFolder);
-		for (File file : folder.listFiles()) {
+		List<File> options = Arrays.asList(new File(dataFolder).listFiles());
+		Collections.sort(options);
+		for (File file : options) {
 			String name = file.getName();
 			if (XMLParser.isXMLFile(name)) {
 				if (configurationFiles && name.contains("Configuration") || !(configurationFiles || name.contains("Configuration"))) {
@@ -212,33 +217,33 @@ public class ControlPanel extends ScrollPane {
 		VBox result = new VBox(VERTICAL_SPACING);
 		
 		HBox sizeBox = new HBox(HORIZONTAL_SPACING);
-		myGridSizeField = createField(myCurrentSimulation.getParameter("gridSize"));
-		myCellSizeField = createField(myCurrentSimulation.getParameter("cellSize"));
+		myGridSizeField = createField(myCurrentSimulation.getSettings().getParameter("gridSize"));
+		myCellSizeField = createField(myCurrentSimulation.getSettings().getParameter("cellSize"));
 		sizeBox.getChildren().addAll(addLabelToNode(myGridSizeField, "GridSizeString"), addLabelToNode(myCellSizeField, "CellSize"));
 		
 		HBox cellBox = new HBox(HORIZONTAL_SPACING);
-		myCells = createComboBox(new String[]{"Square", "Triangle", "Hexagon"}, myCurrentSimulation.getParameter("cellType"));
+		myCells = createComboBox(new String[]{"Square", "Triangle", "Hexagon"}, myCurrentSimulation.getSettings().getParameter("cellType"));
 		cellBox.getChildren().addAll(addLabelToNode(myCells, "CellType"));
 		cellBox.setAlignment(Pos.CENTER_LEFT);
 		
 		HBox edgeBox = new HBox(HORIZONTAL_SPACING);
 		myGridEdges = new ComboBox<String>();
 		myGridEdges.getItems().addAll("Bounded", "Toroidal");
-		myGridEdges.setValue(myCurrentSimulation.getParameter("gridEdge"));
+		myGridEdges.setValue(myCurrentSimulation.getSettings().getParameter("gridEdge"));
 		edgeBox.getChildren().addAll(addLabelToNode(myGridEdges, "GridEdge"));
 		edgeBox.setAlignment(Pos.CENTER_LEFT);
 		
 		HBox distributionBox = new HBox(HORIZONTAL_SPACING);
 		myCellDistributions = new ComboBox<String>();
-		myCellDistributions.getItems().addAll("Probabilistic", "Random", "From List");
-		myCellDistributions.setValue(myCurrentSimulation.getParameter("cellDistribution"));
+		myCellDistributions.getItems().addAll("Probabilistic", "Random");
+		myCellDistributions.setValue(myCurrentSimulation.getSettings().getParameter("cellDistribution"));
 		distributionBox.getChildren().addAll(addLabelToNode(myCellDistributions, "CellDistribution"));
 		distributionBox.setAlignment(Pos.CENTER_LEFT);
 		
-		myNeighborsField = createField(myCurrentSimulation.getParameter("numberOfNeighbors"));
+		myNeighborsField = createField(myCurrentSimulation.getSettings().getParameter("numberOfNeighbors"));
 		
 		myOutlineToggle = new ToggleButton(resources.getString("OutlineGrid"));
-		myOutlineToggle.setSelected(Boolean.parseBoolean(myCurrentSimulation.getParameter("outlineGrid")));
+		myOutlineToggle.setSelected(Boolean.parseBoolean(myCurrentSimulation.getSettings().getParameter("outlineGrid")));
 		
 		result.getChildren().addAll(sizeBox, myOutlineToggle, cellBox, edgeBox, distributionBox, addLabelToNode(myNeighborsField, "NumberNeighbors"));
 		return result;
@@ -305,7 +310,7 @@ public class ControlPanel extends ScrollPane {
 	private void updateGameParameters() {
 		ObservableList<Parameter> data = myParameterTable.getData();
 		for (Parameter entry : data) {
-			getGame().setParameter(entry.getParameter(), entry.getValue());
+			getGame().getSettings().put(entry.getParameter(), entry.getValue());
 		}
 	}
 	
@@ -327,7 +332,7 @@ public class ControlPanel extends ScrollPane {
 		myDelaySlider = new Slider();
 		myDelaySlider.setMin(20);
 		myDelaySlider.setMax(1000);
-		myDelaySlider.setValue(myCurrentSimulation.getIntParameter("delay"));
+		myDelaySlider.setValue(myCurrentSimulation.getSettings().getIntParameter("delay"));
 		myDelaySlider.setShowTickLabels(true);
 		myDelaySlider.setShowTickMarks(false);
 		myDelaySlider.setMajorTickUnit(500);
@@ -341,19 +346,19 @@ public class ControlPanel extends ScrollPane {
 	}
 	
 	private void updateConfigurationParameters() {
-		myCurrentSimulation.setParameter("gridSize", myGridSizeField.getText());
-		myCurrentSimulation.setParameter("cellType", myCells.getValue());
-		myCurrentSimulation.setParameter("gridEdge", myGridEdges.getValue());
-		myCurrentSimulation.setParameter("cellDistribution", myCellDistributions.getValue());
-		myCurrentSimulation.setParameter("cellSize", myCellSizeField.getText());
-		myCurrentSimulation.setParameter("outlineGrid", String.valueOf(myOutlineToggle.isSelected()));
-		myCurrentSimulation.setParameter("numberOfNeighbors", myNeighborsField.getText());
+		myCurrentSimulation.getSettings().put("gridSize", myGridSizeField.getText());
+		myCurrentSimulation.getSettings().put("cellType", myCells.getValue());
+		myCurrentSimulation.getSettings().put("gridEdge", myGridEdges.getValue());
+		myCurrentSimulation.getSettings().put("cellDistribution", myCellDistributions.getValue());
+		myCurrentSimulation.getSettings().put("cellSize", myCellSizeField.getText());
+		myCurrentSimulation.getSettings().put("outlineGrid", String.valueOf(myOutlineToggle.isSelected()));
+		myCurrentSimulation.getSettings().put("numberOfNeighbors", myNeighborsField.getText());
 	}
 	
 	private void saveConfiguration() {
 		if (checkParameters()) {
 			updateConfigurationParameters();
-			XMLParser.write(myCurrentSimulation.getParametersAndValues());
+			XMLParser.write(myCurrentSimulation.getSettings().getMap());
 			resetConfigurations();
 		}
 	}

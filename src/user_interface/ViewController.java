@@ -35,7 +35,7 @@ public class ViewController {
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources";
 	private final int GRID_SIZE = 480;
 	private final int CONTROL_PANEL_WIDTH = 400;
-	
+
 	private SimulationController mySimulationController = new SimulationController();
 	private ArrayList<SimulationView> mySimulationViews = new ArrayList<SimulationView>();
 
@@ -44,17 +44,18 @@ public class ViewController {
 	private ResourceBundle myResources = ResourceBundle.getBundle("UIStrings");
 
 	/**
-	 * @param stage The main window.
+	 * @param stage
+	 *            The main window.
 	 * @return a View Controller.
 	 */
 	public ViewController(Stage stage) {
 		stage.setTitle("CellSociety");
 		stage.setResizable(false);
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-	          public void handle(WindowEvent we) {
-	        	  System.exit(0);
-	          }
-	      });   
+			public void handle(WindowEvent we) {
+				System.exit(0);
+			}
+		});
 		setupUI(stage);
 	}
 
@@ -112,7 +113,9 @@ public class ViewController {
 
 	/**
 	 * Creates a simulation.
-	 * @param game A String identifying the game.
+	 * 
+	 * @param game
+	 *            A String identifying the game.
 	 */
 	public Simulation newSimulation(String game, String configuration) {
 		return mySimulationController.create(game, configuration);
@@ -120,24 +123,30 @@ public class ViewController {
 
 	/**
 	 * Displays the simulation created by the user.
-	 * @param simulation The simulation to be displayed.
-	 * @param size The size of the grid to be displayed.
+	 * 
+	 * @param simulation
+	 *            The simulation to be displayed.
+	 * @param size
+	 *            The size of the grid to be displayed.
 	 */
 	public void displaySimulation(Simulation simulation) {
 		simulation.setup();
 		mySimulationController.add(simulation);
-		DisplayGrid grid = new DisplayGrid(this, simulation, GRID_SIZE, simulation.getParameter("cellType"), Boolean.parseBoolean(simulation.getParameter("outlineGrid")), simulation.getIntParameter("cellSize"));
+		DisplayGrid grid = new DisplayGrid(this, simulation, GRID_SIZE,
+				simulation.getSettings().getParameter("cellType"),
+				Boolean.parseBoolean(simulation.getSettings().getParameter("outlineGrid")),
+				simulation.getSettings().getIntParameter("cellSize"));
 		grid.update(simulation.getGrid());
 		SimulationView view = new SimulationView(simulation, grid, GRID_SIZE, mySimulationViews.size() + 1);
 		view.setOnCloseRequest(new EventHandler<WindowEvent>() {
-	          public void handle(WindowEvent we) {
-	              stop();
-	        	  mySimulationController.remove(view.getSimulation());
-	              mySimulationViews.remove(view);
-	              myGraph.update(mySimulationController.getProportions());
-	          }
-	      });     
-        mySimulationViews.add(view);
+			public void handle(WindowEvent we) {
+				stop();
+				mySimulationController.remove(view.getSimulation());
+				mySimulationViews.remove(view);
+				myGraph.update(mySimulationController.getProportions());
+			}
+		});
+		mySimulationViews.add(view);
 	}
 
 	/**
@@ -154,21 +163,25 @@ public class ViewController {
 	 * Updates the visualizations.
 	 */
 	private void updateGrids() {
-		for (SimulationView view: mySimulationViews) {
+		for (SimulationView view : mySimulationViews) {
 			view.update();
 		}
 	}
 
 	/**
 	 * Handles a click on a cell.
-	 * @param graphicCell The cell that was clicked.
-	 * @param simulation The simulation that was clicked.
+	 * 
+	 * @param graphicCell
+	 *            The cell that was clicked.
+	 * @param simulation
+	 *            The simulation that was clicked.
 	 */
 
 	public void cellClicked(GraphicPolygon graphicCell, Simulation simulation) {
 		if (myAnimation == null || myAnimation.getStatus() == Animation.Status.PAUSED) {
 			Map<String, State> states = simulation.getGame().getStates();
-			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicPolygon.getStateName(states, graphicCell), states.keySet());
+			ChoiceDialog<String> dialog = new ChoiceDialog<>(GraphicPolygon.getStateName(states, graphicCell),
+					states.keySet());
 			dialog.setTitle("State");
 			dialog.setHeaderText("Each cell can have several states.");
 			dialog.setContentText("Choose your cell's state:");

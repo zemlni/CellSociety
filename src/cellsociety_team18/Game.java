@@ -1,13 +1,9 @@
 package cellsociety_team18;
 
-import grids.Grid;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import games.EmptyState;
 
 /**
  * @author Nikita Zemlevskiy This is the superclass for all types of games. This
@@ -16,7 +12,7 @@ import games.EmptyState;
  */
 public abstract class Game {
 
-	private Map<String, String> data;
+	private Settings data;
 	private HashMap<String, State> states = new HashMap<String, State>();
 	private ArrayList<String> parameters = new ArrayList<String>();
 	private String cellDistribution = "";
@@ -27,7 +23,11 @@ public abstract class Game {
 	 * to each game subclass.
 	 */
 	public void parseXML(String gameName) {
-		data = XMLParser.parse(gameName);
+		data = new Settings(XMLParser.parse(gameName));
+	}
+	
+	public Settings getSettings() {
+		return data;
 	}
 	
 	public String getCellDistribution() {
@@ -38,26 +38,10 @@ public abstract class Game {
 		this.cellDistribution = cellDistribution;
 	}
 
-	public void setParameter(String parameter, String value) {
-		data.put(parameter, value);
-	}
-
-	public String getParameter(String parameter) {
-		return data.get(parameter);
-	}
-
-	public double getDoubleParameter(String parameter) {
-		return Double.parseDouble(data.get(parameter));
-	}
-
-	public int getIntParameter(String parameter) {
-		return Integer.parseInt(data.get(parameter));
-	}
-
 	public HashMap<String, String> getParametersAndValues() {
 		HashMap<String, String> result = new HashMap<String, String>();
 		for (String parameter : parameters) {
-			result.put(parameter, getParameter(parameter));
+			result.put(parameter, data.getParameter(parameter));
 		}
 		return result;
 	}
@@ -80,9 +64,6 @@ public abstract class Game {
 		if (cellDistribution.equals("Probabilistic")) {
 			return getStateProbabilistically();
 		}
-		/*else if (cellDistribution.equals("From List")) {
-			return getStateFromList();
-		}*/
 		else {
 			return getStateRandomly();
 		}
@@ -108,8 +89,6 @@ public abstract class Game {
 		return states.get(states.size() - 1);
 	}
 	
-	//public abstract State getStateFromList();
-
 	/**
 	 * Game specific setup happens in here.
 	 */
@@ -126,7 +105,7 @@ public abstract class Game {
 	 * @return the game's description.
 	 */
 	public String getDescription() {
-		return data.get("description");
+		return data.getParameter("description");
 	}
 
 	/**
@@ -135,6 +114,6 @@ public abstract class Game {
 	 * @return the game's title.
 	 */
 	public String getTitle() {
-		return data.get("title");
+		return data.getParameter("title");
 	}
 }

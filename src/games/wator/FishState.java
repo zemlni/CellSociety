@@ -17,8 +17,8 @@ public class FishState extends AgentState {
 	public FishState(Game game) {
 		super(game);
 		this.game = game;
-		setColor(Color.web(game.getParameter("fishColor").toUpperCase()));
-		setReproductionTime(game.getIntParameter("fishReprodTime"));
+		setColor(Color.web(game.getSettings().getParameter("fishColor").toUpperCase()));
+		setReproductionTime(game.getSettings().getIntParameter("fishReprodTime"));
 	}
 
 	/**

@@ -32,9 +32,9 @@ public class WatorGame extends Game {
 	@Override
 	public State getStateProbabilistically() {
 		double rand = Math.random();
-		if (rand < getDoubleParameter("percentFish"))
+		if (rand < getSettings().getDoubleParameter("percentFish"))
 			return new FishState(this);
-		else if (rand >= getDoubleParameter("percentFish") && rand < (getDoubleParameter("percentFish") + getDoubleParameter("percentSharks")))
+		else if (rand >= getSettings().getDoubleParameter("percentFish") && rand < (getSettings().getDoubleParameter("percentFish") + getSettings().getDoubleParameter("percentSharks")))
 			return new SharkState(this);
 		return new EmptyState(this);
 	}

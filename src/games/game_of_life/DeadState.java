@@ -16,7 +16,7 @@ public class DeadState extends GameOfLifeState {
 	 */
 	public DeadState(Game game) {
 		this.game = game;
-		setColor(Color.web(game.getParameter("deadColor").toUpperCase()));
+		setColor(Color.web(game.getSettings().getParameter("deadColor").toUpperCase()));
 	}
 	/**
 	 * If a dead cell has three live neighbors, it becomes a live cell.

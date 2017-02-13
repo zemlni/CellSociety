@@ -18,7 +18,7 @@ public class BurningState extends State {
 	 */
 	public BurningState(Game game) {
 		this.game = game;
-		setColor(Color.web(game.getParameter("burningColor").toUpperCase()));
+		setColor(Color.web(game.getSettings().getParameter("burningColor").toUpperCase()));
 	}
 
 	/**
