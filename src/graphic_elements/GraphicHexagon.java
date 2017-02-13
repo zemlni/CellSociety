@@ -5,9 +5,10 @@ import javafx.scene.paint.Color;
 
 public class GraphicHexagon extends GraphicPolygon {
 
-	public GraphicHexagon(Color color, int gridSizePixels, int gridSizeCells, Point center) {
-		setSize(gridSizePixels/gridSizeCells);
-		double width = getSize();
+	public GraphicHexagon(Color color, int gridSizePixels, int gridSizeCells, Point center, Boolean outlined, int cellSize) {
+		super(outlined);
+		setSize(cellSize);
+		double width = getSize() * 1.5;
 		double horizontalDistance = width * 3/4;
 		double height = Math.sqrt(3)/2 * width;
 		if (!(Math.floorMod(((int) center.getX()), 2) == 0)) {

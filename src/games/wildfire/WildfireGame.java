@@ -1,8 +1,13 @@
 package games.wildfire;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import games.EmptyState;
+import games.wator.FishState;
+import games.wator.SharkState;
 
 /**
  * @author Nikita Zemlevskiy This class is the implementation of wildfire game.
@@ -28,7 +33,7 @@ public class WildfireGame extends Game {
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState() {
+	public State getStateProbabilistically() {
 		double rand = Math.random();
 		if (rand < getDoubleParameter("percentBurning")) {
 			return new BurningState(this);
@@ -36,6 +41,11 @@ public class WildfireGame extends Game {
 		if (rand >= getDoubleParameter("percentBurning") && rand < (getDoubleParameter("percentBurning") + getDoubleParameter("percentTree")))
 			return new TreeState(this);
 		return new EmptyState(this);
+	}
+
+	@Override
+	public State getStateRandomly() {
+		return getStateRandomly(new ArrayList<>(Arrays.asList(new EmptyState(this), new TreeState(this), new BurningState(this))));
 	}
 
 }

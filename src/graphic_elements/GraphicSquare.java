@@ -4,8 +4,10 @@ import cellsociety_team18.Point;
 import javafx.scene.paint.Color;
 
 public class GraphicSquare extends GraphicPolygon {
-	public GraphicSquare(Color color, int gridSizePixels, int gridSizeCells, Point center) {
-		setSize(gridSizePixels / gridSizeCells);
+
+	public GraphicSquare(Color color, int gridSizePixels, int gridSizeCells, Point center, Boolean outlined, int cellSize) {
+		super(outlined);
+		setSize(cellSize);
 		center.setX(center.getX() * getSize());
 		center.setY(center.getY() * getSize());
 		Double[] vertices = getVertices(center);

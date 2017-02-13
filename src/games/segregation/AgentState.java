@@ -33,7 +33,7 @@ public abstract class AgentState extends State {
 	private double percentageOfSimilarNeighbors() {
 		int neighbors = 0;
 		int similar = 0;
-		for (Cell cell: getCell().getNeighborsDiagonal()) {
+		for (Cell cell: getCell().getNeighbors()) {
 			if (!(cell.getState() instanceof EmptyState)) {
 				neighbors++;
 				if (cell.getState().getClass().equals(this.getClass())) {

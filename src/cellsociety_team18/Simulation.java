@@ -20,6 +20,11 @@ import grids.*;
  *         all possible games and grids are maintained.
  */
 public class Simulation {
+	
+	private Grid grid;
+	private Game game;
+	private ArrayList<Map<String, Number>> proportions = new ArrayList<Map<String, Number>>();
+	private Map<String, String> data;
 	private Map<String, Game> games = new HashMap<String, Game>() {
 		{
 			put("Wator", new WatorGame());
@@ -30,16 +35,7 @@ public class Simulation {
 			put("Slime", new SlimeGame());
 		}
 	};
-	private Map<String, Grid> grids = new HashMap<String, Grid>() {
-		{
-			put("Square", new RectGrid());
-			put("Triangle", new TriangleGrid());
-			put("Hexagon", new HexagonGrid());
-		}
-	};
-	private Grid grid;
-	private Game game;
-	private ArrayList<Map<String, Double>> proportions = new ArrayList<Map<String, Double>>();
+	private Map<String, Grid> grids;
 
 	/**
 	 * Initialize a new simulation.
@@ -48,10 +44,31 @@ public class Simulation {
 	 *            The name of the game being played
 	 * @return new simulation with the specified parameters
 	 */
-	public Simulation(String gameName) {
+	public Simulation(String gameName, String configurationName) {
 		game = games.get(gameName);
 		game.parseXML(gameName);
 		game.setup();
+		data = XMLParser.parse(configurationName);
+	}
+	
+	public void setParameter(String parameter, String value) {
+		data.put(parameter, value);
+	}
+
+	public String getParameter(String parameter) {
+		return data.get(parameter);
+	}
+
+	public double getDoubleParameter(String parameter) {
+		return Double.parseDouble(data.get(parameter));
+	}
+
+	public int getIntParameter(String parameter) {
+		return Integer.parseInt(data.get(parameter));
+	}
+	
+	public Map<String, String> getParametersAndValues() {
+		return data;
 	}
 
 	/**
@@ -69,7 +86,7 @@ public class Simulation {
 		return game;
 	}
 
-	public ArrayList<Map<String, Double>> getProportions() {
+	public ArrayList<Map<String, Number>> getProportions() {
 		return proportions;
 	}
 	
@@ -77,9 +94,18 @@ public class Simulation {
 	 * Sets up the grid for the simulation. 
 	 * @param size The size of the grid to be created.
 	 */
-	public void setupGrid(int size, String gridType, int numNeighbors) {
-		grid = grids.get(gridType);
-		grid.setup(game, size, numNeighbors);
+	public void setup() {
+		game.setStates();
+		game.setCellDistribution(getParameter("cellDistribution"));
+		grids = new HashMap<String, Grid>() {
+			{
+				put("Square", new RectGrid(getParameter("gridEdge")));
+				put("Triangle", new TriangleGrid(getParameter("gridEdge")));
+				put("Hexagon", new HexagonGrid(getParameter("gridEdge")));
+			}
+		};
+		grid = grids.get(getParameter("cellType"));
+		grid.setup(game, getIntParameter("gridSize"), getIntParameter("numberOfNeighbors"));
 	}
 		
 	private void recordProportions() {
@@ -90,7 +116,7 @@ public class Simulation {
 	 * Reset the count of the proportion of states.
 	 */
 	public void clearProportions() {
-		proportions = new ArrayList<Map<String, Double>>();
+		proportions = new ArrayList<Map<String, Number>>();
 	}
 	
 	/**

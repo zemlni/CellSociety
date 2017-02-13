@@ -8,9 +8,13 @@ import cellsociety_team18.Cell;
 import cellsociety_team18.Point;
 
 public class HexagonGrid extends Grid {
+	
+	public HexagonGrid(String type) {
+		super(type);
+	}
 
 	@Override
-	public List<Cell> getNeighborsCardinal(Point center) {
+	public List<Cell> getNeighborsBounded(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int) center.getX();
 		int y = (int) center.getY();
@@ -33,14 +37,6 @@ public class HexagonGrid extends Grid {
 		while (neighbors.size() > getNumNeighbors())
 			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
-	}
-
-	/**
-	 * Method doesn't make sense anymore, need to remove
-	 */
-	@Override
-	public List<Cell> getNeighborsDiagonal(Point center) {
-		return getNeighborsCardinal(center);
 	}
 
 	@Override

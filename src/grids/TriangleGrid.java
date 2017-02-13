@@ -5,12 +5,17 @@ import java.util.Collections;
 import java.util.List;
 
 import cellsociety_team18.Cell;
+import cellsociety_team18.Game;
 import cellsociety_team18.Point;
 
 public class TriangleGrid extends Grid {
 
+	public TriangleGrid(String type) {
+		super(type);
+	}
+	
 	@Override
-	public List<Cell> getNeighborsCardinal(Point center) {
+	public List<Cell> getNeighborsBounded(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int) center.getX();
 		int y = (int) center.getY();
@@ -32,14 +37,6 @@ public class TriangleGrid extends Grid {
 		while (neighbors.size() > getNumNeighbors())
 			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
-	}
-
-	/**
-	 * remove this in the future
-	 */
-	@Override
-	public List<Cell> getNeighborsDiagonal(Point center) {
-		return getNeighborsCardinal(center);
 	}
 
 	/**
@@ -73,4 +70,5 @@ public class TriangleGrid extends Grid {
 			neighbors.remove(neighbors.size() - 1);
 		return neighbors;
 	}
+	
 }

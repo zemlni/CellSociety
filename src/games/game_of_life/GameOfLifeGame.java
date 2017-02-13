@@ -1,5 +1,8 @@
 package games.game_of_life;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 
@@ -26,9 +29,12 @@ public class GameOfLifeGame extends Game {
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState() {
-		double rand = Math.random();
-		return rand < getDoubleParameter("percentLiving") ? new LiveState(this) : new DeadState(this);
+	public State getStateProbabilistically() {
+		return Math.random() < getDoubleParameter("percentLiving") ? new LiveState(this) : new DeadState(this);
+	}
+	
+	public State getStateRandomly() {
+		return getStateRandomly(new ArrayList<>(Arrays.asList(new LiveState(this), new DeadState(this))));
 	}
 
 }

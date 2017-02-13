@@ -16,8 +16,8 @@ public class SimulationController {
 	 * @param game A string representing the game's name.
 	 * @return A simulation.
 	 */
-	public Simulation create(String game) {
-		return new Simulation(game);
+	public Simulation create(String game, String configuration) {
+		return new Simulation(game, configuration);
 	}
 	
 	/**
@@ -62,8 +62,8 @@ public class SimulationController {
 	/**
 	 * @return The proportions of the states in each simulation, throughout time.
 	 */
-	public List<List<Map<String, Double>>> getProportions() {
-		List<List<Map<String, Double>>> proportions = new ArrayList<List<Map<String, Double>>>();
+	public List<List<Map<String, Number>>> getProportions() {
+		List<List<Map<String, Number>>> proportions = new ArrayList<List<Map<String, Number>>>();
 		for (Simulation simulation: simulations) {
 			proportions.add(simulation.getProportions());
 		}

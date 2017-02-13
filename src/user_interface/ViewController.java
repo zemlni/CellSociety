@@ -34,7 +34,7 @@ public class ViewController {
 	private final Dimension DEFAULT_SIZE = new Dimension(900, 500);
 	private final String DEFAULT_RESOURCE_PACKAGE = "resources";
 	private final int GRID_SIZE = 480;
-	private final int CONTROL_PANEL_WIDTH = 300;
+	private final int CONTROL_PANEL_WIDTH = 400;
 	
 	private SimulationController mySimulationController = new SimulationController();
 	private ArrayList<SimulationView> mySimulationViews = new ArrayList<SimulationView>();
@@ -42,7 +42,6 @@ public class ViewController {
 	private PopulationGraph myGraph;
 	private Timeline myAnimation;
 	private ResourceBundle myResources = ResourceBundle.getBundle("UIStrings");
-	private int delay = 250;
 
 	/**
 	 * @param stage The main window.
@@ -59,23 +58,17 @@ public class ViewController {
 		setupUI(stage);
 	}
 
-	public int getDelay() {
-		return delay;
-	}
-
-	public void setDelay(int delay) {
-		this.delay = delay;
-	}
-
 	/**
 	 * Create and start the animation.
 	 */
-	public void start() {
-		KeyFrame frame = new KeyFrame(Duration.millis(delay), e -> step());
-		myAnimation = new Timeline();
-		myAnimation.setCycleCount(Timeline.INDEFINITE);
-		myAnimation.getKeyFrames().add(frame);
-		myAnimation.play();
+	public void start(int delay) {
+		if (mySimulationViews.size() > 0) {
+			KeyFrame frame = new KeyFrame(Duration.millis(delay), e -> step());
+			myAnimation = new Timeline();
+			myAnimation.setCycleCount(Timeline.INDEFINITE);
+			myAnimation.getKeyFrames().add(frame);
+			myAnimation.play();
+		}
 	}
 
 	/**
@@ -110,17 +103,19 @@ public class ViewController {
 	 * Updates the simulation on each time step.
 	 */
 	public void step() {
-		mySimulationController.step();
-		myGraph.update(mySimulationController.getProportions());
-		updateGrids();
+		if (mySimulationViews.size() > 0) {
+			mySimulationController.step();
+			myGraph.update(mySimulationController.getProportions());
+			updateGrids();
+		}
 	}
 
 	/**
 	 * Creates a simulation.
 	 * @param game A String identifying the game.
 	 */
-	public Simulation newSimulation(String game) {
-		return mySimulationController.create(game);
+	public Simulation newSimulation(String game, String configuration) {
+		return mySimulationController.create(game, configuration);
 	}
 
 	/**
@@ -128,11 +123,10 @@ public class ViewController {
 	 * @param simulation The simulation to be displayed.
 	 * @param size The size of the grid to be displayed.
 	 */
-	public void displaySimulation(Simulation simulation, int size, String gridType) {
-		simulation.setupGrid(size, gridType, 12);
-		simulation.getGame().setStates();
+	public void displaySimulation(Simulation simulation) {
+		simulation.setup();
 		mySimulationController.add(simulation);
-		DisplayGrid grid = new DisplayGrid(this, simulation, GRID_SIZE, gridType);
+		DisplayGrid grid = new DisplayGrid(this, simulation, GRID_SIZE, simulation.getParameter("cellType"), Boolean.parseBoolean(simulation.getParameter("outlineGrid")), simulation.getIntParameter("cellSize"));
 		grid.update(simulation.getGrid());
 		SimulationView view = new SimulationView(simulation, grid, GRID_SIZE, mySimulationViews.size() + 1);
 		view.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -54,14 +54,7 @@ public class Cell {
 	 * @return A List of the cell's NSEW neighbors.
 	 */
 	public List<Cell> getNeighbors() {
-		return getGrid().getNeighborsCardinal(point);
-	}
-	
-	/**
-	 * @return A List of the cell's NSEW and diagonal neighbors.
-	 */
-	public List<Cell> getNeighborsDiagonal() {
-		return getGrid().getNeighborsDiagonal(point);
+		return getGrid().getNeighbors(point);
 	}
 	
 	public State getState() {

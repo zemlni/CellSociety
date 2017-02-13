@@ -1,8 +1,13 @@
 package games.segregation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import games.EmptyState;
+import games.game_of_life.DeadState;
+import games.game_of_life.LiveState;
 
 /**
  * @author Nikita Zemlevskiy This class is the implementation of Schelling's
@@ -28,13 +33,17 @@ public class SegregationGame extends Game {
 	 * @return new random state.
 	 */
 	@Override
-	public State getRandomState() {
+	public State getStateProbabilistically() {
 		double rand = Math.random();
 		if (rand < getDoubleParameter("percentPopulation1"))
 			return new PopulationOne(this);
 		if (rand >= getDoubleParameter("percentPopulation1") && rand < (getDoubleParameter("percentPopulation1") + getDoubleParameter("percentPopulation2")))
 			return new PopulationTwo(this);
 		return new EmptyState(this);
+	}
+	
+	public State getStateRandomly() {
+		return getStateRandomly(new ArrayList<>(Arrays.asList(new EmptyState(this), new PopulationOne(this), new PopulationTwo(this))));
 	}
 
 }

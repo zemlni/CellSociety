@@ -13,6 +13,10 @@ import cellsociety_team18.Point;
  *         cell as well as setup that is specific to a rectangular grid.
  */
 public class RectGrid extends Grid {
+	
+	public RectGrid(String type) {
+		super(type);
+	}
 
 	/**
 	 * Get list of neighbors, including diagonal ones.
@@ -21,7 +25,7 @@ public class RectGrid extends Grid {
 	 *            point of cell of which neighbors are to be returned.
 	 * @return list of all neighbors, including diagonal ones.
 	 */
-	public List<Cell> getNeighborsDiagonal(Point center) {
+	public List<Cell> getNeighborsBounded(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int) center.getX();
 		int y = (int) center.getY();
@@ -35,26 +39,6 @@ public class RectGrid extends Grid {
 		neighbors.removeAll(Collections.singleton(null));
 		while (neighbors.size() > getNumNeighbors())
 			neighbors.remove(neighbors.size() - 1);
-		return neighbors;
-	}
-
-	/**
-	 * Get list of neighbors not including diagonal ones.
-	 * 
-	 * @param center
-	 *            point of cell of which neighbors are to be returned
-	 * @return list of neighbors not including diagonal ones
-	 */
-	@Override
-	public List<Cell> getNeighborsCardinal(Point center) {
-		ArrayList<Cell> neighbors = new ArrayList<Cell>();
-		int x = (int) center.getX();
-		int y = (int) center.getY();
-		neighbors.add(getCell(new Point(x - 1, y)));
-		neighbors.add(getCell(new Point(x + 1, y)));
-		neighbors.add(getCell(new Point(x, y - 1)));
-		neighbors.add(getCell(new Point(x, y + 1)));
-		neighbors.removeAll(Collections.singleton(null));
 		return neighbors;
 	}
 
