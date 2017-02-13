@@ -242,8 +242,9 @@ public class ControlPanel extends ScrollPane {
 		
 		result.getChildren().addAll(sizeBox, myOutlineToggle, cellBox, edgeBox, distributionBox, addLabelToNode(myNeighborsField, "NumberNeighbors"));
 		return result;
+		
 	}
-	
+		
 	private ComboBox<String> createComboBox(String[] values, String value) { 
 		ComboBox<String> result = new ComboBox<String>();
 		result.getItems().addAll(values);
