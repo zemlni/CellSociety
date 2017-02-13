@@ -41,4 +41,4 @@ Project is fully functional as described above.
 # Any extra features included in the project.
 Some extra features are described above under information. 
 # Your impressions of the assignment to help improve it in the future.
-This was a fun assignment and was a good team work experience. 
+This was a fun assignment and was a good team work experience. Note - the last commit on Monday morning was just adding .classpath and .project files for the convenience of the graders so they wouldn't have to set up the project source folders manually.
