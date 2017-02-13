@@ -14,11 +14,11 @@ public class BurningState extends State {
 	private Game game;
 
 	/**
-	 * @return A burning state.
+	 * @param game The state's game.
 	 */
 	public BurningState(Game game) {
 		this.game = game;
-		setColor(Color.web(game.getParameter("burningColor").toUpperCase()));
+		setColor(Color.web(game.getSettings().getParameter("burningColor").toUpperCase()));
 	}
 
 	/**

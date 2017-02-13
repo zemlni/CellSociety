@@ -25,14 +25,17 @@ public class GameOfLifeGame extends Game {
 	}
 
 	/**
-	 * Get a random GOF state.
-	 * @return new random state.
+	 * @return a new state probabilistically.
 	 */
 	@Override
 	public State getStateProbabilistically() {
-		return Math.random() < getDoubleParameter("percentLiving") ? new LiveState(this) : new DeadState(this);
+		return Math.random() < getSettings().getDoubleParameter("percentLiving") ? new LiveState(this) : new DeadState(this);
 	}
 	
+	/**
+	 * @return a new state randomly.
+	 */
+	@Override
 	public State getStateRandomly() {
 		return getStateRandomly(new ArrayList<>(Arrays.asList(new LiveState(this), new DeadState(this))));
 	}

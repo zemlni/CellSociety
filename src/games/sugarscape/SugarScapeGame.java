@@ -11,7 +11,7 @@ public class SugarScapeGame extends Game {
 	@Override
 	public State getStateProbabilistically() {
 		double rand = Math.random();
-		return rand < getDoubleParameter("percentAgent")
+		return rand < getSettings().getDoubleParameter("percentAgent")
 				? new AgentState(this)
 				: new SugarState(this);
 	}

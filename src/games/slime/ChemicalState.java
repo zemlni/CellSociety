@@ -14,9 +14,9 @@ public class ChemicalState extends State {
 	private Game game;
 	public ChemicalState(Game game) {
 		this.game = game;
-		time = game.getIntParameter("evaporationTime");
-		this.diffusionChance = game.getDoubleParameter("diffusionChance");
-		setColor(Color.web(game.getParameter("chemicalColor").toUpperCase()));
+		time = game.getSettings().getIntParameter("evaporationTime");
+		this.diffusionChance = game.getSettings().getDoubleParameter("diffusionChance");
+		setColor(Color.web(game.getSettings().getParameter("chemicalColor").toUpperCase()));
 	}
 	
 	public ChemicalState(int time, Game game){

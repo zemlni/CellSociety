@@ -24,7 +24,7 @@ public class Simulation {
 	private Grid grid;
 	private Game game;
 	private ArrayList<Map<String, Number>> proportions = new ArrayList<Map<String, Number>>();
-	private Map<String, String> data;
+	private Settings data;
 	private Map<String, Game> games = new HashMap<String, Game>() {
 		{
 			put("Wator", new WatorGame());
@@ -48,26 +48,10 @@ public class Simulation {
 		game = games.get(gameName);
 		game.parseXML(gameName);
 		game.setup();
-		data = XMLParser.parse(configurationName);
+		data = new Settings(XMLParser.parse(configurationName));
 	}
 	
-	public void setParameter(String parameter, String value) {
-		data.put(parameter, value);
-	}
-
-	public String getParameter(String parameter) {
-		return data.get(parameter);
-	}
-
-	public double getDoubleParameter(String parameter) {
-		return Double.parseDouble(data.get(parameter));
-	}
-
-	public int getIntParameter(String parameter) {
-		return Integer.parseInt(data.get(parameter));
-	}
-	
-	public Map<String, String> getParametersAndValues() {
+	public Settings getSettings() {
 		return data;
 	}
 
@@ -96,16 +80,16 @@ public class Simulation {
 	 */
 	public void setup() {
 		game.setStates();
-		game.setCellDistribution(getParameter("cellDistribution"));
+		game.setCellDistribution(data.getParameter("cellDistribution"));
 		grids = new HashMap<String, Grid>() {
 			{
-				put("Square", new RectGrid(getParameter("gridEdge")));
-				put("Triangle", new TriangleGrid(getParameter("gridEdge")));
-				put("Hexagon", new HexagonGrid(getParameter("gridEdge")));
+				put("Square", new RectGrid(data.getParameter("gridEdge")));
+				put("Triangle", new TriangleGrid(data.getParameter("gridEdge")));
+				put("Hexagon", new HexagonGrid(data.getParameter("gridEdge")));
 			}
 		};
-		grid = grids.get(getParameter("cellType"));
-		grid.setup(game, getIntParameter("gridSize"), getIntParameter("numberOfNeighbors"));
+		grid = grids.get(data.getParameter("cellType"));
+		grid.setup(game, data.getIntParameter("gridSize"), data.getIntParameter("numberOfNeighbors"));
 	}
 		
 	private void recordProportions() {

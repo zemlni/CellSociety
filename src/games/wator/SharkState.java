@@ -20,10 +20,10 @@ public class SharkState extends AgentState {
 	public SharkState(Game game) {
 		super(game);
 		this.game = game;
-		setColor(Color.web(game.getParameter("sharkColor").toUpperCase()));
-		setReproductionTime(game.getIntParameter("sharkReprodTime"));
-		this.energy = game.getIntParameter("sharkStartEnergy");
-		this.energyEarned = game.getIntParameter("sharkEnergyPerFish");
+		setColor(Color.web(game.getSettings().getParameter("sharkColor").toUpperCase()));
+		setReproductionTime(game.getSettings().getIntParameter("sharkReprodTime"));
+		this.energy = game.getSettings().getIntParameter("sharkStartEnergy");
+		this.energyEarned = game.getSettings().getIntParameter("sharkEnergyPerFish");
 	}
 
 	/**

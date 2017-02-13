@@ -16,10 +16,10 @@ public class SugarState extends State {
 	 */
 	public SugarState(Game game) {
 		this.game = game;
-		this.curSugar = game.getIntParameter("maxSugar");
-		this.maxSugar = game.getIntParameter("maxSugar");
-		this.interval = game.getIntParameter("interval");
-		setColor(Color.web(game.getParameter("sugarColor").toUpperCase()));
+		this.curSugar = game.getSettings().getIntParameter("maxSugar");
+		this.maxSugar = game.getSettings().getIntParameter("maxSugar");
+		this.interval = game.getSettings().getIntParameter("interval");
+		setColor(Color.web(game.getSettings().getParameter("sugarColor").toUpperCase()));
 	}
 
 	public SugarState(int curSugar, Game game) {

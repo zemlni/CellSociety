@@ -11,9 +11,12 @@ public class LiveState extends GameOfLifeState {
 	
 	private Game game;
 
+	/**
+	 * @param game The state's game.
+	 */
 	public LiveState(Game game) {
 		this.game = game;
-		setColor(Color.web(game.getParameter("liveColor").toUpperCase()));
+		setColor(Color.web(game.getSettings().getParameter("liveColor").toUpperCase()));
 	}
 
 	/**

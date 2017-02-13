@@ -6,8 +6,6 @@ import java.util.Arrays;
 import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import games.EmptyState;
-import games.wator.FishState;
-import games.wator.SharkState;
 
 /**
  * @author Nikita Zemlevskiy This class is the implementation of wildfire game.
@@ -29,20 +27,22 @@ public class WildfireGame extends Game {
 	}
 
 	/**
-	 * Get a random Wator state.
-	 * @return new random state.
+	 * @return a new state probabilistically.
 	 */
 	@Override
 	public State getStateProbabilistically() {
 		double rand = Math.random();
-		if (rand < getDoubleParameter("percentBurning")) {
+		if (rand < getSettings().getDoubleParameter("percentBurning")) {
 			return new BurningState(this);
 		}
-		if (rand >= getDoubleParameter("percentBurning") && rand < (getDoubleParameter("percentBurning") + getDoubleParameter("percentTree")))
+		if (rand >= getSettings().getDoubleParameter("percentBurning") && rand < (getSettings().getDoubleParameter("percentBurning") + getSettings().getDoubleParameter("percentTree")))
 			return new TreeState(this);
 		return new EmptyState(this);
 	}
 
+	/**
+	 * @return a new state randomly.
+	 */
 	@Override
 	public State getStateRandomly() {
 		return getStateRandomly(new ArrayList<>(Arrays.asList(new EmptyState(this), new TreeState(this), new BurningState(this))));

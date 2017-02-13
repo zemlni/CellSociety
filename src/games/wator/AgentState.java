@@ -55,6 +55,7 @@ public abstract class AgentState extends State {
 	
 	/**
 	 * Move to a specific spot on the grid.
+	 * @param state The state we are creating.
 	 */
 	public void moveTo(AgentState state) {
 		survivalTime++;
