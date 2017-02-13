@@ -8,4 +8,7 @@
 	<sniffThreshold>3</sniffThreshold>
 	<evaporationTime>5</evaporationTime>
 	<diffusionChance>0.5</diffusionChance>
+	<slimeColor>RED</slimeColor>
+	<chemicalColor>GREEN</chemicalColor>
+	<emptyColor>BLACK</emptyColor>
 </data>
