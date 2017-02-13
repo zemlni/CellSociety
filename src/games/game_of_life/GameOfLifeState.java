@@ -15,7 +15,7 @@ public abstract class GameOfLifeState extends State {
 	 */
 	public int getLiveNeighbors() {
 		int total = 0;
-		for (Cell cell: getCell().getNeighborsDiagonal()) {
+		for (Cell cell: getCell().getNeighbors()) {
 			if (cell.getState() instanceof LiveState) {
 				total++;
 			}

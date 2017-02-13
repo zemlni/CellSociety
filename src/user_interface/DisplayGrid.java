@@ -10,26 +10,36 @@ import graphic_elements.GraphicTriangle;
 import grids.Grid;
 import cellsociety_team18.Simulation;
 import javafx.scene.Group;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.paint.Color;
 
 /**
  * @author elliott This class represents a visual grid.
  */
-public class DisplayGrid extends Group {
+public class DisplayGrid extends ScrollPane {
 
 	private int sizeInPixels;
 	private int sizeInCells;
+	private int cellSize;
 	private boolean responsive = false;
-	
+	private boolean outlined;
+
 	private ViewController viewController;
 	private Simulation simulation;
 	private HashMap<Point, GraphicPolygon> cells = new HashMap<Point, GraphicPolygon>();
+	private Group root = new Group();
 
-	public DisplayGrid(ViewController viewController, Simulation simulation, int sizeInPixels, String gridType) {
+	public DisplayGrid(ViewController viewController, Simulation simulation, int sizeInPixels, String gridType,
+			Boolean outlined, int cellSize) {
 		this.viewController = viewController;
 		this.simulation = simulation;
 		this.sizeInPixels = sizeInPixels;
 		this.sizeInCells = simulation.getGrid().getSize();
+		this.outlined = outlined;
+		this.cellSize = cellSize;
+		setHbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
+		setContent(root);
 		createCells(gridType);
 	}
 
@@ -50,17 +60,17 @@ public class DisplayGrid extends Group {
 					}
 				});
 				cells.put(new Point(i, j), cell);
-				getChildren().add(cell);
+				root.getChildren().add(cell);
 			}
 		}
 	}
 
-	private GraphicPolygon getNewCell(String gridType, Point center){
+	private GraphicPolygon getNewCell(String gridType, Point center) {
 		if (gridType.equals("Square"))
-			return new GraphicSquare(Color.WHITE, sizeInPixels, sizeInCells, center);
+			return new GraphicSquare(Color.WHITE, sizeInPixels, sizeInCells, center, outlined, cellSize);
 		if (gridType.equals("Hexagon"))
-			return new GraphicHexagon(Color.WHITE, sizeInPixels, sizeInCells, center);
-		return new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, center);
+			return new GraphicHexagon(Color.WHITE, sizeInPixels, sizeInCells, center, outlined, cellSize);
+		return new GraphicTriangle(Color.WHITE, sizeInPixels, sizeInCells, center, outlined, cellSize);
 	}
 
 	/**

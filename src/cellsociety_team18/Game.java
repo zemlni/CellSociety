@@ -1,21 +1,13 @@
 package cellsociety_team18;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
-
 import grids.Grid;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import games.EmptyState;
 
 /**
  * @author Nikita Zemlevskiy This is the superclass for all types of games. This
@@ -24,10 +16,10 @@ import java.util.Map;
  */
 public abstract class Game {
 
-	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private Map<String, String> data;
 	private HashMap<String, State> states = new HashMap<String, State>();
 	private ArrayList<String> parameters = new ArrayList<String>();
+	private String cellDistribution = "";
 
 	/**
 	 * Setup the basic info of the game, such as its name and description and
@@ -35,8 +27,15 @@ public abstract class Game {
 	 * to each game subclass.
 	 */
 	public void parseXML(String gameName) {
-		File xmlFile = new File(getClass().getClassLoader().getResource(gameName + ".xml").getPath());
-		data = populateMap(getRootElement(xmlFile));
+		data = XMLParser.parse(gameName);
+	}
+	
+	public String getCellDistribution() {
+		return cellDistribution;
+	}
+	
+	public void setCellDistribution(String cellDistribution) {
+		this.cellDistribution = cellDistribution;
 	}
 
 	public void setParameter(String parameter, String value) {
@@ -73,40 +72,43 @@ public abstract class Game {
 		return states;
 	}
 
-	private Map<String, String> populateMap(Element root) {
-		HashMap<String, String> map = new HashMap<String, String>();
-		NodeList nList = root.getChildNodes();
-		for (int i = 0; i < nList.getLength(); i++) {
-			Node temp = nList.item(i);
-			if (temp.getNodeType() == Node.ELEMENT_NODE)
-				map.put(temp.getNodeName(), ((Element) temp).getTextContent());
-		}
-		return map;
-	}
-
 	/**
 	 * Get a random state of this type of game.
 	 * @return the random state requested
 	 */
-	public abstract State getRandomState();
-
-	private static DocumentBuilder getDocumentBuilder() {
-		try {
-			return DocumentBuilderFactory.newInstance().newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			throw new XMLException(e);
+	public State getState() {
+		if (cellDistribution.equals("Probabilistic")) {
+			return getStateProbabilistically();
+		}
+		/*else if (cellDistribution.equals("From List")) {
+			return getStateFromList();
+		}*/
+		else {
+			return getStateRandomly();
 		}
 	}
-
-	private Element getRootElement(File xmlFile) {
-		try {
-			DOCUMENT_BUILDER.reset();
-			Document xmlDocument = DOCUMENT_BUILDER.parse(xmlFile);
-			return xmlDocument.getDocumentElement();
-		} catch (SAXException | IOException e) {
-			throw new XMLException(e);
-		}
+	
+	public abstract State getStateRandomly();
+	
+	public State getStateRandomly(List<State> options) {
+		return options.get(((int) (Math.random() * options.size())));
 	}
+	
+	public abstract State getStateProbabilistically();
+	
+	public State getStateFromPercentages(List<Double> percentages, List<State> states) {
+		double rand = Math.random();
+		double total = 0;
+		for (double percentage: percentages) {
+			total += percentage;
+			if (rand <= total) {
+				return states.get(percentages.indexOf(percentage));
+			}
+		}
+		return states.get(states.size() - 1);
+	}
+	
+	//public abstract State getStateFromList();
 
 	/**
 	 * Game specific setup happens in here.

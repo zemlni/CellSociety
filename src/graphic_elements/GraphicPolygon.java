@@ -11,12 +11,14 @@ import javafx.scene.shape.Polygon;
 
 public abstract class GraphicPolygon extends Polygon {
 
-	/**
-	 * Make different shapes with list of vertices. Not sure how to do it here.
-	 */
-
 	private Cell data;
 	private double size;
+	
+	public GraphicPolygon(Boolean outlined) {
+		if (outlined) {
+			setStyle("-fx-stroke: black; -fx-stroke-width: 1;");
+		}
+	}
 
 	public void setSize(double size){
 		this.size = size;

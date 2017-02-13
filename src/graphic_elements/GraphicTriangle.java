@@ -4,16 +4,17 @@ import cellsociety_team18.Point;
 import javafx.scene.paint.Color;
 
 public class GraphicTriangle extends GraphicPolygon {
+	
 	private boolean down;
 
-	public GraphicTriangle(Color color, int gridSizePixels, int gridSizeCells, Point center) {
-		setSize(gridSizePixels / gridSizeCells);
-		//line duplicated from triangle grid code
+	public GraphicTriangle(Color color, int gridSizePixels, int gridSizeCells, Point center, Boolean outlined, int cellSize) {
+		super(outlined);
+		setSize(cellSize);
 		down = ((int) center.getX()) % 2 == ((int) center.getY() % 2);
 		
-		double width = getSize()/2;
+		double width = getSize() * 1.5;
 		double horizontalDistance = width * Math.sqrt(3)/2;
-		double height =  width * 1.5;
+		double height = width * 1.5;
 		
 		center.setX(center.getX() * horizontalDistance);
 		center.setY(center.getY() * height);
@@ -40,8 +41,8 @@ public class GraphicTriangle extends GraphicPolygon {
 				angle += 180;
 
 			angle = angle * Math.PI / 180;
-			vertices[2 * i] = x + getSize()/2 * Math.cos(angle);
-			vertices[2 * i + 1] = y + getSize()/2 * Math.sin(angle);
+			vertices[2 * i] = x + getSize() * Math.cos(angle);
+			vertices[2 * i + 1] = y + getSize() * Math.sin(angle);
 		}
 
 		return vertices;

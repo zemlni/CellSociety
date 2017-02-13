@@ -20,8 +20,13 @@ public abstract class Grid {
 
 	private Map<Point, Cell> cells;
 	private Game game;
+	private String type;
 	private int size;
 	private int numNeighbors;
+	
+	public Grid(String type) {
+		this.type = type;
+	}
 	
 	public void setNumNeighbors(int num){
 		this.numNeighbors = num;
@@ -48,29 +53,18 @@ public abstract class Grid {
 	public void setSize(int size) {
 		this.size = size;
 	}
-
-	/**
-	 * This is get neighbors. Whether diagonal ones are included in
-	 * implementation is said in implementation May make more sense to return
-	 * all neighbors in this method and make separate one for non diagonal,
-	 * since that is specific to rectgrid.
-	 * 
-	 * @param center
-	 *            point where cell is located
-	 * @return list with all adjacent neighbors
-	 */
-	public abstract List<Cell> getNeighborsCardinal(Point center);
 	
-	/**
-	 * same as above but get neighbors including diagonal ones
-	 * 
-	 * @param center
-	 *            point where cell is located
-	 * @return list with all adjacent neighbors
-	 */
-	public abstract List<Cell> getNeighborsDiagonal(Point center);
-	/**TODO need to fix duplicated code across all getNeighbors type methods.
-	 * */
+	public List<Cell> getNeighbors(Point center) {
+		if (type.equals("Bounded")) {
+			return getNeighborsBounded(center);
+		}
+		else {
+			return getNeighborsToroidal(center);
+		}
+	}
+
+	public abstract List<Cell> getNeighborsBounded(Point center);
+	
 	public abstract List<Cell> getNeighborsToroidal(Point center);
 	/**
 	 * Return list of all cells.
@@ -117,7 +111,7 @@ public abstract class Grid {
 		this.numNeighbors = numNeighbors;
 	}
 	public void randomize(Game game, Cell cell){
-		cell.setNextState(game.getRandomState());
+		cell.setNextState(game.getState());
 		cell.updateState();
 	}
 	/**
@@ -132,22 +126,27 @@ public abstract class Grid {
 		}
 	}
 	
-	public Map<String, Double> getProportions(Map<String, State> states) {
-		HashMap<String, Double> result = new HashMap<String, Double>();
+	public Map<String, Number> getProportions(Map<String, State> states) {
+		HashMap<String, Number> result = new HashMap<String, Number>();
 		for (Entry<String, State> entry : states.entrySet()) {
 			result.put(entry.getKey(), getProportion(entry.getKey(), entry.getValue()));
 		}
 		return result;
 	}
 	
-	private Double getProportion(String key, State state) {
+	private int getProportion(String key, State state) {
 		int count = 0;
 		for (Cell cell: cells.values()) {
 			if (cell.getState().getClass().equals(state.getClass())) {
 				count++;
 			}
 		}
-		return ((double) count) / cells.size();
+		return count;
+	}
+
+	public void setup() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
