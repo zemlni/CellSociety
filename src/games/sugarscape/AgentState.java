@@ -16,8 +16,8 @@ public class AgentState extends State {
 
 	public AgentState(Game game) {
 		this.game = game;
-		this.sugar = game.getIntParameter("sugarStart");
-		this.sugarMetabolism = game.getIntParameter("sugarMetabolism");
+		this.sugar = game.getSettings().getIntParameter("sugarStart");
+		this.sugarMetabolism = game.getSettings().getIntParameter("sugarMetabolism");
 		setColor(Color.BLUE);
 	}
 

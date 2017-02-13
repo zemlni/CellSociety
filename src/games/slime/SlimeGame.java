@@ -12,7 +12,7 @@ public class SlimeGame extends Game {
 	@Override
 	public State getStateProbabilistically() {
 		double rand = Math.random();
-		return rand < getDoubleParameter("percentSlime") ? new SlimeState(this) : new EmptyState(this);
+		return rand < getSettings().getDoubleParameter("percentSlime") ? new SlimeState(this) : new EmptyState(this);
 	}
 
 	@Override

@@ -18,8 +18,8 @@ public class SlimeState extends State {
 
 	public SlimeState(Game game) {
 		this.game = game;
-		this.sniffThreshold = game.getIntParameter("sniffThreshold");
-		setColor(Color.web(game.getParameter("slimeColor").toUpperCase()));
+		this.sniffThreshold = game.getSettings().getIntParameter("sniffThreshold");
+		setColor(Color.web(game.getSettings().getParameter("slimeColor").toUpperCase()));
 	}
 
 	@Override
