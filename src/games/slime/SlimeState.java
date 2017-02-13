@@ -12,16 +12,32 @@ import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
-public class SlimeState extends State {
+/**
+ * @author nikita Class represents slime stat in game slime and holds all
+ *         relevant intelligence methods.
+ */
+public class SlimeState extends SlimeGameState {
 	private int sniffThreshold;
 	private Game game;
+	private final int STATE_VALUE = 2;
 
+	/**
+	 * Make a new slime state
+	 * 
+	 * @param game
+	 *            the game which this state is part of
+	 * 
+	 */
 	public SlimeState(Game game) {
 		this.game = game;
 		this.sniffThreshold = game.getSettings().getIntParameter("sniffThreshold");
 		setColor(Color.web(game.getSettings().getParameter("slimeColor").toUpperCase()));
+		setStateValue(STATE_VALUE);
 	}
 
+	/**
+	 * choose the next state
+	 */
 	@Override
 	public void chooseState() {
 
@@ -30,7 +46,7 @@ public class SlimeState extends State {
 
 		if (move != null && !(move.getNextState() instanceof SlimeState) && !move.equals(temp)) {
 			move.setNextState(new SlimeState(game));
-			if (temp.getNextState().hashCode() == this.hashCode()){
+			if (temp.getNextState().hashCode() == this.hashCode()) {
 				temp.setNextState(new ChemicalState(game));
 			}
 			return;
@@ -55,25 +71,12 @@ public class SlimeState extends State {
 		Iterator<Cell> i = optionsSet.iterator();
 		while (i.hasNext()) {
 			Cell cell = i.next();
-			if (cell.getNextState() instanceof SlimeState) {
+			if (cell.getNextState() instanceof SlimeState)
 				i.remove();
-			}
 		}
-		List<Cell> options = new ArrayList<Cell>(optionsSet);
-		Collections.sort(options, (a, b) -> {
-			State aState = ((Cell) a).getNextState();
-			State bState = ((Cell) b).getNextState();
-			if (!(aState instanceof ChemicalState) && !(bState instanceof ChemicalState))
-				return 0;
-			if (aState instanceof ChemicalState && !(bState instanceof ChemicalState))
-				return 1;
-			if (bState instanceof ChemicalState && !(aState instanceof ChemicalState))
-				return -1;
-			return ((ChemicalState) aState).getSlimeContent() - ((ChemicalState) bState).getSlimeContent();
-		});
-		if (options.size() == 0) {
+		List<Cell> options = getSortedList(optionsSet);
+		if (options.size() == 0) 
 			return null;
-		}
 		Cell highest = options.get(0);
 		options = getCell().getNeighbors();
 		Collections.shuffle(options);
@@ -85,8 +88,27 @@ public class SlimeState extends State {
 				break;
 			}
 		}
-
 		return answer;
+	}
+	
+	private List<Cell> getSortedList(Set<Cell> optionsSet) {
+		List<Cell> options = new ArrayList<Cell>(optionsSet);
+		Collections.sort(options, (a, b) -> {
+			State aState = ((Cell) a).getNextState();
+			State bState = ((Cell) b).getNextState();
+			if (!(stateDecider(aState) == stateDecider(bState)))
+				return stateDecider(aState) - stateDecider(bState);
+			else if (aState instanceof ChemicalState && bState instanceof ChemicalState)
+				return ((ChemicalState)aState).getSlimeContent() - ((ChemicalState)bState).getSlimeContent();
+			return 0;
+		});
+		return options;
+	}
+
+	private int stateDecider(State state){
+		if (!(state instanceof SlimeGameState))
+			return 0;
+		else return ((SlimeGameState)state).getStateValue();
 	}
 
 }

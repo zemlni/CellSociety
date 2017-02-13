@@ -58,7 +58,7 @@ public class ControlPanel extends ScrollPane {
 	private String dataFolder = "data/";
 
 	private VBox panelElements;
-	
+
 	private Text myDescription;
 	private Text myTitle;
 	private ComboBox<String> myGames;
@@ -73,13 +73,16 @@ public class ControlPanel extends ScrollPane {
 	private TextField myCellSizeField;
 	private Node myConfigurationControls;
 	private ParameterTable myParameterTable;
-	
+
 	private boolean gameLoaded = false;
 
 	/**
-	 * @param viewController The owner of the control panel.
-	 * @param resources The ResourceBundle for the control panel.
-	 * @param width The control panel's width.
+	 * @param viewController
+	 *            The owner of the control panel.
+	 * @param resources
+	 *            The ResourceBundle for the control panel.
+	 * @param width
+	 *            The control panel's width.
 	 * @return A control panel.
 	 */
 	public ControlPanel(ViewController viewController, ResourceBundle resources, int width) {
@@ -90,7 +93,6 @@ public class ControlPanel extends ScrollPane {
 		setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		setup();
 	}
-	
 
 	private Game getGame() {
 		return myCurrentSimulation.getGame();
@@ -103,7 +105,7 @@ public class ControlPanel extends ScrollPane {
 		panelElements.getChildren().addAll(getGameLabels(), getSimulationSelector(), getConfigurationSelector());
 		getChildren().addAll(panelElements, getDivider());
 	}
-	
+
 	/**
 	 * @return A divider for the grid and control panel.
 	 */
@@ -119,9 +121,11 @@ public class ControlPanel extends ScrollPane {
 		if (gameLoaded == false) {
 			myConfigurationControls = createConfigurationControls();
 			HBox box = new HBox(HORIZONTAL_SPACING);
-			box.getChildren().addAll(makeButton("LoadTitle", e -> loadGame()), makeButton("SaveTitle", e -> saveConfiguration()));
+			box.getChildren().addAll(makeButton("LoadTitle", e -> loadGame()),
+					makeButton("SaveTitle", e -> saveConfiguration()));
 			Node controlButtons = setupControlButtons();
-			panelElements.getChildren().addAll(myConfigurationControls, makeSeparator(false), box, makeSeparator(false), controlButtons, getDelaySlider());
+			panelElements.getChildren().addAll(myConfigurationControls, makeSeparator(false), box, makeSeparator(false),
+					controlButtons, getDelaySlider());
 			gameLoaded = true;
 		}
 	}
@@ -154,7 +158,7 @@ public class ControlPanel extends ScrollPane {
 		result.setAlignment(Pos.CENTER_LEFT);
 		return result;
 	}
-	
+
 	/**
 	 * @return The configuration combo box and its label.
 	 */
@@ -174,7 +178,8 @@ public class ControlPanel extends ScrollPane {
 		for (File file : options) {
 			String name = file.getName();
 			if (XMLParser.isXMLFile(name)) {
-				if (configurationFiles && name.contains("Configuration") || !(configurationFiles || name.contains("Configuration"))) {
+				if (configurationFiles && name.contains("Configuration")
+						|| !(configurationFiles || name.contains("Configuration"))) {
 					box.getItems().add(name.substring(0, name.length() - 4));
 				}
 			}
@@ -213,50 +218,68 @@ public class ControlPanel extends ScrollPane {
 	 * @return The control panel's input fields.
 	 */
 	private Node createConfigurationControls() {
-		
+
 		VBox result = new VBox(VERTICAL_SPACING);
-		
+
+		HBox sizeBox = makeSizeBox();
+
+		HBox cellBox = new HBox(HORIZONTAL_SPACING);
+		myCells = createComboBox(new String[] { "Square", "Triangle", "Hexagon" },
+				myCurrentSimulation.getSettings().getParameter("cellType"));
+		cellBox.getChildren().addAll(addLabelToNode(myCells, "CellType"));
+		cellBox.setAlignment(Pos.CENTER_LEFT);
+
+		HBox edgeBox = makeEdgeBox();
+		HBox distributionBox = makeDistributionBox();
+
+		myNeighborsField = createField(myCurrentSimulation.getSettings().getParameter("numberOfNeighbors"));
+
+		myOutlineToggle = new ToggleButton(resources.getString("OutlineGrid"));
+		myOutlineToggle
+				.setSelected(Boolean.parseBoolean(myCurrentSimulation.getSettings().getParameter("outlineGrid")));
+
+		result.getChildren().addAll(sizeBox, myOutlineToggle, cellBox, edgeBox, distributionBox,
+				addLabelToNode(myNeighborsField, "NumberNeighbors"));
+		return result;
+
+	}
+
+	private HBox makeSizeBox() {
 		HBox sizeBox = new HBox(HORIZONTAL_SPACING);
 		myGridSizeField = createField(myCurrentSimulation.getSettings().getParameter("gridSize"));
 		myCellSizeField = createField(myCurrentSimulation.getSettings().getParameter("cellSize"));
-		sizeBox.getChildren().addAll(addLabelToNode(myGridSizeField, "GridSizeString"), addLabelToNode(myCellSizeField, "CellSize"));
-		
-		HBox cellBox = new HBox(HORIZONTAL_SPACING);
-		myCells = createComboBox(new String[]{"Square", "Triangle", "Hexagon"}, myCurrentSimulation.getSettings().getParameter("cellType"));
-		cellBox.getChildren().addAll(addLabelToNode(myCells, "CellType"));
-		cellBox.setAlignment(Pos.CENTER_LEFT);
-		
+		sizeBox.getChildren().addAll(addLabelToNode(myGridSizeField, "GridSizeString"),
+				addLabelToNode(myCellSizeField, "CellSize"));
+		return sizeBox;
+	}
+
+	private HBox makeEdgeBox() {
 		HBox edgeBox = new HBox(HORIZONTAL_SPACING);
 		myGridEdges = new ComboBox<String>();
 		myGridEdges.getItems().addAll("Bounded", "Toroidal");
 		myGridEdges.setValue(myCurrentSimulation.getSettings().getParameter("gridEdge"));
 		edgeBox.getChildren().addAll(addLabelToNode(myGridEdges, "GridEdge"));
 		edgeBox.setAlignment(Pos.CENTER_LEFT);
-		
+		return edgeBox;
+	}
+
+	private HBox makeDistributionBox() {
 		HBox distributionBox = new HBox(HORIZONTAL_SPACING);
 		myCellDistributions = new ComboBox<String>();
 		myCellDistributions.getItems().addAll("Probabilistic", "Random");
 		myCellDistributions.setValue(myCurrentSimulation.getSettings().getParameter("cellDistribution"));
 		distributionBox.getChildren().addAll(addLabelToNode(myCellDistributions, "CellDistribution"));
 		distributionBox.setAlignment(Pos.CENTER_LEFT);
-		
-		myNeighborsField = createField(myCurrentSimulation.getSettings().getParameter("numberOfNeighbors"));
-		
-		myOutlineToggle = new ToggleButton(resources.getString("OutlineGrid"));
-		myOutlineToggle.setSelected(Boolean.parseBoolean(myCurrentSimulation.getSettings().getParameter("outlineGrid")));
-		
-		result.getChildren().addAll(sizeBox, myOutlineToggle, cellBox, edgeBox, distributionBox, addLabelToNode(myNeighborsField, "NumberNeighbors"));
-		return result;
-		
+		return distributionBox;
 	}
-		
-	private ComboBox<String> createComboBox(String[] values, String value) { 
+
+	private ComboBox<String> createComboBox(String[] values, String value) {
 		ComboBox<String> result = new ComboBox<String>();
 		result.getItems().addAll(values);
 		result.setValue(value);
 		return result;
 	}
-	
+
 	private TextField createField(String value) {
 		TextField field = new TextField(value);
 		field.setPrefWidth(40);
@@ -270,7 +293,7 @@ public class ControlPanel extends ScrollPane {
 		box.setAlignment(Pos.CENTER_LEFT);
 		return box;
 	}
-	
+
 	private ParameterTable createParameters() {
 		return new ParameterTable(getGame().getParametersAndValues());
 	}
@@ -302,7 +325,7 @@ public class ControlPanel extends ScrollPane {
 			getSimulation();
 		}
 	}
-	
+
 	private void getSimulation() {
 		myCurrentSimulation = viewController.newSimulation(myGames.getValue(), myConfigurations.getValue());
 	}
@@ -313,13 +336,13 @@ public class ControlPanel extends ScrollPane {
 			getGame().getSettings().put(entry.getParameter(), entry.getValue());
 		}
 	}
-	
+
 	private Node makeLabel(String property, int fontSize) {
 		Text label = new Text(resources.getString(property));
 		label.setFont(Font.font("Helvetica", fontSize));
 		return label;
 	}
-	
+
 	private Node getDelaySlider() {
 		configureSlider();
 		VBox box = new VBox(0);
@@ -327,7 +350,7 @@ public class ControlPanel extends ScrollPane {
 		box.setAlignment(Pos.CENTER);
 		return box;
 	}
-	
+
 	private void configureSlider() {
 		myDelaySlider = new Slider();
 		myDelaySlider.setMin(20);
@@ -339,12 +362,12 @@ public class ControlPanel extends ScrollPane {
 		myDelaySlider.setMinorTickCount(0);
 		myDelaySlider.setBlockIncrement(10);
 	}
-	
+
 	private void updateParameters() {
 		updateGameParameters();
 		updateConfigurationParameters();
 	}
-	
+
 	private void updateConfigurationParameters() {
 		myCurrentSimulation.getSettings().put("gridSize", myGridSizeField.getText());
 		myCurrentSimulation.getSettings().put("cellType", myCells.getValue());
@@ -354,7 +377,7 @@ public class ControlPanel extends ScrollPane {
 		myCurrentSimulation.getSettings().put("outlineGrid", String.valueOf(myOutlineToggle.isSelected()));
 		myCurrentSimulation.getSettings().put("numberOfNeighbors", myNeighborsField.getText());
 	}
-	
+
 	private void saveConfiguration() {
 		if (checkParameters()) {
 			updateConfigurationParameters();
@@ -362,14 +385,14 @@ public class ControlPanel extends ScrollPane {
 			resetConfigurations();
 		}
 	}
-	
+
 	private void resetConfigurations() {
 		String current = myConfigurations.getValue();
 		myConfigurations.getItems().removeAll(myConfigurations.getItems());
 		addOptionsFromDisk(myConfigurations, true);
 		myConfigurations.setValue(current);
 	}
-	
+
 	private void showMessage() {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Error");
@@ -377,18 +400,17 @@ public class ControlPanel extends ScrollPane {
 		alert.setContentText("One of your input values is incomplete or of the wrong type.");
 		alert.showAndWait();
 	}
-	
+
 	private Boolean checkParameters() {
 		try {
 			Integer.parseInt(myGridSizeField.getText());
 			Integer.parseInt(myNeighborsField.getText());
 			Double.parseDouble(myCellSizeField.getText());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			showMessage();
 			return false;
 		}
 		return true;
 	}
-	
+
 }

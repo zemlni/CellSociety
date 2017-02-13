@@ -17,7 +17,6 @@ public class Cell {
 	private Point point;
 	private State state;
 	private State nextState;
-	private boolean chosen;
 
 	/**
 	 * @param grid The grid that owns the cell.
@@ -28,7 +27,6 @@ public class Cell {
 		this(grid, point);
 		state.setCell(this);
 		this.state = this.nextState = state;
-		chosen = false;
 	}
 	
 	/**
@@ -83,7 +81,6 @@ public class Cell {
 	 */
 	public void chooseState() {
 		state.chooseState();
-		this.chosen = true;
 	}
 	
 	/**
@@ -91,9 +88,5 @@ public class Cell {
 	 */
 	public void updateState() {
 		state = nextState;
-		chosen = false;
-	}
-	public boolean getChosen(){
-		return chosen;
 	}
 }

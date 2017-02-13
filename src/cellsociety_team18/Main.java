@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import user_interface.ViewController;
 
+/**
+ * @author nikita This class launches the application.
+ */
 public class Main extends Application {
 
 	/**

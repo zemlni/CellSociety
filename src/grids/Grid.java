@@ -23,17 +23,19 @@ public abstract class Grid {
 	private String type;
 	private int size;
 	private int numNeighbors;
-	
+
 	public Grid(String type) {
 		this.type = type;
 	}
-	
-	public void setNumNeighbors(int num){
+
+	public void setNumNeighbors(int num) {
 		this.numNeighbors = num;
 	}
-	public int getNumNeighbors(){
+
+	public int getNumNeighbors() {
 		return numNeighbors;
 	}
+
 	public Map<Point, Cell> getCells() {
 		return cells;
 	}
@@ -53,19 +55,33 @@ public abstract class Grid {
 	public void setSize(int size) {
 		this.size = size;
 	}
-	
+
 	public List<Cell> getNeighbors(Point center) {
 		if (type.equals("Bounded")) {
 			return getNeighborsBounded(center);
-		}
-		else {
+		} else {
 			return getNeighborsToroidal(center);
 		}
 	}
 
+	/**
+	 * get neighbors not toroidal
+	 * 
+	 * @param center
+	 *            point of cell of which to get neighbors
+	 * @return list of neighboring cells
+	 */
 	public abstract List<Cell> getNeighborsBounded(Point center);
-	
+
+	/**
+	 * get neighbors toroidal
+	 * 
+	 * @param center
+	 *            point of cell of which to get neighbors
+	 * @return list of neighboring cells
+	 */
 	public abstract List<Cell> getNeighborsToroidal(Point center);
+
 	/**
 	 * Return list of all cells.
 	 * 
@@ -83,8 +99,8 @@ public abstract class Grid {
 	public Cell getCell(Point center) {
 		return cells.get(center);
 	}
-	
-	public int getSize(){
+
+	public int getSize() {
 		return size;
 	}
 
@@ -110,11 +126,13 @@ public abstract class Grid {
 		}
 		this.numNeighbors = numNeighbors;
 	}
-	public void randomize(Game game, Cell cell){
+
+	public void randomize(Game game, Cell cell) {
 		cell.setNextState(game.getState());
 		cell.updateState();
 		cell.getState().setCell(cell);
 	}
+
 	/**
 	 * Randomize states of all cells in the grid
 	 * 
@@ -126,7 +144,7 @@ public abstract class Grid {
 			randomize(game, cell);
 		}
 	}
-	
+
 	public Map<String, Number> getProportions(Map<String, State> states) {
 		HashMap<String, Number> result = new HashMap<String, Number>();
 		for (Entry<String, State> entry : states.entrySet()) {
@@ -134,10 +152,10 @@ public abstract class Grid {
 		}
 		return result;
 	}
-	
+
 	private int getProportion(String key, State state) {
 		int count = 0;
-		for (Cell cell: cells.values()) {
+		for (Cell cell : cells.values()) {
 			if (cell.getState().getClass().equals(state.getClass())) {
 				count++;
 			}
@@ -147,7 +165,7 @@ public abstract class Grid {
 
 	public void setup() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

@@ -2,11 +2,28 @@ package graphic_elements;
 
 import cellsociety_team18.Point;
 import javafx.scene.paint.Color;
-
+/**@author nikita
+ * Class represents a triangle graphically.
+ * */
 public class GraphicTriangle extends GraphicPolygon {
 	
 	private boolean down;
-
+	/**
+	 * make a new triangle of given params
+	 * 
+	 * @param color
+	 *            required color
+	 * @param gridSizePixels
+	 *            grid size in pixels
+	 * @param gridSizeCells
+	 *            grid size in cells
+	 * @param center
+	 *            center of the triangle according to the grid
+	 * @param outlined
+	 *            if triangle is outlined or not
+	 * @param cellSize
+	 *            size of cell
+	 * */
 	public GraphicTriangle(Color color, int gridSizePixels, int gridSizeCells, Point center, Boolean outlined, int cellSize) {
 		super(outlined);
 		setSize(cellSize);
@@ -27,7 +44,14 @@ public class GraphicTriangle extends GraphicPolygon {
 		getPoints().addAll(vertices);
 		setFill(color);
 	}
-
+	
+	/**
+	 * get vertices of triangle at the point
+	 * 
+	 * @param center
+	 *            center point of triangle
+	 * @return array with vertices of the triangle
+	 */
 	@Override
 	public Double[] getVertices(Point center) {
 

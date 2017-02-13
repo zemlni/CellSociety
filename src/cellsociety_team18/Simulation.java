@@ -23,7 +23,7 @@ public class Simulation {
 	
 	private Grid grid;
 	private Game game;
-	private ArrayList<Map<String, Number>> proportions = new ArrayList<Map<String, Number>>();
+	private List<Map<String, Number>> proportions = new ArrayList<Map<String, Number>>();
 	private Settings data;
 	private Map<String, Game> games = new HashMap<String, Game>() {
 		{
@@ -70,7 +70,7 @@ public class Simulation {
 		return game;
 	}
 
-	public ArrayList<Map<String, Number>> getProportions() {
+	public List<Map<String, Number>> getProportions() {
 		return proportions;
 	}
 	

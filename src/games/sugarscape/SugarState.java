@@ -4,6 +4,10 @@ import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
+/**
+ * @author nikita Class represents sugar state of sugarscape game and all
+ *         relevant intelligence.
+ */
 public class SugarState extends State {
 	private int curSugar;
 	private int maxSugar;
@@ -12,7 +16,8 @@ public class SugarState extends State {
 	private Game game;
 
 	/**
-	 * Empty state is white and is transparent.
+	 * Make a new sugar state with the game it is participating in
+	 * @param game the game in which it is participating
 	 */
 	public SugarState(Game game) {
 		this.game = game;
@@ -21,7 +26,10 @@ public class SugarState extends State {
 		this.interval = game.getSettings().getIntParameter("interval");
 		setColor(Color.web(game.getSettings().getParameter("sugarColor").toUpperCase()));
 	}
-
+	/** Make a new sugar state with preset cursugar other than default
+	 * @param curSugar the value for cursugar to set
+	 * @param game the game in which the sugar state will be participating
+	 * */
 	public SugarState(int curSugar, Game game) {
 		this(game);
 		this.curSugar = curSugar;
@@ -35,7 +43,8 @@ public class SugarState extends State {
 	public void resetCurSugar() {
 		curSugar = 0;
 	}
-
+	/**choose the next state.
+	 * */
 	@Override
 	public void chooseState() {
 		curTicks++;

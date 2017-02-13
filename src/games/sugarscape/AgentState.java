@@ -9,11 +9,21 @@ import cellsociety_team18.Game;
 import cellsociety_team18.State;
 import javafx.scene.paint.Color;
 
+/**
+ * @author nikita Class represents an Agent state in the sugarscape simulation.
+ *         It holds all relevant intelligence information.
+ */
 public class AgentState extends State {
 	private int sugarMetabolism;
 	private int sugar;
 	private Game game;
 
+	/**
+	 * make a new Agent state
+	 * 
+	 * @param game
+	 *            the game which this state takes part of
+	 */
 	public AgentState(Game game) {
 		this.game = game;
 		this.sugar = game.getSettings().getIntParameter("sugarStart");
@@ -21,6 +31,9 @@ public class AgentState extends State {
 		setColor(Color.BLUE);
 	}
 
+	/**
+	 * choose the next state
+	 */
 	@Override
 	public void chooseState() {
 		if (sugar <= 0) {
@@ -54,7 +67,6 @@ public class AgentState extends State {
 		});
 		if (options.size() == 0)
 			return null;
-		System.out.println(((SugarState)options.get(0).getNextState()).getCurSugar());
 		return options.get(0);
 	}
 

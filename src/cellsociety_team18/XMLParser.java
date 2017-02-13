@@ -22,20 +22,46 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * @author nikita
+ * @author elliott
+ * @author Robert Duvall Some code taken from class. This class is used to parse
+ *         xml.
+ */
 public class XMLParser {
 
 	private static final DocumentBuilder DOCUMENT_BUILDER = getDocumentBuilder();
 	private static final String path = "data/";
 
+	/**
+	 * check whether a file is xml file or not.
+	 * 
+	 * @param fileName
+	 *            string of file to check whether it is an xml or not
+	 * @return if file is xml or not
+	 */
 	public static boolean isXMLFile(String fileName) {
 		return fileName.substring(fileName.lastIndexOf('.') + 1).equals("xml");
 	}
 
+	/**
+	 * parse xml file.
+	 * 
+	 * @param fileName
+	 *            name of file to parse
+	 * @return map of parsed fields.
+	 */
 	public static Map<String, String> parse(String fileName) {
 		File xmlFile = new File(path + fileName + ".xml");
 		return populateMap(getRootElement(xmlFile));
 	}
 
+	/**
+	 * write fields out to xml file.
+	 * 
+	 * @param data
+	 *            map to be written
+	 */
 	public static void write(Map<String, String> data) {
 		try {
 			DOCUMENT_BUILDER.reset();
@@ -52,7 +78,7 @@ public class XMLParser {
 			exception.printStackTrace();
 		}
 	}
-	
+
 	private static void writeToFile(Document doc) throws TransformerFactoryConfigurationError, TransformerException {
 		Transformer transformer = TransformerFactory.newInstance().newTransformer();
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -69,10 +95,7 @@ public class XMLParser {
 			Node temp = nList.item(i);
 			if (temp.getNodeType() == Node.ELEMENT_NODE) {
 				map.put(temp.getNodeName(), ((Element) temp).getTextContent());
-			}
-			else {
-				System.out.println(temp.getTextContent());
-			}
+			} 
 		}
 		return map;
 	}

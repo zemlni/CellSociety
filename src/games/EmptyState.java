@@ -1,6 +1,3 @@
-/**
- * 
- */
 package games;
 
 import cellsociety_team18.Game;
