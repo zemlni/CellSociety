@@ -6,16 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import game_of_life.GameOfLifeGame;
-import grids.Grid;
-import grids.HexagonGrid;
-import grids.RectGrid;
-import grids.TriangleGrid;
-import segregation.SegregationGame;
-import slime.SlimeGame;
-import sugarscape.SugarScapeGame;
-import wator.WatorGame;
-import wildfire.WildfireGame;
+import games.wator.*;
+import games.segregation.*;
+import games.wildfire.*;
+import games.game_of_life.*;
+import games.sugarscape.*;
+import games.slime.*;
+import grids.*;
 
 /**
  * @author Nikita Zemlevskiy This class controls the current simulation being

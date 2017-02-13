@@ -136,12 +136,12 @@ public abstract class Grid {
 	public Map<String, Double> getProportions(Map<String, State> states) {
 		HashMap<String, Double> result = new HashMap<String, Double>();
 		for (Entry<String, State> entry : states.entrySet()) {
-			result.put(entry.getKey(), getProportion(entry.getValue()));
+			result.put(entry.getKey(), getProportion(entry.getKey(), entry.getValue()));
 		}
 		return result;
 	}
 	
-	private Double getProportion(State state) {
+	private Double getProportion(String key, State state) {
 		int count = 0;
 		for (Cell cell: cells.values()) {
 			if (cell.getState().getClass().equals(state.getClass())) {

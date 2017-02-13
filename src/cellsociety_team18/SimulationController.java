@@ -1,6 +1,7 @@
 package cellsociety_team18;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Map;
  */
 public class SimulationController {
 	
-	ArrayList<Simulation> simulations = new ArrayList<Simulation>();
+	List<Simulation> simulations = new ArrayList<Simulation>();
 	
 	/**
 	 * @param game A string representing the game's name.
@@ -61,8 +62,8 @@ public class SimulationController {
 	/**
 	 * @return The proportions of the states in each simulation, throughout time.
 	 */
-	public ArrayList<ArrayList<Map<String, Double>>> getProportions() {
-		ArrayList<ArrayList<Map<String, Double>>> proportions = new ArrayList<ArrayList<Map<String, Double>>>();
+	public List<List<Map<String, Double>>> getProportions() {
+		List<List<Map<String, Double>>> proportions = new ArrayList<List<Map<String, Double>>>();
 		for (Simulation simulation: simulations) {
 			proportions.add(simulation.getProportions());
 		}

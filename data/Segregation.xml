@@ -4,7 +4,10 @@
 	<title>Segregation</title>
 	<description>A simulation of Schelling's model of segregation using Cellular Automata.</description>
 	<author>Nikita Zemlevskiy</author>
-	<percentBlue>0.25</percentBlue>
-	<percentRed>0.25</percentRed>
+	<percentPopulation1>0.25</percentPopulation1>
+	<percentPopulation2>0.25</percentPopulation2>
 	<satisfaction>0.7</satisfaction>
+	<population1Color>RED</population1Color>
+	<population2Color>BLUE</population2Color>
+	<emptyColor>WHITE</emptyColor>
 </data>
