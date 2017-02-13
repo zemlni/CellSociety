@@ -109,7 +109,7 @@ public abstract class Grid {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {
 				Point p = new Point(i, j);
-				Cell cell = game.makeNewCell(this, p);
+				Cell cell = new Cell(this, p);
 				randomize(game, cell);
 				getCells().put(p, cell);
 			}
@@ -119,6 +119,7 @@ public abstract class Grid {
 	public void randomize(Game game, Cell cell){
 		cell.setNextState(game.getRandomState());
 		cell.updateState();
+		cell.getState().setCell(cell);
 	}
 	/**
 	 * Randomize states of all cells in the grid

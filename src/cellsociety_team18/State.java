@@ -12,7 +12,7 @@ public abstract class State {
 	
 	private Cell cell;
 	private Color color;
-	
+
 	public Color getColor() {
 		return color;
 	}

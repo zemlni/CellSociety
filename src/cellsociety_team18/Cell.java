@@ -94,6 +94,5 @@ public class Cell {
 	 */
 	public void updateState() {
 		state = nextState;
-	}	
-
+	}
 }
