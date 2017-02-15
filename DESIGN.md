@@ -46,18 +46,38 @@ We felt that these three distinct layers of abstraction gave us the best chance 
 
 ## User Interface
 
-![](ui.jpg)
+Our project's User Interface has the following apperance:
 
-Our project's UI will use a menu similar to the one provided in the simulation attached to the Schelling’s Model of Segregation project. The user would be able to modify the grid dimensions and the delay (how quickly the simulation runs) before the game is actually launched.
+![](images/all.png)![](images/simulation.png)
 
-When the user first opens the project, he or she would select the type of game from a scrolling menu. Before the game begins, the user will also have the ability to shuffle and randomize the cells on the board.
+Our User Interface will be divided into three distinct sections: the Control Panel, the Graph, and the Simulation Window(s).
 
-The descriptions of the game will be displayed under the game's name.
+1\. **The Control Panel.**
+The control panel is itself subdivided into several sections.
 
-We will build popup screens into the interface so the user cannot begin the simulation until acceptable data has been entered. 
+![](images/panel_1.png)![](images/panel_2.png)
 
-Pressing the “Start" button will begin the simulation. The simulation will continue until “Stop" is pressed. Pressing the “Step" button will go through one iteration of the simulation.
+1\. *The Introductory Labels:* these serve to display the name of the selected game, and its description.
+	
+2\. *The Simulation Creator:* this part of the panel has as its aims to configure the simulation that will be run. From this portion, the user can select a Simulation from a Combo Box, and then select a possible Configuration for the Simulation. Configurations are general, and apply to all games. 
 
+Once both have been selected, the user can interact with a Table View in which s/he can edit parameters for the simulation. Below this table, the user can modify the configuration parameters that were imported: the size of the grid, of cells, whether the grid is outlined, the cell type, the grid boundary behavior, the distribution of cells, and the number of neighbors taken into consideration. 
+
+Finally, the user can either **Load** this simulation using the corresponding button, or **Save** it to disk using the corresponding button.
+	
+3\. *The Simulation Controller:* serves to control the simulation. The **Start** button starts the Simulation; the **Stop** button stops it; and the **Step** button progresses through one step of the Simulation. The **Reload** button shuffles the Simulation's cells. Under these buttons, a slider lets the user control the delay between each step, in milliseconds.
+
+2\. **The Graph.**
+
+![](images/graph.png)
+
+The graph displays the evolution of the population of the running simulations. It houses the evolution of each population, for each currently loaded simulation – differentiating the population using a legend that numbers the simulations (each Simulation Window has a number). 
+
+3\. **The Simulation Window(s).**
+
+![](images/simulation.png)
+
+The Simulation Window displays an actual simulation. It is a scrollable window: if its contents are too large, the user can reach them by scrolling both vertically and horizontally. Each Simulation Window is named according to the Simulation type and the order in which it was created by the user. This is to better distinguish similar Simulations windows and similar populations on the Graph.
 
 ## Design Details 
 
@@ -115,65 +135,71 @@ While planning *CellSociety*, our group discussed three main design decisions ex
 
 Here were our pros and cons for each point of discussion: 
 
-1. **The Actor model as compared to the State model.**
+1\. **The Actor model as compared to the State model.**
 
 In the Actor model, Actors move across a grid of cells, whereas in the State model, the state of a cell is regularly set. We debated between these two approaches for quite a long time.
 		
 The Actor model is preferable for these reasons: 
 		
 - In many of these games, characters or actors are moving. Conceptually then, it might be reasonable to model these games as Actors moving over grids.
-- It seems normal to ask an Actor to move, to call a method on an actor rather to set it to a new location.
+- It seems normal to ask an Actor to move, or to call a method on an actor, rather than controlling it by setting a cell's state.
 		
 The State model is preferable for these reasons:
 		
 - In these games, there are often empty cells, cells that don't move. The Actor model does not take this type of cell into account, while the State model does.
-- The State abstraction is simpler, and allows us to do away with movement conceptually: we no longer need to worry about movement, and instead we just need to set the state of cells. 
+- The State abstraction is simpler, and allows us to do away with movement conceptually: we no longer need to think about movement, and instead we just need to set the state of cells. 
 		
-While both abstractions had their conceptual advantages, we eventually settled on the State model. We noticed that when we were discussing the matter, our language tended to favor the "set this cell to" construction. This in itself felt like a valid reason to choose the State model.
+While both abstractions had their conceptual advantages, we eventually settled on the State model. We noticed that when we were discussing the matter, our language tended to favor the "set this cell to" construction. This in itself felt like a valid reason to choose the State model. 
 
-2. **The decision to create subclasses of State**.
-	
-Originally, we determined that for each game, we should create subclasses of State and store them in a package related to the game. In a wildfire simulation, for instance, we would create a Fire subclass, an Empty subclass, and a Tree subclass. The alternative was to **not** manually create a number of subclasses, but instead create our States from a Game subclass (wildfire, in this situation).
+In hindsight, we are satisfied with the decisions we came to. Implementing the rules for our games was relatively painless, and the State model was not a cause for concern as we implemented our design. Adding new simulations with new rules was painless.
+
+2\. **The decision to create subclasses of State**.
 		
-The manual subclass model is preferable for these reasons:
+We struggled between two alternatives here. Either we could have one State class, and create our States from our Game subclasses (Wildfire, for example), or we could create seperate subclasses of State for every state and store them in a package related to the game. For this second scenario, in a wildfire simulation, we would create a Burning subclass, an Empty subclass, and a Tree subclass, and place the files in a Wildfire package.
+	
+The first model, to create our States from within a Game subclass, is preferable for these reasons:
+		
+- For each game, we need to create one subclass (a subclass of Game), instead of many subclasses of State.
+- Conceptually, our Game subclass controls and determines the behavior of the game.
+
+The one-State one-subclass model is preferable for these reasons:
 		
 - It is very clear what States belong to what Game. They are in the same package, as separate files.
-- The implementation, while perhaps not flexible, is the simplest and most intuitive.
+- The implementation is leaner and more intuitive. The rules for each state reside in the State subclass, considerably freeing up the Game subclass.
+- The implementation of rules is hidden from the Game class. We thought this was a strong argument in favor of this model: if we needed to add a new set of rules for a State, the Game did not have to know anything about it.
 	
-The alternative, to create our States from a Game subclass, is preferable for these reasons:
-		
-- It is far more flexible. For each game, we need to create one subclass (a subclass of Game), instead of many subclasses of State.
-- Conceptually, our Game subclass controls and determines the behavior of the game – which is exactly what one would expect.
-	
-In the end, we voted for flexibility and the principle of least astonishment, and chose to create our States from within a Game subclass instead of manually subclassing each State for each game.
+In the end, we voted for flexibility, and chose the one-State one-subclass model. This design provided the best encapsulation, isolating rules within the State subclasses they pertained to – exactly as one would expect. Our Game classes, in addition, became more focused and extendable as a consequence of our choice.
 
-3. **Our way of accessing the rules.**
+3\. **Our way of accessing the rules.**
 
-From the start, we felt we should have a Rules class. We debated between two different implementations, however: having every rule, for every game, in a static Rules class; or subclassing the Rules class for each Game, and storing all of one game's rules in one subclass.
+We debated between two conceptual locations for the rules of our games: either we could have separate Rules subclasses, corresponding to each Game or State, or we could store the Rules directly within a State. 
 		
-Having every rule for every game in one Rules class is advantageous because:
+Having separate Rules subclasses for each Game or State had the following advantages:
 		
 - Similar rules can be reused between games (no code duplication in that regard).
-- Each State can conveniently be initialized with an ArrayList of Rules (these rules could be called using either Reflection or Lambda Expressions).
+- Each State can be initialized with an ArrayList of Rules.
 	
-Subclassing the Rules class for each game is better because:
+Placing the rules within individual State subclasses was preferable for the following reasons: 
 		
-- It prevents the creation of a massive, confusing Rules class.
+- It prevents the creation of confusing Rules class.
 - It circumvents the need for mistake-prone tools like Java's Reflection.
-- It lets us clearly identify which rules belong to which game.
+- It lets us clearly identify which rules belong to which state.
+- We also noticed there was very little duplication in terms of rules: few games used the same rules. This took away one of the other model's advantages.
 	
-In the end, this choice was easy: the latter option prevailed. Subclassing the Rules class feels more flexible and robust from a coding standpoint.
+In the end, the latter option prevailed. Adding the rules to the State subclasses satisifed a good balance between extensibility and clarity: while rules could not be reused for several states, it was clearer which States obeyed which rules. This was a tradeoff we willingly accepted, and we do not regret the choice, as adding new rules was quite simple during our implementation.
+
+---
 	
-We designed our current plan under that assumption that, to create a new game, one needs to: create a subclass of Game, and create a subclass of Rules (beyond adding an XML file with game characteristics). At this point, we are aware that combining the Game and Rules class is possible (and would make for a simpler addition of games), but we feel that would reduce our program's flexibility. We'd rather preserve flexibility at this early stage in our project!
+We designed our current plan under that assumption that, to create a new game, one needs to: create a subclass of Game appropriate subclasses of State, and place them in a package together. While this could seem like a lot of classes to create, we valued flexibility instead of the compression of code into few classes. We are glad we took this approach, as the new features we needed to add during sprint 3 were usually to implement and integrated seamlessly.
 
 ## Team Responsibilities
-The code will be split up as follows:
+Our team responsibilities, while not originally divided this way, were split up as follows:
 
-- Sam Schwaller will handle the User Interface code. 
-- Nikita Zemlevskiy and Elliott Bolzan will split up the backend as follows:
-	- Nikita will handle creating the Grid, Game and Simulation classes (and their subclasses where appropriate).
-	- Elliott will handle the State, Rules, and Cell classes (and their subclasses where appropriate). 
+- Nikita Zemlevskiy and Elliott Bolzan split up the backend and front end as follows:
+	- Nikita created the Grid, Game and Simulation classes (and their hierarchies and subclasses where appropriate) during the second sprint. In the third sprint, Nikita worked on the implementation of new cell types, new edge behaviors, and new simulations.
+	- Elliott created the State classes, the rules for each game, the Cell classes, and the User Interface (including their hierarchies and subclasses) during the second sprint. In the third sprint, Elliott worked on the possibility of simultaneous simulations, population graphs, and the configuation of simulations from XML and the UI.
+- Sam Schwaller worked on testing code at the end of the second sprint, and on modifying the colors of cells in the third sprint.
 
-Each of is responsible for debugging and testing our own code. These are our **primary responsibilities**. 
+Each of us was responsible for debugging and testing our own code. These were our **primary responsibilities**. 
 
-In addition, we will all be involved in refactoring our work together. Nikita will be responsible for merging the code when it is ready. Those are our **secondary responsibilities**.
+Nikita and Elliott were responsible for the documentation and refactoring of code, as well as for the merging of branches and new features as they were developed. These were our **secondary responsibilities**.
