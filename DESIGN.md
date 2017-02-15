@@ -55,7 +55,9 @@ Our User Interface will be divided into three distinct sections: the Control Pan
 1\. **The Control Panel.**
 The control panel is itself subdivided into several sections.
 
-![](images/panel_1.png)![](images/panel_2.png)
+![](images/panel_1.png)
+
+![](images/panel_2.png)
 
 1\. *The Introductory Labels:* these serve to display the name of the selected game, and its description.
 	
