@@ -19,36 +19,21 @@ public class RectGrid extends Grid {
 	}
 
 	/**
-	 * Get list of neighbors, including diagonal ones.
+	 * Get list of neighbors, including diagonal ones, possibly toroidally
 	 * 
 	 * @param center
 	 *            point of cell of which neighbors are to be returned.
 	 * @return list of all neighbors, including diagonal ones.
 	 */
-	public List<Cell> getNeighborsBounded(Point center) {
-		return getNeighbors(center, false);
-	}
-
-	/**
-	 * get list of neibors toroidally.
-	 * 
-	 * @param center
-	 *            point of cell of which to get neighbors
-	 * @return list of neighboring cells
-	 */
 	@Override
-	public List<Cell> getNeighborsToroidal(Point center) {
-		return getNeighbors(center, true);
-	}
-
-	private List<Cell> getNeighbors(Point center, boolean toroidal) {
+	public List<Cell> getNeighbors(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int) center.getX();
 		int y = (int) center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				if (!(i == x && j == y)) {
-					if (toroidal)
+					if (getToroidal())
 						neighbors.add(getCell(new Point(Math.floorMod(i, getSize()), Math.floorMod(j, getSize()))));
 					else
 						neighbors.add(getCell(new Point(i, j)));

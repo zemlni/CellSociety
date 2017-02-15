@@ -12,7 +12,7 @@ import cellsociety_team18.Point;
  * @author nikita Class represents a triangular grid
  */
 public class TriangleGrid extends Grid {
-	
+
 	/**
 	 * make a new triangular grid of grid type (eg toroidal vs not)
 	 * 
@@ -22,17 +22,6 @@ public class TriangleGrid extends Grid {
 	public TriangleGrid(String type) {
 		super(type);
 	}
-	/**
-	 * get neighbors not toroidal
-	 * 
-	 * @param center
-	 *            point of cell of which to get neighbors
-	 * @return list of neighboring cells
-	 */
-	@Override
-	public List<Cell> getNeighborsBounded(Point center) {
-		return getNeighbors(center, false);
-	}
 
 	/**
 	 * return true if triangle is facing down
@@ -40,29 +29,25 @@ public class TriangleGrid extends Grid {
 	private boolean downDecider(Point center) {
 		return ((int) center.getX()) % 2 == ((int) center.getY() % 2);
 	}
-	
+
 	/**
-	 * get neighbors toroidal
+	 * get neighbors of a cell (toroidal or not toroidal)
 	 * 
 	 * @param center
 	 *            point of cell of which to get neighbors
 	 * @return list of neighboring cells
 	 */
 	@Override
-	public List<Cell> getNeighborsToroidal(Point center) {
-		return getNeighbors(center, true);
-	}
-	
-	private List<Cell> getNeighbors(Point center, boolean toroidal){
+	public List<Cell> getNeighbors(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int) center.getX();
 		int y = (int) center.getY();
 		for (int i = x - 2; i <= x + 2; i++) {
 			for (int j = y - 1; j <= y + 1; j++) {
 				Point temp = null;
-				if(toroidal)
+				if (getToroidal())
 					temp = new Point(Math.floorMod(i, getSize()), Math.floorMod(j, getSize()));
-				else 
+				else
 					temp = new Point(i, j);
 				if (!temp.equals(center))
 					neighbors.add(getCell(temp));

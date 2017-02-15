@@ -22,37 +22,21 @@ public class HexagonGrid extends Grid {
 	}
 
 	/**
-	 * get neighbors not toroidal
+	 * get neighbors of a cell (toroidal or not toroidal)
 	 * 
 	 * @param center
 	 *            point of cell of which to get neighbors
 	 * @return list of neighboring cells
 	 */
 	@Override
-	public List<Cell> getNeighborsBounded(Point center) {
-		return getNeighbors(center, false);
-	}
-
-	/**
-	 * get neighbors toroidal
-	 * 
-	 * @param center
-	 *            point of cell of which to get neighbors
-	 * @return list of neighboring cells
-	 */
-	@Override
-	public List<Cell> getNeighborsToroidal(Point center) {
-		return getNeighbors(center, true);
-	}
-
-	private List<Cell> getNeighbors(Point center, boolean toroidal) {
+	public List<Cell> getNeighbors(Point center) {
 		List<Cell> neighbors = new ArrayList<Cell>();
 		int x = (int) center.getX();
 		int y = (int) center.getY();
 		for (int i = x - 1; i <= x + 1; i++) {
 			for (int j = y; j <= y + 1; j++) {
 				Point temp = null;
-				if (toroidal)
+				if (getToroidal())
 					temp = new Point(Math.floorMod(i, getSize()), Math.floorMod(j, getSize()));
 				else
 					temp = new Point(i, j);

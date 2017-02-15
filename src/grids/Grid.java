@@ -56,31 +56,14 @@ public abstract class Grid {
 		this.size = size;
 	}
 
-	public List<Cell> getNeighbors(Point center) {
-		if (type.equals("Bounded")) {
-			return getNeighborsBounded(center);
-		} else {
-			return getNeighborsToroidal(center);
-		}
-	}
-
 	/**
-	 * get neighbors not toroidal
+	 * get neighbors of a cell (toroidal or not toroidal)
 	 * 
 	 * @param center
 	 *            point of cell of which to get neighbors
 	 * @return list of neighboring cells
 	 */
-	public abstract List<Cell> getNeighborsBounded(Point center);
-
-	/**
-	 * get neighbors toroidal
-	 * 
-	 * @param center
-	 *            point of cell of which to get neighbors
-	 * @return list of neighboring cells
-	 */
-	public abstract List<Cell> getNeighborsToroidal(Point center);
+	public abstract List<Cell> getNeighbors(Point center);
 
 	/**
 	 * Return list of all cells.
@@ -109,6 +92,8 @@ public abstract class Grid {
 	 * 
 	 * @param game
 	 *            the game that will be played in this grid
+	 * @param numNeighbors
+	 *            the max amount of neighbors each cell can have
 	 * @param size
 	 *            size of the grid
 	 */
@@ -163,9 +148,8 @@ public abstract class Grid {
 		return count;
 	}
 
-	public void setup() {
-		// TODO Auto-generated method stub
-
+	public boolean getToroidal() {
+		return !type.equals("Bounded");
 	}
 
 }
