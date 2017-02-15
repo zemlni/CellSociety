@@ -59,15 +59,15 @@ The control panel is itself subdivided into several sections.
 
 ![](images/panel_2.png)
 
-1\. *The Introductory Labels:* these serve to display the name of the selected game, and its description.
+- *The Introductory Labels:* these serve to display the name of the selected game, and its description.
 	
-2\. *The Simulation Creator:* this part of the panel has as its aims to configure the simulation that will be run. From this portion, the user can select a Simulation from a Combo Box, and then select a possible Configuration for the Simulation. Configurations are general, and apply to all games. 
+- *The Simulation Creator:* this part of the panel has as its aims to configure the simulation that will be run. From this portion, the user can select a Simulation from a Combo Box, and then select a possible Configuration for the Simulation. Configurations are general, and apply to all games. 
 
-Once both have been selected, the user can interact with a Table View in which s/he can edit parameters for the simulation. Below this table, the user can modify the configuration parameters that were imported: the size of the grid, of cells, whether the grid is outlined, the cell type, the grid boundary behavior, the distribution of cells, and the number of neighbors taken into consideration. 
+	Once both have been selected, the user can interact with a Table View in which s/he can edit parameters for the simulation. Below this table, the user can modify the configuration parameters that were imported: the size of the grid, of cells, whether the grid is outlined, the cell type, the grid boundary behavior, the distribution of cells, and the number of neighbors taken into consideration. 
 
-Finally, the user can either **Load** this simulation using the corresponding button, or **Save** it to disk using the corresponding button.
+	Finally, the user can either **Load** this simulation using the corresponding button, or **Save** it to disk using the corresponding button.
 	
-3\. *The Simulation Controller:* serves to control the simulation. The **Start** button starts the Simulation; the **Stop** button stops it; and the **Step** button progresses through one step of the Simulation. The **Reload** button shuffles the Simulation's cells. Under these buttons, a slider lets the user control the delay between each step, in milliseconds.
+- *The Simulation Controller:* serves to control the simulation. The **Start** button starts the Simulation; the **Stop** button stops it; and the **Step** button progresses through one step of the Simulation. The **Reload** button shuffles the Simulation's cells. Under these buttons, a slider lets the user control the delay between each step, in milliseconds.
 
 2\. **The Graph.**
 
