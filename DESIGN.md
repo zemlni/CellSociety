@@ -19,7 +19,7 @@ In planning CellSociety, we sought to design an organized and extensible project
 
 We chose to divide our program into three layers of abstraction:
 
-![](overview.jpg)
+![](images/overview.jpg)
 
 1. **The User Interface/Visualization.**
 
@@ -84,7 +84,7 @@ Here we have provided details on the functionality of every major class in the p
 
 - There will be a *Main* class in the root of the project. It will be responsible for launching the program.
 
-1. UI/Visualization:
+1\. **UI/Visualization**:
 
 - GraphicPolygon hierarchy: This hierarchy is used to generate different kinds of cells (ie square, hexagonal, triangular). The superclass, *GraphicPolygon* contains methods that are common to all three cells. Some of these are update(State state) and others. There is one abstract method defined, *getVertices(Point center)*. The subclasses represent different shapes and thus have different ways of retrieving the coordinates that define that shape. Other than this, the cells are the same.
   
@@ -100,7 +100,7 @@ Here we have provided details on the functionality of every major class in the p
  
 - ViewController: This is the class that is responsible for holding all of the elements of the user interface together. It has instances of *PopulationGraph*, multiple instances of *SimulationView* because multiple simulations can be played at once, instances of *ControlPanel*, and elements from the backend such as *SimulationController*. This class also takes care of loading strings from the properties files where the proper strings for displaying to the user are defined. 
 
-2. Configuration:
+2\. **Configuration**:
 
 - Settings: This class is used to store and load various settings that are not pertinent to games but are just general settings like grid size or grid type. Here there are methods to get specific parameters that were read in from the XML configuration file in different formats (ie String, double, int) depending on the type of parameter requested. There are also methods to store parameters in a map that the class maintains.
 
@@ -114,7 +114,7 @@ Here we have provided details on the functionality of every major class in the p
  
 - XML files: All of the configuration can be defined from the XML files. These are read when a new simulation is selected or when a configuration is changed. They are read by the XMLParser object.
 
-3. Simulation:
+3\. **Simulation**:
 
 - Grid: superclass will have a grid object that contains a Collection of *Cells*. Subclasses of *Grid* will be classes related to each specific kind of grid, (ie, square, triangle, hexagon). These will define the specific ways the *getNeighbors()* method works for that type of *Grid*. Since each *Cell* has a *State* instance variable, it also tells the UI what color to display the *Cell* in. Thus, *Grid* is a bridge between the backend and the frontend. 
 
