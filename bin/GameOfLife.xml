@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<name>life</name>
+	<title>Game of Life</title>
+	<description>A simulation of Conway's Game of Life using Cellular Automata.</description>
+	<author>Nikita Zemlevskiy</author>
+	<percentLiving>0.2</percentLiving>
+	<deadColor>WHITE</deadColor>
+	<liveColor>BLACK</liveColor>
+</data>

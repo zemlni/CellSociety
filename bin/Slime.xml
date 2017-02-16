@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<name>slime</name>
+	<title>Slime</title>
+	<description>A simulation of the Slime aggregation model using Cellular Automata.</description>
+	<author>Nikita Zemlevskiy</author>
+	<percentSlime>0.25</percentSlime>
+	<sniffThreshold>3</sniffThreshold>
+	<evaporationTime>5</evaporationTime>
+	<diffusionChance>0.5</diffusionChance>
+	<slimeColor>RED</slimeColor>
+	<chemicalColor>GREEN</chemicalColor>
+	<emptyColor>BLACK</emptyColor>
+</data>

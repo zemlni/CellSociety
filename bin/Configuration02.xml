@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+	<author>Elliott Bolzan</author>
+	<delay>200</delay>
+	<gridSize>10</gridSize>
+	<cellType>Square</cellType>
+	<gridEdge>Bounded</gridEdge>
+	<cellDistribution>Probabilistic</cellDistribution>
+	<cellSize>48</cellSize>
+	<outlineGrid>false</outlineGrid>
+	<numberOfNeighbors>12</numberOfNeighbors>
+	<locations></locations>
+</data>
